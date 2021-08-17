@@ -7,8 +7,9 @@ package Enumerações;
 
 /**
  *
- * @author João
+ * @author João Leite Nº 8170556
+ * @author Celio Macedo Nº 8170358
  */
 public enum SalaQuarentena {
-    
+    TRUE, FALSE
 }
