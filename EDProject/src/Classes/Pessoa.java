@@ -5,6 +5,8 @@
  */
 package Classes;
 
+import Colecoes.DoubleLinkedOrderedList;
+import Colecoes.UnorderedDoubleLinkedList;
 import Enumerações.Tipo;
 
 /**
@@ -47,6 +49,7 @@ public class Pessoa {
     public int getId() {
         return this.id;
     }
+    
     
     
 }
