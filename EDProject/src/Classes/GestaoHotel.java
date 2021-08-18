@@ -5,6 +5,7 @@
  */
 package Classes;
 
+import Colecoes.DoubleLinkedOrderedList;
 import Colecoes.UnorderedDoubleLinkedList;
 import Enumerações.Tipo;
 import java.util.Scanner;
@@ -19,6 +20,7 @@ public class GestaoHotel {
     private final UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
     private int versao;
     private String nomeHotel;
+    private DoubleLinkedOrderedList<Movimentos> movimentosPessoas;
     /**
      * Local onde temos o nosso ficheiro.
      */
@@ -28,6 +30,7 @@ public class GestaoHotel {
         this.versao=0;
         this.nomeHotel="";
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
+        this.movimentosPessoas = new DoubleLinkedOrderedList<Movimentos>();
         this.pathFile=pathFile;
     }
     

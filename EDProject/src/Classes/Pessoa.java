@@ -49,6 +49,11 @@ public class Pessoa {
     public int getId() {
         return this.id;
     }
+
+    @Override
+    public String toString() {
+        return "Pessoa{" + "id=" + id + ", nome=" + nome + ", tipo=" + tipo + '}';
+    }
     
     
     

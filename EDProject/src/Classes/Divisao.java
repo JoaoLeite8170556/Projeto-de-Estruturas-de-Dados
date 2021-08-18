@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Classes;
 
 import Enumerações.Reservado;
 import Enumerações.SalaQuarentena;
 
 /**
- *
- * @author João
+ * Classe para fazer gestão da Divisão.
+ * @author João Leite Nº 8170556
+ * @author Celio Macedo Nº 8170358
  */
 public class Divisao {
     private String nome;
