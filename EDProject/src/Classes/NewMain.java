@@ -5,6 +5,7 @@
  */
 package Classes;
 
+import Colecoes.UnorderedDoubleLinkedList;
 import Enumerações.Tipo;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,7 +31,9 @@ public class NewMain {
         while(itr.hasNext()){
             System.out.println(itr.next().toString());
         }
+        UnorderedDoubleLinkedList<Integer> ko = new UnorderedDoubleLinkedList<>();
         
+        ko.
     }
     
 }

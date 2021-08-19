@@ -47,10 +47,6 @@ public class JSONMovimentos {
         
         JSONArray jsonMovimentos = (JSONArray) jsonObject.get("Movimentos");
         
-        /**Integer idPessoa = 0;
-        String divisao = null;
-        String dataHora = null;*/
-        
         for(int i=0;i<jsonMovimentos.size();i++){
             
             JSONObject objMovimentos = (JSONObject) jsonMovimentos.get(i);

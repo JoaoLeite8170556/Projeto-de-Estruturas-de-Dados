@@ -1,6 +1,7 @@
 
 package Classes;
 
+import Colecoes.UnorderedDoubleLinkedList;
 import Enumerações.Reservado;
 import Enumerações.SalaQuarentena;
 
@@ -13,13 +14,17 @@ public class Divisao {
     private String nome;
     private SalaQuarentena salaQuarentena;
     private Reservado reservado;
+    private int capacidadeMaxima;
+    private UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
 
-    public Divisao(String nome, SalaQuarentena salaQuarentena, Reservado reservado) {
+    public Divisao(String nome, SalaQuarentena salaQuarentena, Reservado reservado,int capacidadeMaxima) {
         this.nome = nome;
         this.salaQuarentena = salaQuarentena;
         this.reservado = reservado;
+        this.capacidadeMaxima = capacidadeMaxima;
+        this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
     }
-
+    
     public String getNome() {
         return nome;
     }

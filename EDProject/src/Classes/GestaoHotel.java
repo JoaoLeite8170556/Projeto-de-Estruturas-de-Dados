@@ -6,6 +6,7 @@
 package Classes;
 
 import Colecoes.DoubleLinkedOrderedList;
+import Colecoes.GraphWeight;
 import Colecoes.UnorderedDoubleLinkedList;
 import Enumerações.Tipo;
 import java.util.Scanner;
@@ -21,6 +22,7 @@ public class GestaoHotel {
     private int versao;
     private String nomeHotel;
     private DoubleLinkedOrderedList<Movimentos> movimentosPessoas;
+    private GraphWeight<Divisao> divisoes;
     /**
      * Local onde temos o nosso ficheiro.
      */
@@ -32,6 +34,7 @@ public class GestaoHotel {
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
         this.movimentosPessoas = new DoubleLinkedOrderedList<Movimentos>();
         this.pathFile=pathFile;
+        this.divisoes = new GraphWeight<Divisao>();
     }
     
     public void inserirHospede(){
