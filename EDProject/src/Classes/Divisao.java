@@ -12,31 +12,53 @@ import Enumerações.SalaQuarentena;
  */
 public class Divisao {
     private String nome;
-    private SalaQuarentena salaQuarentena;
-    private Reservado reservado;
+    private boolean salaQuarentena;
+    private boolean reservado;
     private int capacidadeMaxima;
     private UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
 
-    public Divisao(String nome, SalaQuarentena salaQuarentena, Reservado reservado,int capacidadeMaxima) {
+    public Divisao(String nome, int capacidadeMaxima, boolean reservado) {
+        this.nome = nome;
+        this.reservado = reservado;
+        this.capacidadeMaxima = capacidadeMaxima;
+        
+    }
+
+    public Divisao(String nome, boolean salaQuarentena, int capacidadeMaxima) {
         this.nome = nome;
         this.salaQuarentena = salaQuarentena;
-        this.reservado = reservado;
         this.capacidadeMaxima = capacidadeMaxima;
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
     }
+
+    public Divisao(String nome, int capacidadeMaxima) {
+        this.nome = nome;
+        this.capacidadeMaxima = capacidadeMaxima;
+        this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
+    }
+    
+    
     
     public String getNome() {
         return nome;
     }
 
-    public SalaQuarentena getSalaQuarentena() {
+    public boolean getSalaQuarentena() {
         return salaQuarentena;
     }
 
-    public Reservado getReservado() {
+    public boolean getReservado() {
         return reservado;
     }
 
+    public void setSalaQuarentena(boolean salaQuarentena) {
+        this.salaQuarentena = salaQuarentena;
+    }
+
+    public void setReservado(boolean reservado) {
+        this.reservado = reservado;
+    }
+    
     
     
 }

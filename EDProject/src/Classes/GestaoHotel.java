@@ -23,17 +23,13 @@ public class GestaoHotel {
     private String nomeHotel;
     private DoubleLinkedOrderedList<Movimentos> movimentosPessoas;
     private GraphWeight<Divisao> divisoes;
-    /**
-     * Local onde temos o nosso ficheiro.
-     */
-    private String pathFile;
+    
 
-    public GestaoHotel(String pathFile){
+    public GestaoHotel(){
         this.versao=0;
         this.nomeHotel="";
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
         this.movimentosPessoas = new DoubleLinkedOrderedList<Movimentos>();
-        this.pathFile=pathFile;
         this.divisoes = new GraphWeight<Divisao>();
     }
     
@@ -57,6 +53,34 @@ public class GestaoHotel {
         
         this.listaDePessoas.addToRear(new Pessoa(nomePessoa,Tipo.FUNCIONARIO));
         
+    }
+
+    public UnorderedDoubleLinkedList<Pessoa> getListaDePessoas() {
+        return listaDePessoas;
+    }
+
+    public int getVersao() {
+        return versao;
+    }
+
+    public String getNomeHotel() {
+        return nomeHotel;
+    }
+
+    public DoubleLinkedOrderedList<Movimentos> getMovimentosPessoas() {
+        return movimentosPessoas;
+    }
+
+    public GraphWeight<Divisao> getDivisoes() {
+        return divisoes;
+    }
+
+    public void setMovimentosPessoas(DoubleLinkedOrderedList<Movimentos> movimentosPessoas) {
+        this.movimentosPessoas = movimentosPessoas;
+    }
+
+    public void setDivisoes(GraphWeight<Divisao> divisoes) {
+        this.divisoes = divisoes;
     }
     
     
