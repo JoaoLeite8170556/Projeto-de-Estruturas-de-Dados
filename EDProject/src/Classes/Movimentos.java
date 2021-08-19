@@ -20,16 +20,23 @@ public class Movimentos implements Comparable{
     private int idPessoa;
     private String nomeDivisao;
     private SimpleDateFormat dataFormater;
-    private Date dataHora;
+    private Date dataHoraAtual;
+    private String dataHora;
 
     public Movimentos(int idPessoa, String nomeDivisao) {
         this.idPessoa = idPessoa;
         this.nomeDivisao = nomeDivisao;
         this.dataFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        this.dataHora = new Date();
-        this.dataFormater.format(dataHora).toString();
+        this.dataHoraAtual = new Date();
+        this.dataHora = this.dataFormater.format(this.dataHoraAtual);
     }
 
+    public Movimentos(int idPessoa, String nomeDivisao, String dataHora) {
+        this.idPessoa = idPessoa;
+        this.nomeDivisao = nomeDivisao;
+        this.dataHora = dataHora;
+    }
+    
     public int getIdPessoa() {
         return idPessoa;
     }
@@ -38,28 +45,34 @@ public class Movimentos implements Comparable{
         return nomeDivisao;
     }
 
-    public Date getDataHora() {
+    public String getDataHora() {
         return dataHora;
     }
 
-    public SimpleDateFormat getDataFormater() {
-        return dataFormater;
+    public Date getDataHoraAtual(){
+        return dataHoraAtual;
     }
+    
 
     @Override
     public int compareTo(Object obj) {
-        
         Movimentos movimentos = (Movimentos) obj;
         
-        if (getDataHora().before(movimentos.getDataHora()) && getIdPessoa()>movimentos.getIdPessoa()){
+        if (getIdPessoa() > movimentos.getIdPessoa() && (getDataHora().compareTo(movimentos.getDataHora())>1)){
             return 1;
         } else {
-            if (getDataHora().after(movimentos.getDataHora()) && getIdPessoa() < movimentos.getIdPessoa()){
+            if (getIdPessoa() < movimentos.getIdPessoa() && (getDataHora().compareTo(movimentos.getDataHora())<1)){
                 return -1;
             } else {
                 return 0;
             }
         }
-
     }
+
+    @Override
+    public String toString() {
+        return "idPessoa:" + this.idPessoa + "\n" + "Divisão:" + this.nomeDivisao + "\n" +"DataHora:" + this.dataHora + "\n";
+    }
+    
+    
 }

@@ -6,11 +6,14 @@
 package Classes;
 
 import Colecoes.DoubleLinkedOrderedList;
+import Excepcoes.IsNotComparable;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
@@ -30,9 +33,9 @@ public class JSONMovimentos {
         return filePath;
     }
     
-    public DoubleLinkedOrderedList<Movimentos> readFileMovimentos(String filePath) throws FileNotFoundException, IOException, ParseException, java.text.ParseException{
+    public DoubleLinkedOrderedList<Movimentos> readFileMovimentos() throws FileNotFoundException, IOException, ParseException, java.text.ParseException{
         JSONParser JSONParser = new JSONParser();
-        FileReader reader = new FileReader(filePath);
+        FileReader reader = new FileReader(this.filePath);
         
         DoubleLinkedOrderedList<Movimentos> tempList = new DoubleLinkedOrderedList<Movimentos>();
         
@@ -44,13 +47,20 @@ public class JSONMovimentos {
         
         JSONArray jsonMovimentos = (JSONArray) jsonObject.get("Movimentos");
         
+        /**Integer idPessoa = 0;
+        String divisao = null;
+        String dataHora = null;*/
+        
         for(int i=0;i<jsonMovimentos.size();i++){
-            JSONObject objMovimentos = (JSONObject) jsonMovimentos.get(i);
             
+            JSONObject objMovimentos = (JSONObject) jsonMovimentos.get(i);
             Integer idPessoa = Integer.parseInt((String) objMovimentos.get("idPessoa").toString());
-            String codMissao = (String) objMovimentos.get("Divisão");
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd HH:mm");
-            Date DataHora = format.parse("DataHora");
+            String divisao = (String) objMovimentos.get("Divisão");
+            String dataHora = (String) objMovimentos.get("DataHora");
+             try {
+                tempList.add(new Movimentos(idPessoa,divisao,dataHora));
+            } catch (IsNotComparable ex){}
+            
         }
         return tempList;
         

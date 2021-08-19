@@ -6,8 +6,12 @@
 package Classes;
 
 import Enumerações.Tipo;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Iterator;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -18,15 +22,15 @@ public class NewMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        Pessoa pessoa1 = new Pessoa("Zé", Tipo.HOSPEDE);
-        Pessoa pessoa2 = new Pessoa("Zé", Tipo.HOSPEDE);
-        Movimentos movimentos = new Movimentos(pessoa1.getId(),"Quarto");
+    public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException {
         
-        System.out.println(movimentos.getDataFormater());
-        System.out.println(pessoa1.getId());
-        System.out.println(pessoa2.getId());
-        System.out.println("Ola E ADeus");
+        
+        JSONMovimentos jsonMovimentos = new JSONMovimentos("../movimentos.json");
+        Iterator itr = jsonMovimentos.readFileMovimentos().iterator();
+        while(itr.hasNext()){
+            System.out.println(itr.next().toString());
+        }
+        
     }
     
 }
