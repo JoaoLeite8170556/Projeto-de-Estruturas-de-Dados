@@ -6,6 +6,8 @@
 package Classes;
 
 
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -14,15 +16,18 @@ import java.util.Date;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class Movimentos {
+public class Movimentos implements Comparable{
     private int idPessoa;
     private String nomeDivisao;
+    private SimpleDateFormat dataFormater;
     private Date dataHora;
 
-    public Movimentos(int idPessoa, String nomeDivisao, Date dataHora) {
+    public Movimentos(int idPessoa, String nomeDivisao) {
         this.idPessoa = idPessoa;
         this.nomeDivisao = nomeDivisao;
-        this.dataHora = dataHora;
+        this.dataFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        this.dataHora = new Date();
+        this.dataFormater.format(dataHora).toString();
     }
 
     public int getIdPessoa() {
@@ -37,7 +42,15 @@ public class Movimentos {
         return dataHora;
     }
 
-    public int compareTo(Movimentos movimentos) {
+    public SimpleDateFormat getDataFormater() {
+        return dataFormater;
+    }
+
+    @Override
+    public int compareTo(Object obj) {
+        
+        Movimentos movimentos = (Movimentos) obj;
+        
         if (getDataHora().before(movimentos.getDataHora()) && getIdPessoa()>movimentos.getIdPessoa()){
             return 1;
         } else {
@@ -49,5 +62,4 @@ public class Movimentos {
         }
 
     }
-    
 }
