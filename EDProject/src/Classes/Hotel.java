@@ -17,7 +17,10 @@ public class Hotel {
     private String nome;
     
     /**
-     * Método Construção 
+     * Método Construção
+     * 
+     * 
+     * 
      * @param pathFile caminho onde esta o file
      * @param nome nome do mapa
      */
