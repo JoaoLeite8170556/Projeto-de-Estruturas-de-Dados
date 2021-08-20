@@ -6,7 +6,7 @@
 package Classes;
 
 import Colecoes.DoubleLinkedOrderedList;
-import Excepcoes.IsNotComparable;
+import Excepcoes.ElementNonComparable;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class JSONMovimentos {
             String dataHora = (String) objMovimentos.get("DataHora");
              try {
                 tempList.add(new Movimentos(idPessoa,divisao,dataHora));
-            } catch (IsNotComparable ex){}
+            } catch (ElementNonComparable ex){}
             
         }
         return tempList;

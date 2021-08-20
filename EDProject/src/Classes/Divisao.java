@@ -2,8 +2,7 @@
 package Classes;
 
 import Colecoes.UnorderedDoubleLinkedList;
-import Enumerações.Reservado;
-import Enumerações.SalaQuarentena;
+import java.util.Objects;
 
 /**
  * Classe para fazer gestão da Divisão.
@@ -35,6 +34,30 @@ public class Divisao {
         this.nome = nome;
         this.capacidadeMaxima = capacidadeMaxima;
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Divisao other = (Divisao) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        return true;
     }
     
     
