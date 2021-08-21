@@ -19,7 +19,7 @@ import Enumerações.Tipo;
 
 public class Pessoa {
     
-    private static int incremento = 1;
+    private static int incremento = 0;
     private int id;
     private String nome;
     private Tipo tipo;
@@ -28,6 +28,10 @@ public class Pessoa {
         this.id= incremento++;
         this.nome = nome;
         this.tipo = tipo;
+    }
+    
+    public Pessoa(){
+        this.id = incremento++;
     }
 
     public String getNome() {
@@ -52,7 +56,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Pessoa{" + "id=" + id + ", nome=" + nome + ", tipo=" + tipo + '}';
+        return "ID Pessoa: " + this.id + "\n" + "Nome: " + this.nome + "\n" +"Tipo: " + this.tipo + "\n";
     }
     
     

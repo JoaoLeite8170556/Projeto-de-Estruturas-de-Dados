@@ -5,15 +5,9 @@
  */
 package Classes;
 
-import Colecoes.DoubleLinkedOrderedList;
-import Excepcoes.ElementNonComparable;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Colecoes.*;
+import Excepcoes.*;
+import java.io.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
@@ -56,7 +50,6 @@ public class JSONMovimentos {
              try {
                 tempList.add(new Movimentos(idPessoa,divisao,dataHora));
             } catch (ElementNonComparable ex){}
-            
         }
         return tempList;
         

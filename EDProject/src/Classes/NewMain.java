@@ -6,6 +6,7 @@
 package Classes;
 
 import Colecoes.GraphWeight;
+import Grafo.GrafoHotel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
@@ -24,19 +25,14 @@ public class NewMain {
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException{
         
         
-        GestaoHotel mapa = new GestaoHotel("../mapa.json");
-        
-        mapa.loadMapaHotel();
-        
-        Iterator itr = (Iterator) mapa.getDivisoes();
+        GestaoHotel hotel = new GestaoHotel("../mapa.json");
         
         
-        GraphWeight<Integer> grafo = new GrafoHotel<>();
+        hotel.loadMapaHotel();
         
-     
-        while(itr.hasNext()){
-            System.out.println(itr.next());
-        }
+        System.out.println(hotel.getNomeHotel());
+        
+        
         
     }
     
