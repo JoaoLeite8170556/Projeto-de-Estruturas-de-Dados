@@ -53,14 +53,7 @@ public class GrafoHotel<T> extends GraphWeight<T>{
         return tempList.iterator();
     }
     
-    public Iterator<T> getDivisoes(){
-        
-        UnorderedArrayList<T> listaDeDiviseos = new UnorderedArrayList<T>();
-        
-        
-        
-        return null;
-    }
+    
     
     /**
      * Este metodo vai indicar qual o número de vertices adjacentes tem
@@ -114,9 +107,9 @@ public class GrafoHotel<T> extends GraphWeight<T>{
     
     /**
      * Este metodo vai permitir verificar se os vertices estao conectados entre si
-     * @param vertice1
+     * @param vertice1 
      * @param vertice2
-     * @return 
+     * @return true se estiver conectado, false se não.
      */
     public boolean estaConectado(T vertice1, T vertice2){
         int index1 = this.getIndex(vertice1);
@@ -145,10 +138,10 @@ public class GrafoHotel<T> extends GraphWeight<T>{
     
     /**
      * Metodo que vai guardar num estrutura todos os vertices presentes no Grafo
-     * @return 
+     * @return todas as divisões do Hotel
      */
     public UnorderedDoubleLinkedList<T> getTodasDivisoes(){
-        UnorderedDoubleLinkedList<T> tempList = new UnorderedDoubleLinkedList<>();
+        UnorderedDoubleLinkedList<T> tempList = new UnorderedDoubleLinkedList<T>();
         
         for(int i=0;i<this.numVertices;i++){
             tempList.addToRear(this.vertices[i]);

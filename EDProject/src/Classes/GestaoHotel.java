@@ -50,7 +50,7 @@ public class GestaoHotel {
         this.listaDePessoas = new UnorderedArrayList<Pessoa>();
         this.movimentosPessoas = new DoubleLinkedOrderedList<Movimentos>();
         this.divisoesHotel = new GrafoHotel<Divisao>(getNumeroDeDivisoes(this.nomeHotel));
-        this.pessoa = new Pessoa();
+        
     }
 
     /**
@@ -116,6 +116,7 @@ public class GestaoHotel {
 
         FileReader reader = null;
         try {
+            
             JSONParser JSONParser = new JSONParser();
             reader = new FileReader(this.pathFile);
             Object obj = JSONParser.parse(reader);
@@ -158,14 +159,14 @@ public class GestaoHotel {
                 }
             }
             
-            JSONArray jsonLigacoes = (JSONArray) jsonObject.get("ligacoes");
+            /**JSONArray jsonLigacoes = (JSONArray) jsonObject.get("ligacoes");
 
             for (Object ligacoes : jsonLigacoes) {
 
                 Divisao coneccao = new Divisao((String) ligacoes);
                 this.divisoesHotel.addVertex(coneccao);
                 this.atualizaPesos(divisao, coneccao);
-            }
+            }*/
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
         } catch (ParseException ex) {
@@ -207,7 +208,7 @@ public class GestaoHotel {
         return movimentosPessoas;
     }
 
-    public GraphWeight<Divisao> getDivisoes() {
+    public GrafoHotel<Divisao> getDivisoes() {
         return divisoesHotel;
     }
     
@@ -226,6 +227,11 @@ public class GestaoHotel {
             }
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "GestaoHotel{" + "versao=" + versao + ", nomeHotel=" + nomeHotel + ", divisoesHotel=" + divisoesHotel + '}';
     }
     
     

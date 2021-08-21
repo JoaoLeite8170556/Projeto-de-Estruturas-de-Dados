@@ -107,6 +107,12 @@ public class Divisao {
     public void setCapacidadeMaxima(int capacidadeMaxima) {
         this.capacidadeMaxima = capacidadeMaxima;
     }
+
+    @Override
+    public String toString() {
+        return "Divisão: " + this.nome + "\t" +"Lotação Máxima: " + this.capacidadeMaxima + "\n"+
+                "Lotação Atual: "+this.listaDePessoas.size()+"\n";
+    }
     
     
    

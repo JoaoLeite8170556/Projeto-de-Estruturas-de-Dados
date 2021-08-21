@@ -13,7 +13,7 @@ import java.util.Iterator;
 import org.json.simple.parser.ParseException;
 
 /**
- *
+ * Main do Projeto
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
@@ -27,10 +27,15 @@ public class NewMain {
         
         GestaoHotel hotel = new GestaoHotel("../mapa.json");
         
-        
         hotel.loadMapaHotel();
         
-        System.out.println(hotel.getNomeHotel());
+        Iterator itr = hotel.getDivisoes().getTodasDivisoes().iterator();
+        
+        while(itr.hasNext()){
+            System.out.println(itr.next().toString());
+        }
+        
+        
         
         
         
