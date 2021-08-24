@@ -22,22 +22,20 @@ public class NewMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, FileNotFoundException, ParseException{
+    public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException{
         
         
-        GestaoHotel hotel = new GestaoHotel("../mapa.json");
         
-        hotel.loadMapaHotel();
         
-        Iterator itr = hotel.getDivisoes().getTodasDivisoes().iterator();
+         Menu menu = new Menu();
+         
+        /*Iterator itr = menu.arrayDeHoteis();
         
         while(itr.hasNext()){
             System.out.println(itr.next().toString());
-        }
+        }*/
         
-        
-        
-        
+        menu.mostraHoteis();
         
     }
     

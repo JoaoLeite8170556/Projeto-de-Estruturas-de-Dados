@@ -17,8 +17,7 @@ public class Hotel {
     private String nome;
     
     /**
-     * Método Construção
-     * 
+     * Método Construtor
      * 
      * 
      * @param pathFile caminho onde esta o file
@@ -37,4 +36,9 @@ public class Hotel {
         return nome;
     }
 
+    @Override
+    public String toString() {
+        return this.nome ;
+    }
+    
 }

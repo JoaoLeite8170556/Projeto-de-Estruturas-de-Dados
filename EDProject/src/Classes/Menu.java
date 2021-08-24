@@ -7,6 +7,7 @@ package Classes;
 
 import Colecoes.UnorderedArrayList;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
@@ -31,40 +32,44 @@ public class Menu {
     }
     
     /**
-     * Este método vai retornar todos os mapas da pasta Mapas
-     * @return iterador com a lista de mapas presentes na pasta "./Mapas"
+     * Este método vai retornar todos os Hoteis da pasta Hoteis
+     * @return iterador com a lista de mapas presentes na pasta "./Hoteis"
      */
-    public Iterator arrayDeMapas(){
-        UnorderedArrayList<Hotel> hoteis = new UnorderedArrayList<>();
-        
-        File[] listaDeFicheiros = new File("./Mapas").listFiles(new FilenameFilter(){
+    public Iterator arrayDeHoteis() {
+
+        UnorderedArrayList<Hotel> hoteis = new UnorderedArrayList<Hotel>();
+
+        File directoryPath = new File("D://Users//joao-//OneDrive - Instituto Politécnico do Porto//Ambiente de Trabalho//ED_EpocaEspecial//Hoteis");
+
+        FileFilter textFileFilter = new FileFilter() {
             @Override
-            public boolean accept(File dir, String name) {
-                if(name.toLowerCase().endsWith(".json")){
+            public boolean accept(File file) {
+                boolean isFile = file.isFile();
+
+                
+                
+                if (isFile) {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             }
-            
-        });
-        
-        for(File fileName: listaDeFicheiros){
-            try {
-                JSONParser parser = new JSONParser();
-                JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("Mapas/"+fileName.getName()));
-                
-                String[] nomesDosHoteis = fileName.getName().split(".json");
-                
-                Hotel hotel = new Hotel(nomesDosHoteis[0], jsonObject.get("nome").toString());
-                hoteis.addToFront(hotel);
-            } catch (FileNotFoundException ex) {
-            } catch (IOException ex) {} 
-            catch (ParseException ex) {}
+        };
+
+        File listaDeFicheiros[] = directoryPath.listFiles(textFileFilter);
+
+        for (File fileName : listaDeFicheiros) {
+
+            Hotel hotel = new Hotel(fileName.getAbsolutePath(),fileName.getName());
+            hoteis.addToFront(hotel);
+
         }
         return hoteis.iterator();
     }
     
+   
+    
+ 
     /**
      * Metodo que vai permitir escolher o hotel para a nossa aplicação
      * @param escolhaHotel o numero a que o hotel corresponde
@@ -73,7 +78,7 @@ public class Menu {
     public String escolheHotel(String escolhaHotel){
         int count =1;
         boolean found = false;
-        Iterator itr = this.arrayDeMapas();
+        Iterator itr = this.arrayDeHoteis();
         
         while(itr.hasNext() && !found){
             Hotel hotel = (Hotel) itr.next();
@@ -86,6 +91,26 @@ public class Menu {
             }
         }
         return null;
+    }
+    
+    
+    /**
+     * Este metodo vai imprimir todos os hoteis e retornar o seu número
+     * @return numero de hoteis
+     */
+    public int mostraHoteis(){
+        Iterator itr = arrayDeHoteis();
+        int num = 1;
+        
+        while(itr.hasNext()){
+            Hotel hotel = (Hotel) itr.next();
+            System.out.println(num + ") "+ hotel.getNome());
+            
+            if(itr.hasNext()){
+                num++;
+            }
+        }
+        return num;
     }
     
 }
