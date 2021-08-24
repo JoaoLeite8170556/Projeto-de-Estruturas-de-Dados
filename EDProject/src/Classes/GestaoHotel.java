@@ -9,6 +9,7 @@ import static Classes.JSONHotel.getNumeroDeDivisoes;
 
 import Colecoes.*;
 import Enumerações.Tipo;
+import Excepcoes.EmptyExcpetion;
 import Grafo.GrafoHotel;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -109,6 +110,30 @@ public class GestaoHotel {
         
     }
     
+    
+    public UnorderedDoubleLinkedList<Integer> listagemDePessoas() throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion{
+        
+        
+        UnorderedDoubleLinkedList<Integer> lista = new UnorderedDoubleLinkedList<Integer>();
+        JSONMovimentos jsonMovimentos = new JSONMovimentos("../movimentos.json");
+        
+        DoubleLinkedOrderedList<Movimentos> allMovimentos = jsonMovimentos.readFileMovimentos();
+        
+        
+        Iterator itr = allMovimentos.iterator();
+        
+        while(itr.hasNext()){
+            
+            Movimentos move = (Movimentos) itr.next();
+            
+           if(lista.contains(move.getIdPessoa())){
+               lista.addToRear(move.getIdPessoa());
+           }
+                   
+        }
+        
+        return lista;
+    }
     /**
      * Este método vai possibilitar estruturar o grafo conforme o ficheiro JSON
      */

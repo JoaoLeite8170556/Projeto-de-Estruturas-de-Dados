@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONObject;
@@ -24,18 +25,16 @@ import org.json.simple.parser.ParseException;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class Menu {
+public final class Menu {
     
     
-    public Menu(){
-        
-    }
+   
     
     /**
      * Este método vai retornar todos os Hoteis da pasta Hoteis
      * @return iterador com a lista de mapas presentes na pasta "./Hoteis"
      */
-    public Iterator arrayDeHoteis() {
+    private Iterator arrayDeHoteis() {
 
         UnorderedArrayList<Hotel> hoteis = new UnorderedArrayList<Hotel>();
 
@@ -45,8 +44,6 @@ public class Menu {
             @Override
             public boolean accept(File file) {
                 boolean isFile = file.isFile();
-
-                
                 
                 if (isFile) {
                     return true;
@@ -68,12 +65,41 @@ public class Menu {
     }
     
    
-    
+    Menu(){
+        
+        String choise = "";
+        
+        boolean nomeDoMapa = false;
+        boolean validoPath = false;
+        String nomeHotel = "";
+        
+        while(!nomeDoMapa || !validoPath){
+            int number = mostraHoteis();
+            
+            System.out.println("Escolha o hotel para usar:");
+            
+            Scanner scanner = new Scanner(System.in);
+            
+            choise = scanner.nextLine();
+            
+            if(choise.matches("[1-"+number+"]")){
+                if(escolheHotel(choise)!= null){
+                    nomeHotel = escolheHotel(choise);
+                }
+            }
+            
+        }
+        
+        
+        
+        
+        
+    }
  
     /**
      * Metodo que vai permitir escolher o hotel para a nossa aplicação
      * @param escolhaHotel o numero a que o hotel corresponde
-     * @return o nome do hotel escolhido.
+     * @return o nome do hotel escolhido
      */
     public String escolheHotel(String escolhaHotel){
         int count =1;
@@ -112,5 +138,7 @@ public class Menu {
         }
         return num;
     }
+    
+    
     
 }

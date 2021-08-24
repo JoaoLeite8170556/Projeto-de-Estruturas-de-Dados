@@ -6,6 +6,8 @@
 package Classes;
 
 import Colecoes.GraphWeight;
+import Excepcoes.ElementNonComparable;
+import Excepcoes.EmptyExcpetion;
 import Grafo.GrafoHotel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,20 +24,16 @@ public class NewMain {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException{
+    public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
-        
-        
-        
-         Menu menu = new Menu();
-         
-        /*Iterator itr = menu.arrayDeHoteis();
-        
-        while(itr.hasNext()){
-            System.out.println(itr.next().toString());
-        }*/
-        
-        menu.mostraHoteis();
+       GestaoHotel hotel = new GestaoHotel("../mapa.json");
+       
+       Iterator itr = hotel.listagemDePessoas().iterator();
+       
+       
+       while(itr.hasNext()){
+           System.out.println(itr.next().toString());
+       }
         
     }
     
