@@ -24,16 +24,17 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
-       GestaoHotel hote = new GestaoHotel("D://Users//joao-//OneDrive - Instituto Politécnico do Porto//Ambiente de Trabalho//ED_EpocaEspecial//Hoteis/mapa.json");
+       GestaoHotel hote = new GestaoHotel("C://Users//celio//OneDrive//Ambiente de Trabalho//universidade//2ºano//1º Semestre//Estruturas de Dados//trabalho final época especial//ED_EpocaEspecial//Hoteis//mapa.json");
        
        hote.loadMapaHotel();
        
        
        Iterator itr = hote.getDivisoes().getTodasDivisoes().iterator();
        
-       while(itr.hasNext()){
+        System.out.println(hote.getDivisoes().toString());
+       /**while(itr.hasNext()){
            System.out.println(itr.next().toString());
-       }
+       }**/
         
     }
     

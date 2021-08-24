@@ -6,6 +6,7 @@
 package Grafo;
 
 
+import Classes.Divisao;
 import Colecoes.GraphWeight;
 import Colecoes.UnorderedArrayList;
 import Colecoes.UnorderedDoubleLinkedList;
@@ -150,13 +151,13 @@ public class GrafoHotel<T> extends GraphWeight<T>{
     }
     
     
-    
     /**
+    
      * Metodo que vai retornar uma string onde vai indicar uma matriz com as
      * ligações e os vertices com as suas ligações correspondentes.
      *
      * @return a string com os vertices e as suas ligaçoes
-     */
+     
     @Override
     public String toString() {
         if (numVertices == 0) {
@@ -165,7 +166,7 @@ public class GrafoHotel<T> extends GraphWeight<T>{
 
         String result = new String("");
 
-        /* Print the adjacency Matrix */
+        /* Print the adjacency Matrix 
         result += "----------------------------------Matriz de adjacência----------------------------------\n";
         result += "----------------------------------------------------------------------------------------\n";
         result += "Divisões\t\t";
@@ -177,7 +178,7 @@ public class GrafoHotel<T> extends GraphWeight<T>{
         result += "\n";
 
         for (int i = 0; i < numVertices; i++) {
-            String temp = (String) this.vertices[i];
+            Divisao temp = (Divisao) this.vertices[i];
             if (temp.length() < 8) {
                 result += this.vertices[i] + "\t\t\t";
             } else if (temp.length() > 15) {
@@ -258,5 +259,5 @@ public class GrafoHotel<T> extends GraphWeight<T>{
 
         result += "\n";
         return result;
-    }
+    }**/
 }

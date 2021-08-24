@@ -195,10 +195,9 @@ public class GestaoHotel {
             JSONArray jsonLigacoes = (JSONArray) jsonObject.get("ligacoes");
 
             for (Object ligacoes : jsonLigacoes) {
-
-               //var coneccao = new Divisao((String) ligacoes);
-                this.divisoesHotel.addVertex(new Divisao((String) ligacoes));
-                this.atualizaPesos(divisao, new Divisao((String) ligacoes));
+                JSONArray edge = (JSONArray) ligacoes;
+                this.divisoesHotel.addEdge(findDivision(edge.get(0).toString()),
+                        findDivision(edge.get(1).toString()), 1);
             }
         } catch (FileNotFoundException ex) {
         } catch (IOException | ParseException ex) {
@@ -250,6 +249,24 @@ public class GestaoHotel {
         while(itr.hasNext()){
             Pessoa aux = (Pessoa)itr.next();
             if(aux.getId()== idPessoa){
+                return aux;
+            }
+        }
+        return null;
+    }
+    
+     /**
+     * Este metodo vai procurar o objeto divisao pelo nome
+     * @param divisao string da divisao que se pretende procurar
+     * @return a Divisao caso seja encontrado, se não for encontrada retorna null
+     */
+    public Divisao findDivision(String divisao){
+        
+        Iterator itr = this.divisoesHotel.getTodasDivisoes().iterator();
+        
+        while(itr.hasNext()){
+            Divisao aux = (Divisao)itr.next();
+            if(aux.getNome().equals(divisao) ){
                 return aux;
             }
         }
