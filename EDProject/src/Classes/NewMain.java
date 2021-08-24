@@ -5,10 +5,8 @@
  */
 package Classes;
 
-import Colecoes.GraphWeight;
 import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
-import Grafo.GrafoHotel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
@@ -26,12 +24,15 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
-       GestaoHotel hote = new GestaoHotel("../mapa.json");
+       GestaoHotel hote = new GestaoHotel("D://Users//joao-//OneDrive - Instituto Politécnico do Porto//Ambiente de Trabalho//ED_EpocaEspecial//Hoteis/mapa.json");
        
-       Iterator itr = hote.listagemDePessoas().iterator();
+       hote.loadMapaHotel();
+       
+       
+       Iterator itr = hote.getDivisoes().getTodasDivisoes().iterator();
        
        while(itr.hasNext()){
-           System.out.println(itr.next());
+           System.out.println(itr.next().toString());
        }
         
     }

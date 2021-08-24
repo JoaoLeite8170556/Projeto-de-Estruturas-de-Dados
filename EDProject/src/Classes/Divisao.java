@@ -27,7 +27,8 @@ public class Divisao {
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
         
     }
-
+    
+    
     public Divisao(String nome) {
         this.nome = nome;
         this.capacidadeMaxima = 0;

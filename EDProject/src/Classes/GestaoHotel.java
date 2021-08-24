@@ -37,7 +37,7 @@ public class GestaoHotel {
     private DoubleLinkedOrderedList<Movimentos> movimentosPessoas;
     private GrafoHotel<Divisao> divisoesHotel;
     private String pathFile;
-    private Pessoa pessoa;
+    
 
     /**
      * Metodo construtor para criar uma GestaoHotel
@@ -110,7 +110,15 @@ public class GestaoHotel {
         
     }
     
-    
+    /**
+     * Este metodo vai permitir retornar a listagem de todas as pessoas que estão no hotel;
+     * @return a losta com todas as pessoas
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @throws ParseException
+     * @throws java.text.ParseException
+     * @throws EmptyExcpetion 
+     */
     public UnorderedDoubleLinkedList<Integer> listagemDePessoas() throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion{
         
         
@@ -184,23 +192,17 @@ public class GestaoHotel {
                 }
             }
             
-            /**JSONArray jsonLigacoes = (JSONArray) jsonObject.get("ligacoes");
+            JSONArray jsonLigacoes = (JSONArray) jsonObject.get("ligacoes");
 
             for (Object ligacoes : jsonLigacoes) {
 
-                Divisao coneccao = new Divisao((String) ligacoes);
-                this.divisoesHotel.addVertex(coneccao);
-                this.atualizaPesos(divisao, coneccao);
-            }*/
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
-        } catch (ParseException ex) {
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException ex) {
+               //var coneccao = new Divisao((String) ligacoes);
+                this.divisoesHotel.addVertex(new Divisao((String) ligacoes));
+                this.atualizaPesos(divisao, new Divisao((String) ligacoes));
             }
-        }
+        } catch (FileNotFoundException ex) {
+        } catch (IOException | ParseException ex) {
+        } 
 
     }
     

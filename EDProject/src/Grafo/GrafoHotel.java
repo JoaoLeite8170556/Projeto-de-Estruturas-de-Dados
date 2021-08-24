@@ -30,7 +30,7 @@ public class GrafoHotel<T> extends GraphWeight<T>{
     
     /**
      * Este método permite obter todos os vertices adjacentes de determinado
-     * vertice 
+     * vertice.
      * @param vertex vertice na qual queremos obter os vertices vizinhos
      * @return lista de vertices adjacentes
      */
