@@ -26,13 +26,12 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
-       GestaoHotel hotel = new GestaoHotel("../mapa.json");
+       GestaoHotel hote = new GestaoHotel("../mapa.json");
        
-       Iterator itr = hotel.listagemDePessoas().iterator();
-       
+       Iterator itr = hote.listagemDePessoas().iterator();
        
        while(itr.hasNext()){
-           System.out.println(itr.next().toString());
+           System.out.println(itr.next());
        }
         
     }

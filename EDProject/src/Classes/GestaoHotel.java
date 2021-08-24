@@ -126,7 +126,7 @@ public class GestaoHotel {
             
             Movimentos move = (Movimentos) itr.next();
             
-           if(lista.contains(move.getIdPessoa())){
+           if(!lista.contains(move.getIdPessoa())){
                lista.addToRear(move.getIdPessoa());
            }
                    
