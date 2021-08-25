@@ -10,13 +10,19 @@ import static Classes.JSONHotel.getNumeroDeDivisoes;
 import Colecoes.*;
 import Enumerações.Tipo;
 import Enumerações.TipoSala;
+import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
 import Grafo.GrafoHotel;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -38,8 +44,7 @@ public class GestaoHotel {
     private DoubleLinkedOrderedList<Movimentos> movimentosPessoas;
     private GrafoHotel<Divisao> divisoesHotel;
     private String pathFile;
-    
-
+    private JSONMovimentos movimentos;
     /**
      * Metodo construtor para criar uma GestaoHotel
      *
@@ -50,9 +55,9 @@ public class GestaoHotel {
         this.nomeHotel = null;
         this.pathFile = pathFile;
         this.listaDePessoas = new UnorderedArrayList<Pessoa>();
-        this.movimentosPessoas = new DoubleLinkedOrderedList<Movimentos>();
         this.divisoesHotel = new GrafoHotel<Divisao>(getNumeroDeDivisoes(this.nomeHotel));
-        
+        this.movimentos = new JSONMovimentos("../movimentos.json");    
+        this.movimentosPessoas=this.movimentos.readFileMovimentos();
     }
 
     /**
@@ -247,8 +252,6 @@ public class GestaoHotel {
             }
         }
     }
-    
-    
 
     public UnorderedArrayList<Pessoa> getListaDePessoas() {
         return listaDePessoas;
@@ -268,6 +271,55 @@ public class GestaoHotel {
 
     public GrafoHotel<Divisao> getDivisoes() {
         return divisoesHotel;
+    }
+    
+    public DoubleLinkedOrderedList<Movimentos> listaDeContactos(int date) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, ElementNonComparable{
+        
+        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<>();
+        
+        SimpleDateFormat formater = new SimpleDateFormat("HH");
+        
+        Date dataFormatada = formater.parse();
+        
+        Date now = new Date();
+        
+        Iterator itr = this.movimentosPessoas.iterator();
+        
+        while(itr.hasNext()){
+            Movimentos movimentos = (Movimentos) itr.next();
+            
+            if(TimeUnit.MILLISECONDS.toHours(now.getTime() - date){
+                listaDeMovimentos.add(movimentos);
+            }
+        }
+        return listaDeMovimentos;
+    }
+    
+    
+    public int escolheDataHora(){
+        
+        int hora = 0;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introduza a Hora na qual quer pesquisar!!!!"+"\n\n");
+       
+        /*System.out.println("Introduza o ano: "+"\n");
+        String yyyy = scanner.nextLine();
+        System.out.println("Ano Introduzido: "+yyyy+"\n");
+        System.out.println("Introduza o Mes: "+"\n");
+        String MM = scanner.nextLine();
+        System.out.println("Mês introduzido: "+MM+"\n");
+        System.out.println("Introduza o Dia: "+"\n");
+        String dd = scanner.nextLine();
+        System.out.println("Dia introduzido: "+dd+"\n");*/
+        System.out.println("Introduza a Hora: "+"\n");
+        int HH = scanner.nextInt();
+        System.out.println("Hora introduzido: "+HH+"\n");
+        /*System.out.println("Introduza o Minutos: "+"\n");
+        String mm = scanner.nextLine();
+        System.out.println("Hora introduzido: "+mm+"\n");*/
+        
+        
+        return hora = HH;
     }
     
     /**

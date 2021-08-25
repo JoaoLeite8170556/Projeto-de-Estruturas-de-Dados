@@ -28,13 +28,15 @@ public class NewMain {
        
        hote.loadMapaHotel();
        
+       //Iterator itr1 = hote.getMovimentosPessoas().iterator();
        
-       Iterator itr = hote.getDivisoes().getTodasDivisoes().iterator();
+        
+       Iterator itr = hote.listaDeContactos(hote.escolheDataHora()).iterator();
        
-        System.out.println(hote.getDivisoes().toString());
-       /**while(itr.hasNext()){
+        
+       while(itr.hasNext()){
            System.out.println(itr.next().toString());
-       }**/
+       }
         
     }
     

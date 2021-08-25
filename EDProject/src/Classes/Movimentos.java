@@ -31,10 +31,10 @@ public class Movimentos implements Comparable{
         this.dataHora = this.dataFormater.format(this.dataHoraAtual);
     }
 
-    public Movimentos(int idPessoa, String nomeDivisao, String dataHora) {
+    public Movimentos(int idPessoa, String nomeDivisao, Date dataHoraAtual) {
         this.idPessoa = idPessoa;
         this.nomeDivisao = nomeDivisao;
-        this.dataHora = dataHora;
+        this.dataHoraAtual = dataHoraAtual;
     }
     
     public int getIdPessoa() {
@@ -57,12 +57,12 @@ public class Movimentos implements Comparable{
     @Override
     public int compareTo(Object obj) {
         Movimentos movimentos = (Movimentos) obj;
-        
-        if (getIdPessoa() > movimentos.getIdPessoa() && (getDataHora().compareTo(movimentos.getDataHora())>1)){
+
+        if (getDataHoraAtual().compareTo(movimentos.dataHoraAtual) == 1 && getIdPessoa() > movimentos.getIdPessoa()) {
             return 1;
         } else {
-            if (getIdPessoa() < movimentos.getIdPessoa() && (getDataHora().compareTo(movimentos.getDataHora())<1)){
-                return -1;
+            if (getDataHoraAtual().compareTo(movimentos.dataHoraAtual) == -1 && getIdPessoa() < movimentos.getIdPessoa()) {
+                return 1;
             } else {
                 return 0;
             }
@@ -71,7 +71,7 @@ public class Movimentos implements Comparable{
 
     @Override
     public String toString() {
-        return "idPessoa:" + this.idPessoa + "\n" + "Divisão:" + this.nomeDivisao + "\n" +"DataHora:" + this.dataHora + "\n";
+        return "idPessoa:" + this.idPessoa + "\n" + "Divisão:" + this.nomeDivisao + "\n" +"DataHora:" + this.dataHoraAtual + "\n";
     }
     
     
