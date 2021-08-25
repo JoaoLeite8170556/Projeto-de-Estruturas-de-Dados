@@ -1,7 +1,7 @@
-
 package Classes;
 
 import Colecoes.UnorderedDoubleLinkedList;
+import Enumerações.TipoSala;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -12,17 +12,17 @@ import java.util.Objects;
  */
 public class Divisao {
     private String nome;
-    private boolean salaQuarentena;
-    private boolean reservado;
+    private TipoSala tipoSala;
+    
     /**
      * Lotação Máxima de cada Divisão
      */
     private int capacidadeMaxima;
     private UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
 
-    public Divisao(String nome,boolean reservado) {
+    public Divisao(String nome,TipoSala tipoSala) {
         this.nome = nome;
-        this.reservado = reservado;
+        this.tipoSala = tipoSala;
         this.capacidadeMaxima = 0;
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
         
@@ -34,6 +34,12 @@ public class Divisao {
         this.capacidadeMaxima = 0;
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
     }
+
+    public Divisao() {
+        
+    }
+    
+    
     
     @Override
     public int hashCode() {
@@ -85,22 +91,14 @@ public class Divisao {
         return nome;
     }
 
-    public boolean getSalaQuarentena() {
-        return salaQuarentena;
+    public TipoSala getTipoSala() {
+        return tipoSala;
     }
 
-    public boolean getReservado() {
-        return reservado;
+    public void setTipoSala(TipoSala tipoSala) {
+        this.tipoSala = tipoSala;
     }
 
-    public void setSalaQuarentena(boolean salaQuarentena) {
-        this.salaQuarentena = salaQuarentena;
-    }
-
-    public void setReservado(boolean reservado) {
-        this.reservado = reservado;
-    }
-    
     public int getNumeroPessoas(){
         return this.listaDePessoas.size();
     }
@@ -111,8 +109,18 @@ public class Divisao {
 
     @Override
     public String toString() {
-        return "Divisão: " + this.nome + "\t" +"Lotação Máxima: " + this.capacidadeMaxima + "\n"+
-                "Lotação Atual: "+this.listaDePessoas.size()+"\n";
+        
+        String msm = "";
+
+        if(getTipoSala()==this.tipoSala.QUARENTENA || getTipoSala()==this.tipoSala.RESERVADO){
+            msm = "Divisão: " + this.nome + "\t" +"Lotação Máxima: " + this.capacidadeMaxima + "\n"+
+                        "Lotação Atual: "+this.listaDePessoas.size()+"\n"+
+                "Tipo de Divisão: "+ this.tipoSala+"\n";
+        }else{
+             msm = "Divisão: " + this.nome + "\t" +"Lotação Máxima: " + this.capacidadeMaxima + "\n"+
+                        "Lotação Atual: "+this.listaDePessoas.size()+"\n";
+        }
+        return msm;
     }
     
     

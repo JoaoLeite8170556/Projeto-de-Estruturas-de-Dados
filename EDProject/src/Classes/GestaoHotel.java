@@ -9,6 +9,7 @@ import static Classes.JSONHotel.getNumeroDeDivisoes;
 
 import Colecoes.*;
 import Enumerações.Tipo;
+import Enumerações.TipoSala;
 import Excepcoes.EmptyExcpetion;
 import Grafo.GrafoHotel;
 import java.io.FileNotFoundException;
@@ -178,13 +179,13 @@ public class GestaoHotel {
 
                 nomeDivisao = ((JSONObject) divisoes).get("nome").toString();
                 lotacao = Integer.parseInt(((JSONObject) divisoes).get("lotacao").toString());
-                if (jsonObject.containsKey("quarentena")) {
-                    boolean quarentena = Boolean.parseBoolean(((JSONObject) divisoes).get("quarentena").toString());
-                    this.divisoesHotel.addVertex(divisao = new Divisao(nomeDivisao ,quarentena));
+ 
+
+                if (((JSONObject) divisoes).containsKey("quarentena")){
+                    this.divisoesHotel.addVertex(divisao = new Divisao(nomeDivisao, TipoSala.QUARENTENA));
                     divisao.setCapacidadeMaxima(lotacao);
-                } else if (jsonObject.containsKey("reservado")) {
-                    boolean reservado = Boolean.parseBoolean(((JSONObject) divisoes).get("reservado").toString());
-                    this.divisoesHotel.addVertex(divisao = new Divisao(nomeDivisao,reservado));
+                } else if (((JSONObject) divisoes).containsKey("reservado")) {
+                    this.divisoesHotel.addVertex(divisao = new Divisao(nomeDivisao, TipoSala.RESERVADO));
                     divisao.setCapacidadeMaxima(lotacao);
                 } else {
                     this.divisoesHotel.addVertex(divisao = new Divisao(nomeDivisao));
@@ -199,6 +200,7 @@ public class GestaoHotel {
                 this.divisoesHotel.addEdge(findDivision(edge.get(0).toString()),
                         findDivision(edge.get(1).toString()), 1);
             }
+            
         } catch (FileNotFoundException ex) {
         } catch (IOException | ParseException ex) {
         } 
@@ -211,12 +213,42 @@ public class GestaoHotel {
      * @param divisaoDestino divisão destino
      */
     private void atualizaPesos(Divisao divisaoInicial, Divisao divisaoDestino){
-        if(!this.divisoesHotel.estaConectado(divisaoInicial, divisaoDestino)){
-            this.divisoesHotel.addEdge(divisaoInicial, divisaoDestino, 0);
+        
+        Iterator itr_divisaoDestino = 
+                this.divisoesHotel.getVerticesAdjacentes(divisaoDestino);
+        Iterator itr_divisaoInicial = 
+                this.divisoesHotel.getVerticesAdjacentes(divisaoInicial); 
+        
+        while(itr_divisaoDestino.hasNext()){
+            
+            Divisao aux_divisaoDestino = (Divisao)itr_divisaoDestino.next();
+           
+            if(aux_divisaoDestino!=divisaoInicial){
+               
+                this.divisoesHotel.setEdgeWeight(aux_divisaoDestino, 
+                        divisaoDestino,
+                        this.divisoesHotel.getEdgeWeight(aux_divisaoDestino,
+                                divisaoDestino)+1);
+                
+            }
         }
         
-        this.divisoesHotel.addEdge(divisaoInicial, divisaoDestino, divisaoInicial.getNumeroPessoas());
+        while(itr_divisaoInicial.hasNext()){
+            
+            Divisao aux_divisaoInicial = (Divisao)itr_divisaoInicial.next();
+           
+            if(aux_divisaoInicial!=divisaoDestino){
+               
+                this.divisoesHotel.setEdgeWeight(aux_divisaoInicial, 
+                        divisaoDestino,
+                        this.divisoesHotel.getEdgeWeight(aux_divisaoInicial,
+                                divisaoDestino)-1);
+                
+            }
+        }
     }
+    
+    
 
     public UnorderedArrayList<Pessoa> getListaDePessoas() {
         return listaDePessoas;
@@ -271,6 +303,51 @@ public class GestaoHotel {
             }
         }
         return null;
+    }
+    /**
+     * Este método vai permitir guardar pessoas nas divisão analisando certas variaveis
+     * como tipo de sala que esta a entrar ou tipo de pessoa que é.
+     * @param pessoa pessoa que vai ser mover para a divisão.
+     * @param divisao a divisao.
+     */
+    public void verificaTipoPessoa(Pessoa pessoa, Divisao divisao){
+
+        Iterator itr = divisao.getListaDePessoas().iterator();
+
+        while(itr.hasNext()){
+            if(divisao.getTipoSala().equals("RESERVADO") && pessoa.getTipo().equals("FUNCIONARIO") && verificaLotacao(divisao)==0){
+                divisao.getListaDePessoas().addToRear(pessoa);
+            }else if(divisao.getListaDePessoas().equals("QUARENTENA") && pessoa.getTipo().equals("HOSPEDE") && verificaLotacao(divisao)==0){
+                divisao.getListaDePessoas().addToRear(pessoa);
+            }else if(!divisao.getListaDePessoas().equals("QUARENTENA") && !divisao.getListaDePessoas().equals("RESERVADO") && verificaLotacao(divisao)==1){
+                divisao.getListaDePessoas().addToRear(pessoa);
+            }else{
+                System.out.println("IMPOSSÍVEL!!!! Não pode entrar!!!!");
+            }
+        }
+    }
+    
+    /**
+     * Este método vai possibilitar a lotação da divisão chegar ao limite apresenta a seguinte mensagem
+     * @param divisao a divisão em causa.
+     */
+    public void alertaLotacao(Divisao divisao){
+        if(verificaLotacao(divisao)==0){
+            System.out.println("Atingiu limite da Divisão, não pode entrar.");
+        }
+    }
+    /**
+     * Metodo que verifica se a lotacao atual da divisao ja atingiu a lotacao máxima
+     * @param divisao a divisao na qual vamos fazer a verificação
+     * @return retorna 1 se a lotação estiver OK, 0 se atingir o máximo
+     */
+    private int verificaLotacao(Divisao divisao){
+
+        if(divisao.getListaDePessoas().size() < divisao.getNumeroPessoas()){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     @Override
