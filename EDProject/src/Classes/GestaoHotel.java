@@ -268,6 +268,15 @@ public class GestaoHotel {
         }
         return null;
     }
+    
+    /**
+     * Este metodo vai verificar a lotacao atual de uma determinada Divisao.
+     * @param divisao a divisao, na qual queremos aceder 
+     * @return true se o o n
+     */
+    public boolean verificaLotacaoAtual(Divisao divisao){
+        return (divisao.getListaDePessoas().size() <= divisao.getNumeroPessoas());
+    }
     /**
      * Este método vai permitir guardar pessoas nas divisão analisando certas variaveis
      * como tipo de sala que esta a entrar ou tipo de pessoa que é.
