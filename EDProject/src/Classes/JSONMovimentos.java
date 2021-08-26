@@ -16,7 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 /**
- * Classe para fazer import e export dos dados dos movimentos efetuados
+ * Classe para fazer import e export dos dados dos movimentos efetuados.
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */

@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -206,35 +208,7 @@ public class GestaoHotel {
         }
         return listaDeMovimentos;
     }
-    
-    
-    
-    
-    
-    /*public int escolheDataHora(){
-        
-        int hora = 0;
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Introduza a Hora na qual quer pesquisar!!!!"+"\n\n");
-       
-        /*System.out.println("Introduza o ano: "+"\n");
-        String yyyy = scanner.nextLine();
-        System.out.println("Ano Introduzido: "+yyyy+"\n");
-        System.out.println("Introduza o Mes: "+"\n");
-        String MM = scanner.nextLine();
-        System.out.println("Mês introduzido: "+MM+"\n");
-        System.out.println("Introduza o Dia: "+"\n");
-        String dd = scanner.nextLine();
-        System.out.println("Dia introduzido: "+dd+"\n");
-        System.out.println("Introduza a Hora: "+"\n");
-        int HH = scanner.nextInt();
-        System.out.println("Hora introduzido: "+HH+"\n");
-        /*System.out.println("Introduza o Minutos: "+"\n");
-        String mm = scanner.nextLine();
-        System.out.println("Hora introduzido: "+mm+"\n");
-
-        return hora = HH;
-    }*/
+   
     
     /**
      * Este metodo vai procurar uma pessoa inscritos no Hotel 
@@ -251,6 +225,30 @@ public class GestaoHotel {
             }
         }
         return null;
+    }
+    
+    /**
+     * Este método vai adicionar uma pessoa na Divisao para qual ela se moveu.
+     * @param Divisao a divisao onde ela vai
+     * @param pessoa  a pessoa que se moveu para la
+     */
+    public void addPessoaEmDivisao(String Divisao,Pessoa pessoa){
+        Divisao auxDivisao = findDivision(Divisao);
+        auxDivisao.getListaDePessoas().addToRear(pessoa);
+    }
+    
+    
+    /**
+     * Este método vai remover uma pessoa quando ele sair da divisão.
+     * @param Divisao Divisão
+     * @param pessoa pessoa
+     */
+    public void removePessoaEmDivisao(String Divisao, Pessoa pessoa){
+        Divisao auxDivisao = findDivision(Divisao);
+        
+        try {
+            auxDivisao.getListaDePessoas().remove(pessoa);
+        } catch (EmptyExcpetion ex){}
     }
     
      /**
@@ -309,23 +307,26 @@ public class GestaoHotel {
      */
     private int verificaLotacao(Divisao divisao){
 
-        if(divisao.getListaDePessoas().size() < divisao.getNumeroPessoas()){
+        if(divisao.getListaDePessoas().size() <= divisao.getNumeroPessoas()){
             return 1;
         }else{
             return 0;
         }
     }
-
+    /**
+     * Este método vai possibilitar mostrar as divisões adjacentes 
+     * @param divisao a divisao na qual queremos obter as divisões adjacentes
+     */
     public void imprimeDivisoesAdjacentes(Divisao divisao){
          Iterator itr_divisoes = 
                 this.divisoesHotel.getVerticesAdjacentes(divisao);
-        
-        System.out.println("Divisoes Adjacentes: \n");
+        int contador =1;
+        System.out.println("Divisoes Adjacentes: " + divisao.getNome()+"\n");
         while(itr_divisoes.hasNext()){
             
             Divisao aux_divisao = (Divisao)itr_divisoes.next();
             
-            System.out.println("->" + aux_divisao.getNome() + "\n");
+            System.out.println("->"+" "+contador++ + " -" +" "+ aux_divisao.getNome() + "\n");
         }
     }
     

@@ -29,7 +29,7 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
-       GestaoHotel hote = new GestaoHotel("C://Users//celio//OneDrive//Ambiente de Trabalho//universidade//2ºano//1º Semestre//Estruturas de Dados//trabalho final época especial//ED_EpocaEspecial//Hoteis//mapa.json");
+       GestaoHotel hote = new GestaoHotel("D://Users//joao-//OneDrive - Instituto Politécnico do Porto//Ambiente de Trabalho//ED_EpocaEspecial//Hoteis//mapa.json");
        
        hote.loadMapaHotel();
        
@@ -40,31 +40,7 @@ public class NewMain {
        
         Divisao div1 = new Divisao("Hall de entrada");
         hote.imprimeDivisoesAdjacentes(div1);
-       /*while(itr.hasNext()){
-           System.out.println(itr.next().toString());
-       }*/
        
-       
-       /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        System.out.println("Current Date " + dateFormat.format(date));
-
-        // Convert Date to Calendar
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-
-        // Perform addition/subtraction
-        //c.add(Calendar.YEAR, 2);
-        //c.add(Calendar.MONTH, 1);
-        //c.add(Calendar.DATE, -10);
-        c.add(Calendar.HOUR, -4);
-        //c.add(Calendar.MINUTE, 30);
-        //c.add(Calendar.SECOND, 50);
-
-        // Convert calendar back to Date
-        Date currentDatePlusOne = c.getTime();
-
-        System.out.println("Updated Date " + dateFormat.format(currentDatePlusOne));*/
        
         
     }
