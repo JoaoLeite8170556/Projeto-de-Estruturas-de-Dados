@@ -16,17 +16,10 @@ import Grafo.GrafoHotel;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -63,94 +56,7 @@ public class GestaoHotel {
         this.movimentosPessoas=this.movimentos.readFileMovimentos();
     }
 
-    /**
-     * Este metodo vai possibilitar a adição de Hospede
-     */
-    public void inserirHospede() {
-        System.out.println("Insira um Hospede no Sistema!!!");
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Introduza o nome:");
-        String nomePessoa = scanner.nextLine();
-
-        this.listaDePessoas.addToRear(new Pessoa(nomePessoa, Tipo.HOSPEDE));
-
-    }
-
-    /**
-     * Este metodo vai possibilitar a adição de Funcionario
-     */
-    public void inserirFuncionario() {
-        System.out.println("Insira um Funcionario no Sistema!!!");
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Introduza o nome: ");
-        String nomePessoa = scanner.nextLine();
-
-        this.listaDePessoas.addToRear(new Pessoa(nomePessoa, Tipo.FUNCIONARIO));
-
-    }
-    
-    /**
-     * Este método vai imprimir todos os Hospedes inseridos no Hotel
-     */
-    public void imprimeHospedes(){
-        Iterator<Pessoa> itr = this.listaDePessoas.iterator();
-        
-        while(itr.hasNext()){
-            if(itr.next().getTipo()== Tipo.HOSPEDE){
-                System.out.println(itr.next().toString());
-            }
-        }
-        
-    }
-    
-    /**
-     * Este método vai imprimir todos os Funcionarios no Hotel
-     */
-    public void imprimeFuncionarios(){
-        Iterator<Pessoa> itr = this.listaDePessoas.iterator();
-        
-        while(itr.hasNext()){
-            if(itr.next().getTipo()== Tipo.FUNCIONARIO){
-                System.out.println(itr.next().toString());
-            }
-        }
-        
-    }
-    
-    /**
-     * Este metodo vai permitir retornar a listagem de todas as pessoas que estão no hotel;
-     * @return a losta com todas as pessoas
-     * @throws IOException
-     * @throws FileNotFoundException
-     * @throws ParseException
-     * @throws java.text.ParseException
-     * @throws EmptyExcpetion 
-     */
-    public UnorderedDoubleLinkedList<Integer> listagemDePessoas() throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion{
-        
-        
-        UnorderedDoubleLinkedList<Integer> lista = new UnorderedDoubleLinkedList<Integer>();
-        JSONMovimentos jsonMovimentos = new JSONMovimentos("../movimentos.json");
-        
-        DoubleLinkedOrderedList<Movimentos> allMovimentos = jsonMovimentos.readFileMovimentos();
-        
-        
-        Iterator itr = allMovimentos.iterator();
-        
-        while(itr.hasNext()){
-            
-            Movimentos move = (Movimentos) itr.next();
-            
-           if(!lista.contains(move.getIdPessoa())){
-               lista.addToRear(move.getIdPessoa());
-           }
-                   
-        }
-        
-        return lista;
-    }
+   
     /**
      * Este método vai possibilitar estruturar o grafo conforme o ficheiro JSON
      */
@@ -410,6 +316,19 @@ public class GestaoHotel {
         }
     }
 
+    public void imprimeDivisoesAdjacentes(Divisao divisao){
+         Iterator itr_divisoes = 
+                this.divisoesHotel.getVerticesAdjacentes(divisao);
+        
+        System.out.println("Divisoes Adjacentes: \n");
+        while(itr_divisoes.hasNext()){
+            
+            Divisao aux_divisao = (Divisao)itr_divisoes.next();
+            
+            System.out.println("->" + aux_divisao.getNome() + "\n");
+        }
+    }
+    
     @Override
     public String toString() {
         return "GestaoHotel{" + "versao=" + versao + ", nomeHotel=" + nomeHotel + ", divisoesHotel=" + divisoesHotel + '}';

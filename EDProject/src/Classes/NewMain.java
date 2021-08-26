@@ -38,10 +38,11 @@ public class NewMain {
         
        Iterator itr = hote.listaDeContactos(5).iterator();
        
-        
-       while(itr.hasNext()){
+        Divisao div1 = new Divisao("Hall de entrada");
+        hote.imprimeDivisoesAdjacentes(div1);
+       /*while(itr.hasNext()){
            System.out.println(itr.next().toString());
-       }
+       }*/
        
        
        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
