@@ -17,6 +17,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -151,7 +154,7 @@ public class GestaoHotel {
     /**
      * Este método vai possibilitar estruturar o grafo conforme o ficheiro JSON
      */
-    public void loadMapaHotel() {
+    public void loadMapaHotel(){
 
         FileReader reader = null;
         try {
@@ -273,22 +276,25 @@ public class GestaoHotel {
         return divisoesHotel;
     }
     
+    /**
+     * Este método vai permitir retornar todos os movimentos efetuados nas ultimas 
+     * X horas
+     * @param date o número de horas na qual queremos ter os movimentos
+     * @return uma listas com todos os movimentos.
+     */
     public DoubleLinkedOrderedList<Movimentos> listaDeContactos(int date) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, ElementNonComparable{
         
-        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<>();
-        
-        SimpleDateFormat formater = new SimpleDateFormat("HH");
-        
-        Date dataFormatada = formater.parse();
-        
-        Date now = new Date();
-        
-        Iterator itr = this.movimentosPessoas.iterator();
-        
-        while(itr.hasNext()){
-            Movimentos movimentos = (Movimentos) itr.next();
+        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<Movimentos>();
+       
+        Calendar c = Calendar.getInstance(); // data e hora atual
+       
+        c.add(Calendar.HOUR, -date); // vou retirar as X horas
             
-            if(TimeUnit.MILLISECONDS.toHours(now.getTime() - date){
+        Date updateDate = c.getTime(); // Guardar num objeto Date a subtração feita
+       
+        for (Movimentos movimentos : this.movimentosPessoas) {
+
+            if(movimentos.getDataHoraAtual().compareTo(updateDate)==1){
                 listaDeMovimentos.add(movimentos);
             }
         }
@@ -296,7 +302,10 @@ public class GestaoHotel {
     }
     
     
-    public int escolheDataHora(){
+    
+    
+    
+    /*public int escolheDataHora(){
         
         int hora = 0;
         Scanner scanner = new Scanner(System.in);
@@ -310,17 +319,16 @@ public class GestaoHotel {
         System.out.println("Mês introduzido: "+MM+"\n");
         System.out.println("Introduza o Dia: "+"\n");
         String dd = scanner.nextLine();
-        System.out.println("Dia introduzido: "+dd+"\n");*/
+        System.out.println("Dia introduzido: "+dd+"\n");
         System.out.println("Introduza a Hora: "+"\n");
         int HH = scanner.nextInt();
         System.out.println("Hora introduzido: "+HH+"\n");
         /*System.out.println("Introduza o Minutos: "+"\n");
         String mm = scanner.nextLine();
-        System.out.println("Hora introduzido: "+mm+"\n");*/
-        
-        
+        System.out.println("Hora introduzido: "+mm+"\n");
+
         return hora = HH;
-    }
+    }*/
     
     /**
      * Este metodo vai procurar uma pessoa inscritos no Hotel 
