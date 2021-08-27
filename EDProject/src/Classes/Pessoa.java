@@ -4,9 +4,6 @@
  * and open the template in the editor.
  */
 package Classes;
-
-import Colecoes.DoubleLinkedOrderedList;
-import Colecoes.UnorderedDoubleLinkedList;
 import Enumerações.Tipo;
 
 /**
@@ -21,12 +18,10 @@ public class Pessoa {
     
     private static int incremento = 0;
     private int id;
-    private String nome;
     private Tipo tipo;
 
     public Pessoa(String nome, Tipo tipo) {
         this.id= incremento++;
-        this.nome = nome;
         this.tipo = tipo;
     }
     
@@ -34,13 +29,6 @@ public class Pessoa {
         this.id = incremento++;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public Tipo getTipo() {
         return tipo;
@@ -56,7 +44,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "ID Pessoa: " + this.id + "\n" + "Nome: " + this.nome + "\n" +"Tipo: " + this.tipo + "\n";
+        return "ID Pessoa: " + this.id +"\n" +"Tipo: " + this.tipo + "\n";
     }
     
     

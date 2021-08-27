@@ -9,9 +9,6 @@ import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 import java.util.Iterator;
 
@@ -29,7 +26,7 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
-       GestaoHotel hote = new GestaoHotel("D://Users//joao-//OneDrive - Instituto Politécnico do Porto//Ambiente de Trabalho//ED_EpocaEspecial//Hoteis//mapa.json");
+       GestaoHotel hote = new GestaoHotel("../Hoteis/mapa.json");
        
        hote.loadMapaHotel();
        

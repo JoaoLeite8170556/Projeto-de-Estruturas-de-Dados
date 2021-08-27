@@ -8,17 +8,9 @@ package Classes;
 import Colecoes.UnorderedArrayList;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 
 /**
  * Classe para tratarmos dos menus do Programa.
@@ -34,13 +26,13 @@ public final class Menu {
      * Este método vai retornar todos os Hoteis da pasta Hoteis
      * @return iterador com a lista de mapas presentes na pasta "./Hoteis"
      */
-    private Iterator arrayDeHoteis() {
+    /*private Iterator arrayDeHoteis() {
 
         UnorderedArrayList<Hotel> hoteis = new UnorderedArrayList<Hotel>();
 
-        File directoryPath = new File("D://Users//joao-//OneDrive - Instituto Politécnico do Porto//Ambiente de Trabalho//ED_EpocaEspecial//Hoteis");
+        File directoryPath = new File("../Hoteis");
 
-        FileFilter textFileFilter = new FileFilter() {
+        FileFilter textFileFilter = new FileFilter(){
             @Override
             public boolean accept(File file) {
                 boolean isFile = file.isFile();
@@ -62,7 +54,7 @@ public final class Menu {
 
         }
         return hoteis.iterator();
-    }
+    }*/
     
    
     Menu(){
@@ -97,7 +89,7 @@ public final class Menu {
     }
  
     /**
-     * Metodo que vai permitir escolher o hotel para a nossa aplicação
+     * Método que vai permitir escolher o hotel para a nossa aplicação
      * @param escolhaHotel o numero a que o hotel corresponde
      * @return o nome do hotel escolhido
      */
@@ -122,9 +114,9 @@ public final class Menu {
     
     /**
      * Este metodo vai imprimir todos os hoteis e retornar o seu número
-     * @return numero de hoteis
+     * @return número de hoteis
      */
-    public int mostraHoteis(){
+    private int mostraHoteis(){
         Iterator itr = arrayDeHoteis();
         int num = 1;
         

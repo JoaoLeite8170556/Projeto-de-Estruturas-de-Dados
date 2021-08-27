@@ -108,22 +108,9 @@ public class JSONMovimentos {
         return lista;
     }
     
-    /**
-     * Metodo que vai retornar a divisão atual de determinada pessao
-     * @param idPessoa identificação da pessoa
-     * @return retorna o nome da divisão ou null
-     */
-    public String divisaoAtual(int idPessoa){
-        try {
-            return movimentosPessoa(idPessoa).first().getNomeDivisao();
-        } catch (EmptyExcpetion ex) {
-            Logger.getLogger(JSONMovimentos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    
+    public void escreveMovimentosJson(DoubleLinkedOrderedList<Movimentos> listaDeMovimentos){
+        
     }
-    
-    
-    
-    
-     
+   
 }

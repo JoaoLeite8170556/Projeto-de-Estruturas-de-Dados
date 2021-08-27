@@ -35,9 +35,7 @@ public class Divisao {
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
     }
 
-    public Divisao() {
-        
-    }
+    public Divisao() {}
     
     
     
