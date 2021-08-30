@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Classes;
-
+import Colecoes.*;
 import java.io.File;
 import java.util.Iterator;
 import org.json.simple.JSONArray;
@@ -21,38 +21,54 @@ public class Export {
 
 
     public Export(){
-
+        
     }
     
     
-    public void escreveMovimentosJSON(){
-        String movimentosPath = "movimentos.json";
+    public void escreveMovimentosJSON(DoubleLinkedOrderedList<JSONMovimentos> listaDeMovimentos){
         
-        File file = new File(movimentosPath);
+        JSONObject jsonObject = new JSONObject();
         
-        JSONObject hotel = new JSONObject();
-        JSONArray movimentosArray = new JSONArray();
+        JSONArray array = new JSONArray();
         
-        hotel.put("nomeHotel", this.hotel.getNomeHotel());
-        hotel.put("versao",this.hotel.getVersao());
-        
-        Iterator itr = this.hotel.getMovimentosHotel().iterator();
+        Iterator<JSONMovimentos> itr = listaDeMovimentos.iterator();
         
         while(itr.hasNext()){
-            JSONObject movimentosJSON = new JSONObject();
-            
-            Movimentos movimentos = (Movimentos) itr.next();
-            
-            movimentosJSON.put("idPessoa",movimentos.getIdPessoa());
-            movimentosJSON.put("divisao", movimentos.getNomeDivisao());
-            movimentosJSON.put("dataHora",movimentos.getDataHoraAtual());
-            
-            movimentosArray.add(movimentosJSON);
+            array.add((jsonMovimentos(itr.next())));
         }
         
-        hotel.put("movimentos",movimentosArray);
+        jsonObject.put("movimentosHoteis",array);
         
+        try{
+            FileW
+        }
+    }
+    
+    
+    /**
+     * Metodo que estrutura 
+     * @param movimentos
+     * @return 
+     */
+    private JSONObject jsonMovimentos(JSONMovimentos movimentos){
         
+        JSONObject jsonMovimentos = new JSONObject();
+        
+        jsonMovimentos.put("nome", movimentos.getNomeHotel());
+        
+        jsonMovimentos.put("versao", movimentos.getVersao());
+        
+        JSONArray jsonListaMovimentos = new JSONArray();
+        
+        Iterator itr = movimentos.getMovimentos().iterator();
+        
+        while(itr.hasNext()){
+            jsonListaMovimentos.add(itr.next());
+        }
+        
+        jsonMovimentos.put("movimentos", jsonListaMovimentos);
+        
+        return jsonMovimentos;
     }
      
     

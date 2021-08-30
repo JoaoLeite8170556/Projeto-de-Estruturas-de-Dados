@@ -38,12 +38,13 @@ import org.json.simple.parser.ParseException;
 public class Hotel {
 
     private final UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
+    private String pathFile;
     private int versao;
     private String nomeHotel;
     private DoubleLinkedOrderedList<Movimentos> movimentosHotel;
     private GrafoHotel<Divisao> divisoesHotel;
-    private String pathFile;
-    //private JSONMovimentos movimentos;
+    private JSONMovimentos jsonMovimentos;
+    private DoubleLinkedOrderedList<JSONMovimentos> listaMovimentos;
 
     /**
      * Método construtor para criar uma GestaoHotel
@@ -54,8 +55,11 @@ public class Hotel {
         this.versao = 0;
         this.nomeHotel = null;
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
+        this.pathFile = pathFile;
         this.divisoesHotel = new GrafoHotel<Divisao>(getNumeroDeDivisoes(this.nomeHotel));
         this.movimentosHotel = new DoubleLinkedOrderedList<>();
+        this.jsonMovimentos = new JSONMovimentos(this.nomeHotel, this.versao, this.movimentosHotel);
+        this.listaMovimentos = new DoubleLinkedOrderedList<>();
     }
 
     /**
