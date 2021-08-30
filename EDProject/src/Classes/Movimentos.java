@@ -17,6 +17,7 @@ import java.util.Date;
  * @author Celio Macedo Nº 8170358
  */
 public class Movimentos implements Comparable{
+    
     private int idPessoa;
     private String nomeDivisao;
     private SimpleDateFormat dataFormater;

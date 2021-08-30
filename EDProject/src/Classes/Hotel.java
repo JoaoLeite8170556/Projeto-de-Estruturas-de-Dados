@@ -11,13 +11,18 @@ import Enumerações.TipoSala;
 import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
 import Grafo.GrafoHotel;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.*;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -35,10 +40,10 @@ public class Hotel {
     private final UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
     private int versao;
     private String nomeHotel;
-    private DoubleLinkedOrderedList<Movimentos> movimentosPessoas;
+    private DoubleLinkedOrderedList<Movimentos> movimentosHotel;
     private GrafoHotel<Divisao> divisoesHotel;
     private String pathFile;
-    private JSONMovimentos movimentos;
+    //private JSONMovimentos movimentos;
 
     /**
      * Método construtor para criar uma GestaoHotel
@@ -50,8 +55,7 @@ public class Hotel {
         this.nomeHotel = null;
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
         this.divisoesHotel = new GrafoHotel<Divisao>(getNumeroDeDivisoes(this.nomeHotel));
-        this.movimentos = new JSONMovimentos("../movimentos.json");
-        this.movimentosPessoas = this.movimentos.readFileMovimentos();
+        this.movimentosHotel = new DoubleLinkedOrderedList<>();
     }
 
     /**
@@ -121,7 +125,7 @@ public class Hotel {
     }
 
     /**
-     * Método para calcular o número de Divisões no Array
+     * Método para calcular o número de Divisões que estão no file JSON
      *
      * @param nomeDivisao nome da Divisão
      * @return retorna o número de Divisões
@@ -185,7 +189,11 @@ public class Hotel {
             }
         }
     }
-
+    
+   
+    
+    
+    
     public UnorderedDoubleLinkedList<Pessoa> getListaDePessoas() {
         return listaDePessoas;
     }
@@ -198,40 +206,18 @@ public class Hotel {
         return nomeHotel;
     }
 
-    public DoubleLinkedOrderedList<Movimentos> getMovimentosPessoas(){
-        return movimentosPessoas;
-    }
+    
 
     public GrafoHotel<Divisao> getDivisoes() {
         return divisoesHotel;
     }
 
-    /**
-     * Este método vai permitir retornar todos os movimentos efetuados nas
-     * últimas X horas
-     *
-     * @param date o número de horas na qual queremos ter os movimentos
-     * @return uma listas com todos os movimentos
-     */
-    public DoubleLinkedOrderedList<Movimentos> listaDeContactosDasPessoas(int date) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, ElementNonComparable {
-
-        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<Movimentos>();
-
-        Calendar c = Calendar.getInstance(); 
-
-        c.add(Calendar.HOUR, -date); 
-
-        Date updateDate = c.getTime(); 
-
-        for (Movimentos movimentos : this.movimentosPessoas) {
-
-            if (movimentos.getDataHoraAtual().compareTo(updateDate) == 1) {
-                listaDeMovimentos.add(movimentos);
-            }
-        }
-        return listaDeMovimentos;
+    public DoubleLinkedOrderedList<Movimentos> getMovimentosHotel() {
+        return movimentosHotel;
     }
 
+
+    
     /**
      * Este metodo vai procurar uma pessoa inscritos no Hotel
      *

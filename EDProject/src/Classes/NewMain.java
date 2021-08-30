@@ -26,17 +26,18 @@ public class NewMain {
      */
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
-       GestaoHotel hote = new GestaoHotel("../Hoteis/mapa.json");
+       Menu menu = new Menu();
        
-       hote.loadMapaHotel();
+       
+       menu.menuHotel();
        
        //Iterator itr1 = hote.getMovimentosPessoas().iterator();
        
         
-       Iterator itr = hote.listaDeContactos(5).iterator();
+       /*Iterator itr = hote.listaDeContactos(5).iterator();
        
         Divisao div1 = new Divisao("Hall de entrada");
-        hote.imprimeDivisoesAdjacentes(div1);
+        hote.imprimeDivisoesAdjacentes(div1);*/
        
        
         

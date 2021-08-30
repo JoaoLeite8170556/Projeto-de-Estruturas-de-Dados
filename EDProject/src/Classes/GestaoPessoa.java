@@ -5,7 +5,7 @@
  */
 package Classes;
 
-import static Classes.JSONHotel.getNumeroDeDivisoes;
+
 import Colecoes.*;
 import Enumerações.Tipo;
 import Excepcoes.EmptyExcpetion;
@@ -95,11 +95,11 @@ public class GestaoPessoa {
      * @throws java.text.ParseException
      * @throws EmptyExcpetion 
      */
-    public UnorderedDoubleLinkedList<Integer> listagemDePessoas() throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion{
+    /*public UnorderedDoubleLinkedList<Integer> listagemDePessoas() throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion{
         
         
         UnorderedDoubleLinkedList<Integer> lista = new UnorderedDoubleLinkedList<Integer>();
-        JSONMovimentos jsonMovimentos = new JSONMovimentos("../movimentos.json");
+        //JSONMovimentos jsonMovimentos = new JSONMovimentos("../movimentos.json");
         
         DoubleLinkedOrderedList<Movimentos> allMovimentos = jsonMovimentos.readFileMovimentos();
         
@@ -117,6 +117,6 @@ public class GestaoPessoa {
         }
         
         return lista;
-    }
+    }*/
 
     }
