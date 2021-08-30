@@ -20,9 +20,9 @@ public class GestaoHotel {
 
     private Hotel hotel;
 
-    public GestaoHotel() {
-        this.hotel = new Hotel("../Hoteis/mapa.json");
-        this.hotel.loadMapaHotel();
+    public GestaoHotel(Hotel hotel) {
+        this.hotel = hotel;
+        hotel.loadMapaHotel();
     }
 
     private Pessoa escolhePessoa() throws EmptyExcpetion {
@@ -59,6 +59,7 @@ public class GestaoHotel {
 
     private void pessoaDesconhecida(String escolha) throws EmptyExcpetion {
         Scanner scanner = new Scanner(System.in);
+        hotel.loadMapaHotel();
         while (!escolha.equals("valido")) {
             System.out.println("!!!!!Pessoa desconhecida pelo sistema!!!!!\n");
             System.out.println("Pretende criar registar-se?\n");
@@ -85,7 +86,9 @@ public class GestaoHotel {
         DoubleLinkedOrderedList<Movimentos> listaMovimentos
                 = hotel.getMovimentosHotel();
         Pessoa pessoaAux = escolhePessoa();
+        
         Divisao divisaoPessoa = hotel.encontraPessoaDivisao(pessoaAux);
+        
         if (divisaoPessoa != null) {
             Divisao divisaoEntrada = hotel.getEntrada();
             while (!escolha.equals("valido")) {
@@ -96,7 +99,8 @@ public class GestaoHotel {
                 System.out.println("2->Não\n");
                 escolha = scanner.nextLine();
                 if (escolha.equals("1")) {
-                    divisaoPessoa.getListaDePessoas().addToRear(pessoaAux);
+                    
+                    hotel.addPessoaEmDivisao(divisaoPessoa, pessoaAux);
                     adicionaMovimento(divisaoPessoa, pessoaAux);
                     escolha = "valido";
                 } else if (escolha.equals("2")) {
@@ -123,7 +127,13 @@ public class GestaoHotel {
                     int countAux2 = 0;
                     while (itr.hasNext()) {
                         Divisao conecao = (Divisao) itr.next();
-                        
+                        if (countAux2++ == contAux) {
+                            hotel.addPessoaEmDivisao(conecao, pessoaAux);
+                            hotel.removePessoaEmDivisao(divisaoPessoa, pessoaAux);
+                            adicionaMovimento(divisaoPessoa, pessoaAux);
+                            hotel.atualizaPesos(divisaoPessoa, conecao);
+                            escolha = "valido";
+                        }
                     }
 
                 }

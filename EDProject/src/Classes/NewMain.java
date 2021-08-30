@@ -27,10 +27,11 @@ public class NewMain {
     public static void main(String[] args) throws IOException, FileNotFoundException, ParseException, java.text.ParseException, EmptyExcpetion, ElementNonComparable{
         
        Menu menu = new Menu();
-       
-       
-       menu.menuHotel();
-       
+       Hotel hotel = new Hotel("../Hoteis/mapa.json");
+       hotel.loadMapaHotel();
+       GestaoHotel gestaoHotel= new GestaoHotel(hotel);
+       //menu.modoManual();
+       gestaoHotel.modoManual();
        //Iterator itr1 = hote.getMovimentosPessoas().iterator();
        
         

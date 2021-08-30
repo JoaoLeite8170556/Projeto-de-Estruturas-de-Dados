@@ -161,7 +161,7 @@ public class Hotel {
      * @param divisaoInicial divisao inicial
      * @param divisaoDestino divisão destino
      */
-    private void atualizaPesos(Divisao divisaoInicial, Divisao divisaoDestino) {
+    public void atualizaPesos(Divisao divisaoInicial, Divisao divisaoDestino) {
 
         Iterator itr_divisaoDestino
                 = this.divisoesHotel.getVerticesAdjacentes(divisaoDestino);
@@ -282,9 +282,8 @@ public class Hotel {
      * @param Divisao a divisao onde ela vai
      * @param pessoa a pessoa que se moveu para lá
      */
-    public void addPessoaEmDivisao(String Divisao, Pessoa pessoa) {
-        Divisao auxDivisao = findDivision(Divisao);
-        auxDivisao.getListaDePessoas().addToRear(pessoa);
+    public void addPessoaEmDivisao(Divisao divisao, Pessoa pessoa) {
+        divisao.getListaDePessoas().addToRear(pessoa);
     }
 
     /**
@@ -293,11 +292,9 @@ public class Hotel {
      * @param Divisao Divisão
      * @param pessoa pessoa
      */
-    public void removePessoaEmDivisao(String Divisao, Pessoa pessoa) {
-        Divisao auxDivisao = findDivision(Divisao);
-
+    public void removePessoaEmDivisao(Divisao divisao, Pessoa pessoa) {
         try {
-            auxDivisao.getListaDePessoas().remove(pessoa);
+            divisao.getListaDePessoas().remove(pessoa);
         } catch (EmptyExcpetion ex) {
         }
     }

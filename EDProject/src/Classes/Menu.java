@@ -174,9 +174,10 @@ public class Menu {
     }
      
      
-     public void modoManual() throws EmptyExcpetion, ElementNonComparable{
-          int opcao= 0;
-        while(opcao != -1){
+    public void modoManual() throws EmptyExcpetion, ElementNonComparable {
+        int opcao = 0;
+        Scanner scanner = new Scanner(System.in);
+        while (opcao != -1) {
             System.out.println("---------------------------");
             System.out.println("1 -> Mover Pessoas");
             System.out.println("2 -> Criar Hospede");
@@ -185,9 +186,11 @@ public class Menu {
             System.out.println("5 -> Ver Mapa de Hotel");
             System.out.println("0 -> Sair");
             System.out.println("---------------------------");
-            
-            switch(opcao){
+            int escolha = scanner.nextInt();
+            switch (escolha) {
                 case 1:
+                    GestaoHotel gestaoHotel = new GestaoHotel();
+                    
                     gestaoHotel.modoManual();
                     break;
                 case 2:
@@ -200,13 +203,13 @@ public class Menu {
                     hotel.imprimePessoas();
                     break;
                 case 5:
-                    
+
                     break;
                 case 0:
-                    opcao=-1;
+                    opcao = -1;
                     break;
             }
         }
-     }
-    
+    }
+
 }
