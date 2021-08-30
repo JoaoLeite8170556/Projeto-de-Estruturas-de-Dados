@@ -6,6 +6,8 @@
 package Classes;
 
 import Colecoes.UnorderedArrayList;
+import Excepcoes.ElementNonComparable;
+import Excepcoes.EmptyExcpetion;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
@@ -28,7 +30,7 @@ public class Menu {
     
     
     private Hotel hotel;
-
+    private GestaoHotel gestaoHotel;
     public Menu() {
     }
     
@@ -147,5 +149,64 @@ public class Menu {
             }
         }
     }
+    
+     public void modoDeJogo() throws EmptyExcpetion, ElementNonComparable{
+        int opcao = 0;
+        while(opcao != -1){
+            System.out.println("---------------------------");
+            System.out.println("1 -> Modo Manual");
+            System.out.println("2 -> Modo Automatico");
+            System.out.println("0 -> Sair");
+            System.out.println("---------------------------");
+            
+            switch(opcao){
+                case 1:
+                    modoManual();
+                    break;
+                case 2:
+                    gestaoHotel.modoAutomatico();
+                    break;
+                case 0:
+                    opcao=-1;
+                    break;
+            }
+        }
+    }
+     
+     
+     public void modoManual() throws EmptyExcpetion, ElementNonComparable{
+          int opcao= 0;
+        while(opcao != -1){
+            System.out.println("---------------------------");
+            System.out.println("1 -> Mover Pessoas");
+            System.out.println("2 -> Criar Hospede");
+            System.out.println("3 -> Criar Funcionario");
+            System.out.println("4 -> Ver Lista de Pessoas");
+            System.out.println("5 -> Ver Mapa de Hotel");
+            System.out.println("0 -> Sair");
+            System.out.println("---------------------------");
+            
+            switch(opcao){
+                case 1:
+                    gestaoHotel.modoManual();
+                    break;
+                case 2:
+                    hotel.inserirHospede();
+                    break;
+                case 3:
+                    hotel.inserirFuncionario();
+                    break;
+                case 4:
+                    hotel.imprimePessoas();
+                    break;
+                case 5:
+                    
+                    break;
+                case 0:
+                    opcao=-1;
+                    break;
+            }
+        }
+     }
     
 }

@@ -1,0 +1,145 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Classes;
+
+import Colecoes.DoubleLinkedOrderedList;
+import Colecoes.UnorderedDoubleLinkedList;
+import Excepcoes.ElementNonComparable;
+import Excepcoes.EmptyExcpetion;
+import java.util.Iterator;
+import java.util.Scanner;
+
+/**
+ *
+ * @author celio
+ */
+public class GestaoHotel {
+
+    private Hotel hotel;
+
+    public GestaoHotel() {
+        this.hotel = new Hotel("../Hoteis/mapa.json");
+        this.hotel.loadMapaHotel();
+    }
+
+    private Pessoa escolhePessoa() throws EmptyExcpetion {
+        UnorderedDoubleLinkedList<Pessoa> listaTemp = hotel.getListaDePessoas();
+        if (listaTemp.isEmpty()) {
+            System.out.println("Ainda nao existe Pessoas cridas!! \n");
+            System.out.println("Crie pessoas!! \n");
+            //----------------------metodo menu para criar pessoas-------------
+            listaTemp = hotel.getListaDePessoas();
+        }
+
+        System.out.println("Escolha qual a Pessoa que pretende Mover");
+        for (Pessoa pessoa : listaTemp) {
+            System.out.println("-> ");
+            System.out.println(pessoa.getId());
+            System.out.println("\n");
+        }
+
+        System.out.println("Escolha a opção: " + "\n");
+
+        Scanner scanner = new Scanner(System.in);
+
+        String escolha = scanner.nextLine();
+
+        Pessoa pessoaEscolhida = hotel.encontraPessoa(escolha);
+
+        if (pessoaEscolhida != null) {
+            return pessoaEscolhida;
+        } else {
+            pessoaDesconhecida(escolha);
+        }
+        return null;
+    }
+
+    private void pessoaDesconhecida(String escolha) throws EmptyExcpetion {
+        Scanner scanner = new Scanner(System.in);
+        while (!escolha.equals("valido")) {
+            System.out.println("!!!!!Pessoa desconhecida pelo sistema!!!!!\n");
+            System.out.println("Pretende criar registar-se?\n");
+            System.out.println("1->Sim\n");
+            System.out.println("2->Não\n");
+            escolha = scanner.nextLine();
+            if (escolha.equals("1")) {
+                hotel.inserirHospede();
+                System.out.println("Você está no sistema com o id: "
+                        + hotel.getListaDePessoas().last().getId() + "\n");
+                escolha = "valido";
+            } else if (escolha.equals("2")) {
+                System.out.println("Nao se registou nao vai ser premitido entrar no hotel!! \n");
+                escolha = "valido";
+            } else {
+                System.out.println("!!Escolha invalida!! \n");
+            }
+        }
+    }
+
+    public void modoManual() throws EmptyExcpetion, ElementNonComparable {
+        Scanner scanner = new Scanner(System.in);
+        String escolha = "vazia";
+        DoubleLinkedOrderedList<Movimentos> listaMovimentos
+                = hotel.getMovimentosHotel();
+        Pessoa pessoaAux = escolhePessoa();
+        Divisao divisaoPessoa = hotel.encontraPessoaDivisao(pessoaAux);
+        if (divisaoPessoa != null) {
+            Divisao divisaoEntrada = hotel.getEntrada();
+            while (!escolha.equals("valido")) {
+
+                System.out.println("Pretende entrar no" + divisaoEntrada.getNome()
+                        + "\n");
+                System.out.println("1->Sim\n");
+                System.out.println("2->Não\n");
+                escolha = scanner.nextLine();
+                if (escolha.equals("1")) {
+                    divisaoPessoa.getListaDePessoas().addToRear(pessoaAux);
+                    adicionaMovimento(divisaoPessoa, pessoaAux);
+                    escolha = "valido";
+                } else if (escolha.equals("2")) {
+                    System.out.println("Passou a sua vez....");
+                    escolha = "valido";
+                } else {
+                    System.out.println("!!Escolha invalida!! \n");
+                }
+            }
+            escolha = "vazia";
+        } else {
+            while (!escolha.equals("valido")) {
+
+                System.out.println("Escolha a divisao para "
+                        + "a qual se pretende mover:\n");
+                int contAux = hotel.imprimeDivisoesAdjacentes(divisaoPessoa);
+                escolha = scanner.nextLine();
+
+                if (!escolha.matches("[1-" + contAux + "]")) {
+                    System.out.println("Invalid option");
+                } else {
+                    Iterator itr
+                            = hotel.getDivisoes().getVerticesAdjacentes(divisaoPessoa);
+                    int countAux2 = 0;
+                    while (itr.hasNext()) {
+                        Divisao conecao = (Divisao) itr.next();
+                        
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    public void modoAutomatico() throws EmptyExcpetion {
+
+    }
+
+    private void adicionaMovimento(Divisao divisao, Pessoa pessoa)
+            throws ElementNonComparable {
+        hotel.getMovimentosHotel().add(new Movimentos(pessoa.getId(),
+                divisao.getNome()));
+    }
+
+}

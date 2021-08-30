@@ -16,11 +16,11 @@ import Enumerações.Tipo;
 
 public class Pessoa {
     
-    private static int incremento = 0;
+    private static int incremento = 1;
     private int id;
     private Tipo tipo;
 
-    public Pessoa(String nome, Tipo tipo) {
+    public Pessoa(Tipo tipo) {
         this.id= incremento++;
         this.tipo = tipo;
     }

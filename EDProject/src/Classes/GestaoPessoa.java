@@ -34,13 +34,9 @@ public class GestaoPessoa {
      */
     
     public void inserirHospede() {
-        System.out.println("Insira um Hospede no Sistema!!!");
-        Scanner scanner = new Scanner(System.in);
+       
 
-        System.out.println("Introduza o nome:");
-        String nomePessoa = scanner.nextLine();
-
-        this.listaDePessoas.addToRear(new Pessoa(nomePessoa, Tipo.HOSPEDE));
+        this.listaDePessoas.addToRear(new Pessoa( Tipo.HOSPEDE));
 
     }
 
@@ -48,13 +44,9 @@ public class GestaoPessoa {
      * Este metodo vai possibilitar a adição de Funcionario
      */
     public void inserirFuncionario() {
-        System.out.println("Insira um Funcionario no Sistema!!!");
-        Scanner scanner = new Scanner(System.in);
+        
 
-        System.out.println("Introduza o nome: ");
-        String nomePessoa = scanner.nextLine();
-
-        this.listaDePessoas.addToRear(new Pessoa(nomePessoa, Tipo.FUNCIONARIO));
+        this.listaDePessoas.addToRear(new Pessoa( Tipo.FUNCIONARIO));
 
     }
     

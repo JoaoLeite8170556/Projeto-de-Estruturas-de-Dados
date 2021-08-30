@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.html.HTMLDocument;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -243,58 +244,37 @@ public class Hotel {
     /**
      * Este metodo vai possibilitar a adição de Hospede
      */
-    public void inserirHospede() {
-        System.out.println("Insira um Hospede no Sistema!!!");
-        Scanner scanner = new Scanner(System.in);
+    public void inserirHospede() throws EmptyExcpetion {
 
-        System.out.println("Introduza o nome:");
-        String nomePessoa = scanner.nextLine();
 
-        this.listaDePessoas.addToRear(new Pessoa(nomePessoa, Tipo.HOSPEDE));
-
+        this.listaDePessoas.addToRear(new Pessoa(Tipo.HOSPEDE));
+        System.out.println("Hospede Criado com sucesso!! \n");
+        System.out.println("Id do Hospede -> " + listaDePessoas.last().toString());
     }
 
     /**
      * Este metodo vai possibilitar a adição de Funcionario
      */
-    public void inserirFuncionario() {
-        System.out.println("Insira um Funcionario no Sistema!!!");
-        Scanner scanner = new Scanner(System.in);
+    public void inserirFuncionario() throws EmptyExcpetion {
 
-        System.out.println("Introduza o nome: ");
-        String nomePessoa = scanner.nextLine();
-
-        this.listaDePessoas.addToRear(new Pessoa(nomePessoa, Tipo.FUNCIONARIO));
-
+        this.listaDePessoas.addToRear(new Pessoa(Tipo.FUNCIONARIO));
+        System.out.println("Funcionario Criado com sucesso!! \n");
+        System.out.println("Id do Funcionario -> " + listaDePessoas.last().toString());
     }
     
     /**
-     * Este método vai imprimir todos os Hospedes inseridos no Hotel
+     * Este método vai imprimir todas as Pessoas inseridos no Hotel
      */
-    public void imprimeHospedes(){
+    public void imprimePessoas(){
         Iterator<Pessoa> itr = this.listaDePessoas.iterator();
-        
+        System.out.println("Lista de Pessoas: ");
         while(itr.hasNext()){
-            if(itr.next().getTipo()== Tipo.HOSPEDE){
-                System.out.println(itr.next().toString());
-            }
+                System.out.println("-> " + itr.next().toString() + "\n");
         }
         
     }
     
-    /**
-     * Este método vai imprimir todos os Funcionarios no Hotel
-     */
-    public void imprimeFuncionarios(){
-        Iterator<Pessoa> itr = this.listaDePessoas.iterator();
-        
-        while(itr.hasNext()){
-            if(itr.next().getTipo()== Tipo.FUNCIONARIO){
-                System.out.println(itr.next().toString());
-            }
-        }
-        
-    }
+    
 
     /**
      * Este método vai adicionar uma pessoa na Divisao para qual ela se moveu
@@ -427,12 +407,26 @@ public class Hotel {
         }
     }
 
+     /**
+     * verificar se a pessoa existe 
+     * @param id id que se pretende procurar
+     * @return retorna a pessoa caso ela seja encontrada
+     */
+    public Pessoa encontraPessoa(String id){
+         for (Pessoa pessoa: listaDePessoas){
+             if(id.equals(pessoa.getId())){
+                 return pessoa;
+             }
+         }
+        return null;
+    }
+    
     /**
      * Este método vai possibilitar mostrar as divisões adjacentes
      *
      * @param divisao a divisão na qual queremos obter as divisões adjacentes
      */
-    public void imprimeDivisoesAdjacentes(Divisao divisao) {
+    public int imprimeDivisoesAdjacentes(Divisao divisao) {
         Iterator itr_divisoes
                 = this.divisoesHotel.getVerticesAdjacentes(divisao);
         int contador = 1;
@@ -440,9 +434,28 @@ public class Hotel {
         while (itr_divisoes.hasNext()) {
 
             Divisao aux_divisao = (Divisao) itr_divisoes.next();
-
-            System.out.println("->" + " " + contador++ + " -" + " " + aux_divisao.getNome() + "\n");
+            System.out.println(  contador++ + "-> " + aux_divisao.getNome() + "\n");
         }
+        return contador;
     }
+    
+    public Divisao getEntrada(){
+        return findDivision("Hall de Entrada");
+    }
+    
+   public Divisao encontraPessoaDivisao(Pessoa pessoa){
+        Iterator<Divisao> itr = divisoesHotel.getTodasDivisoes().iterator();
+        Divisao divisaoAux;
+        while(itr.hasNext()){
+            divisaoAux=itr.next();
+            if(divisaoAux.findPessoaInDivision(pessoa)!= null){
+                return divisaoAux;
+            }
+        }
+        return null;
+    } 
+    
+    
+   
 
 }
