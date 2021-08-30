@@ -6,13 +6,18 @@
 package Classes;
 import Colecoes.*;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- *
- * @author João
+ * Classe que vai possibilitar fazer o export para ficheiro JSON de alguma informacao
+ * @author João Leite Nº 8170556
+ * @author Celio Macedo Nº 8170358
  */
 public class Export {
         
@@ -25,7 +30,7 @@ public class Export {
     }
     
     
-    public void escreveMovimentosJSON(DoubleLinkedOrderedList<JSONMovimentos> listaDeMovimentos){
+    public void escreveMovimentosJSON(DoubleLinkedOrderedList<JSONMovimentos> listaDeMovimentos) throws IOException{
         
         JSONObject jsonObject = new JSONObject();
         
@@ -39,35 +44,43 @@ public class Export {
         
         jsonObject.put("movimentosHoteis",array);
         
-        try{
-            FileW
+        try(FileWriter file = new FileWriter("../movimentos.json")){
+            file.write(jsonObject.toString());
         }
     }
     
     
     /**
-     * Metodo que estrutura 
+     * Método que estrutura JSONObject
      * @param movimentos
      * @return 
      */
-    private JSONObject jsonMovimentos(JSONMovimentos movimentos){
-        
+    private JSONObject jsonMovimentos(JSONMovimentos movimentos) {
+
         JSONObject jsonMovimentos = new JSONObject();
-        
+
         jsonMovimentos.put("nome", movimentos.getNomeHotel());
-        
+
         jsonMovimentos.put("versao", movimentos.getVersao());
-        
+
         JSONArray jsonListaMovimentos = new JSONArray();
-        
-        Iterator itr = movimentos.getMovimentos().iterator();
-        
-        while(itr.hasNext()){
-            jsonListaMovimentos.add(itr.next());
+
+        Iterator<Movimentos> itr = movimentos.getMovimentos().iterator();
+
+        while (itr.hasNext()) {
+            JSONObject informacao = new JSONObject();
+            informacao.put("idPessoa", itr.next().getIdPessoa());
+            informacao.put("divisao", itr.next().getNomeDivisao());
+
+            Date date = itr.next().getDataHoraAtual();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+            informacao.put("dataHora", formatter.format(date));
+            jsonListaMovimentos.add(informacao);
         }
-        
+
         jsonMovimentos.put("movimentos", jsonListaMovimentos);
-        
+
         return jsonMovimentos;
     }
      
