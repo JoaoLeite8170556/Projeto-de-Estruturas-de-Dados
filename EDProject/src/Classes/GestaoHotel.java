@@ -129,7 +129,7 @@ public class GestaoHotel {
                         + "a qual se pretende mover:\n");
                 int contAux = this.hotel.imprimeDivisoesAdjacentes(divisaoPessoa);
                 escolha = scanner.nextLine();
-
+                int auxEscolha = Integer.parseInt(escolha);  
                 if (!escolha.matches("[1-" + contAux + "]")) {
                     System.out.println("Invalid option");
                 } else {
@@ -138,7 +138,7 @@ public class GestaoHotel {
                     int countAux2 = 0;
                     while (itr.hasNext()) {
                         Divisao conecao = (Divisao) itr.next();
-                        if (countAux2++ == contAux) {
+                        if (countAux2++ == auxEscolha) {
                             hotel.addPessoaEmDivisao(conecao, pessoaAux);
                             hotel.removePessoaEmDivisao(divisaoPessoa, pessoaAux);
                             adicionaMovimento(divisaoPessoa, pessoaAux);

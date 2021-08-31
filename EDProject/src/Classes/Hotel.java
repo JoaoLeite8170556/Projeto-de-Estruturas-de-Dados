@@ -240,7 +240,7 @@ public class Hotel {
 
         this.listaDePessoas.addToRear(new Pessoa(Tipo.HOSPEDE));
         System.out.println("Hospede Criado com sucesso!! \n");
-        System.out.println("Id do Hospede -> " + listaDePessoas.last().toString());
+        System.out.println("Id do Hospede -> " + this.listaDePessoas.last().toString());
     }
 
     /**
@@ -283,11 +283,10 @@ public class Hotel {
      * @param Divisao Divisão
      * @param pessoa pessoa
      */
-    public void removePessoaEmDivisao(Divisao divisao, Pessoa pessoa) {
-        try {
-            divisao.getListaDePessoas().remove(pessoa);
-        } catch (EmptyExcpetion ex) {
-        }
+    public void removePessoaEmDivisao(Divisao divisao, Pessoa pessoa) throws EmptyExcpetion {
+      
+        divisao.getListaDePessoas().remove(pessoa);
+       
     }
 
     /**
@@ -299,13 +298,14 @@ public class Hotel {
      */
     public Divisao findDivision(String divisao) {
         Iterator itr = this.divisoesHotel.getTodasDivisoes().iterator();
-
+        Divisao aux = null;
         while (itr.hasNext()) {
-            Divisao aux = (Divisao) itr.next();
-            if (aux.getNome().equals(divisao)) {
+            aux = (Divisao) itr.next();
+            if (aux!= null && aux.getNome().equals(divisao)) {
                 return aux;
             }
         }
+        
         return null;
     }
 
@@ -401,8 +401,9 @@ public class Hotel {
      * @return retorna a pessoa caso ela seja encontrada
      */
     public Pessoa encontraPessoa(String id){
+        int idAux = Integer.parseInt(id);  
          for (Pessoa pessoa: listaDePessoas){
-             if(id.equals(pessoa.getId())){
+             if(idAux == pessoa.getId()){
                  return pessoa;
              }
          }
@@ -434,7 +435,7 @@ public class Hotel {
         Divisao divisaoAux;
         while(itr.hasNext()){
             divisaoAux=itr.next();
-            if(divisaoAux.findPessoaInDivision(pessoa)!= null){
+             if( divisaoAux.findPessoaInDivision(pessoa)!= null){
                 return divisaoAux;
             }
         }

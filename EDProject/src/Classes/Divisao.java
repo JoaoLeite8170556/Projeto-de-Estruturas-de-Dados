@@ -51,13 +51,13 @@ public class Divisao {
      * @param Pessoa A pessoa a procurar
      * @return returna a Pessoa se a encontrar 
      */
-    public Pessoa findPessoaInDivision(Pessoa Pessoa){
+    public Pessoa findPessoaInDivision(Pessoa pessoa){
         
         Iterator itr = this.listaDePessoas.iterator();
         
         while(itr.hasNext()){
             Pessoa auxPessoa = (Pessoa) itr.next();
-            if(auxPessoa.equals(auxPessoa)){
+            if(auxPessoa != null && auxPessoa.equals(pessoa)){
                 return auxPessoa;
             }
         }
