@@ -6,6 +6,7 @@
 package Classes;
 
 import Colecoes.UnorderedArrayList;
+import Colecoes.UnorderedDoubleLinkedList;
 import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
 import java.io.File;
@@ -50,7 +51,9 @@ public class Menu {
     
     
     
-    
+    public UnorderedDoubleLinkedList<Divisao> retornaDivisoes(){
+        return this.hotel.getDivisoes().getTodasDivisoes();
+    }
    
     
    

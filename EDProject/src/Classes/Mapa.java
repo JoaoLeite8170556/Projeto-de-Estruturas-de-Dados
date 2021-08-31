@@ -12,16 +12,23 @@ package Classes;
 public class Mapa {
     
     private String fileName;
+    private String path;
     
     
-    public Mapa(String file){
-        this.fileName=file;
+    public Mapa(String fileName, String path){
+        this.fileName=fileName;
+        this.path=path;
     }
 
     public String getFileName() {
         return fileName;
     }
 
+    public String getPath() {
+        return path;
+    }
+    
+    
     
     
 }

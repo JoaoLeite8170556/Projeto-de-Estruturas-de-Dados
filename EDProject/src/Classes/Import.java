@@ -96,7 +96,7 @@ public class Import {
         
         for(int j=listOfFiles.length; i<j; i++){
             File arquivos = listOfFiles[i];
-            Mapa mapa = new Mapa(arquivos.getName());
+            Mapa mapa = new Mapa(arquivos.getName(),arquivos.getAbsolutePath());
             listaDeMapas.addToRear(mapa);
         }
         
@@ -118,7 +118,7 @@ public class Import {
             
             if(Integer.parseInt(escolhaHotel)==count){
                 found=true;
-                return hotel.getFileName();
+                return hotel.getPath();
             }else{
                 count++;
             }

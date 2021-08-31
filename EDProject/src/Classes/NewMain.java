@@ -43,12 +43,18 @@ public class NewMain {
         hote.imprimeDivisoesAdjacentes(div1);*/
        
        
-        //Import import1 = new Import();
+        /*Import import1 = new Import();
+        
+        Iterator<Mapa> itr = import1.obtemMapasHoteis();
+        
+        while(itr.hasNext()){
+            System.out.println(itr.next().getPath());
+        }*/
         
         Menu menu = new Menu();
         
         
-        menu.modoManual();
+       
         
         //System.out.println(import1.escolheHotel(import1.));
     }
