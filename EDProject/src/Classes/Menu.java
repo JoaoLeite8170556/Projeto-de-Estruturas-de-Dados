@@ -31,6 +31,8 @@ public class Menu {
     
     private Hotel hotel;
     private GestaoHotel gestaoHotel;
+    
+    
     public Menu() {
     }
     
@@ -164,7 +166,7 @@ public class Menu {
                     modoManual();
                     break;
                 case 2:
-                    gestaoHotel.modoAutomatico();
+                    //gestaoHotel.modoAutomatico();
                     break;
                 case 0:
                     opcao=-1;
@@ -189,8 +191,6 @@ public class Menu {
             int escolha = scanner.nextInt();
             switch (escolha) {
                 case 1:
-                    GestaoHotel gestaoHotel = new GestaoHotel();
-                    
                     gestaoHotel.modoManual();
                     break;
                 case 2:

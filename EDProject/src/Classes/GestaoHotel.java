@@ -13,8 +13,10 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 /**
- *
- * @author celio
+ * Esta classe Gestão do Hotel
+ * 
+ * @author João Leite Nº 8170556
+ * @author Celio Macedo Nº 8170358
  */
 public class GestaoHotel {
 
@@ -22,15 +24,18 @@ public class GestaoHotel {
 
     public GestaoHotel(Hotel hotel) {
         this.hotel = hotel;
-        hotel.loadMapaHotel();
     }
 
     private Pessoa escolhePessoa() throws EmptyExcpetion {
+        
+        
         UnorderedDoubleLinkedList<Pessoa> listaTemp = hotel.getListaDePessoas();
+        
         if (listaTemp.isEmpty()) {
+            
             System.out.println("Ainda nao existe Pessoas cridas!! \n");
             System.out.println("Crie pessoas!! \n");
-            //----------------------metodo menu para criar pessoas-------------
+            //----------------------metodo menu para criar pessoas-------------//
             listaTemp = hotel.getListaDePessoas();
         }
 
@@ -47,7 +52,7 @@ public class GestaoHotel {
 
         String escolha = scanner.nextLine();
 
-        Pessoa pessoaEscolhida = hotel.encontraPessoa(escolha);
+        Pessoa pessoaEscolhida = this.hotel.encontraPessoa(escolha);
 
         if (pessoaEscolhida != null) {
             return pessoaEscolhida;
@@ -58,15 +63,16 @@ public class GestaoHotel {
     }
 
     private void pessoaDesconhecida(String escolha) throws EmptyExcpetion {
+        
         Scanner scanner = new Scanner(System.in);
-        hotel.loadMapaHotel();
+        
         while (!escolha.equals("valido")) {
-            System.out.println("!!!!!Pessoa desconhecida pelo sistema!!!!!\n");
-            System.out.println("Pretende criar registar-se?\n");
-            System.out.println("1->Sim\n");
-            System.out.println("2->Não\n");
+            System.out.println("!!!!!Pessoa desconhecida pelo sistema!!!!! \n");
+            System.out.println("Pretende criar registar-se ? \n");
+            System.out.println("1->Sim \n");
+            System.out.println("2->Não \n");
             escolha = scanner.nextLine();
-            if (escolha.equals("1")) {
+            if (escolha.equals("1")){
                 hotel.inserirHospede();
                 System.out.println("Você está no sistema com o id: "
                         + hotel.getListaDePessoas().last().getId() + "\n");
@@ -80,10 +86,11 @@ public class GestaoHotel {
         }
     }
 
-    public void modoManual() throws EmptyExcpetion, ElementNonComparable {
+    public void modoManual() throws EmptyExcpetion, ElementNonComparable{
+
         Scanner scanner = new Scanner(System.in);
         String escolha = "vazia";
-        DoubleLinkedOrderedList<Movimentos> listaMovimentos
+        DoubleLinkedOrderedList<Movimentos> listaMovimentos 
                 = hotel.getMovimentosHotel();
         Pessoa pessoaAux = escolhePessoa();
         
@@ -100,7 +107,7 @@ public class GestaoHotel {
                 escolha = scanner.nextLine();
                 if (escolha.equals("1")) {
                     
-                    hotel.addPessoaEmDivisao(divisaoPessoa, pessoaAux);
+                    this.hotel.addPessoaEmDivisao(divisaoPessoa, pessoaAux);
                     adicionaMovimento(divisaoPessoa, pessoaAux);
                     escolha = "valido";
                 } else if (escolha.equals("2")) {
@@ -116,14 +123,14 @@ public class GestaoHotel {
 
                 System.out.println("Escolha a divisao para "
                         + "a qual se pretende mover:\n");
-                int contAux = hotel.imprimeDivisoesAdjacentes(divisaoPessoa);
+                this.hotel.imprimeDivisoesAdjacentes(divisaoPessoa);
                 escolha = scanner.nextLine();
-
+                int contAux=0;
                 if (!escolha.matches("[1-" + contAux + "]")) {
                     System.out.println("Invalid option");
                 } else {
                     Iterator itr
-                            = hotel.getDivisoes().getVerticesAdjacentes(divisaoPessoa);
+                            = this.hotel.getDivisoes().getVerticesAdjacentes(divisaoPessoa);
                     int countAux2 = 0;
                     while (itr.hasNext()) {
                         Divisao conecao = (Divisao) itr.next();
@@ -141,14 +148,15 @@ public class GestaoHotel {
 
         }
     }
-
-    public void modoAutomatico() throws EmptyExcpetion {
-
+    
+    public Hotel getHotel(){
+        return hotel;
     }
+
 
     private void adicionaMovimento(Divisao divisao, Pessoa pessoa)
             throws ElementNonComparable {
-        hotel.getMovimentosHotel().add(new Movimentos(pessoa.getId(),
+        this.hotel.getMovimentosHotel().add(new Movimentos(pessoa.getId(),
                 divisao.getNome()));
     }
 

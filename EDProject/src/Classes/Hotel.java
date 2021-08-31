@@ -8,22 +8,12 @@ package Classes;
 import Colecoes.*;
 import Enumerações.Tipo;
 import Enumerações.TipoSala;
-import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
 import Grafo.GrafoHotel;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.*;
 import java.util.Iterator;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.html.HTMLDocument;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -39,7 +29,7 @@ import org.json.simple.parser.ParseException;
 public class Hotel {
 
     private final UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
-    private String pathFile;
+    //private String pathFile;
     private int versao;
     private String nomeHotel;
     private DoubleLinkedOrderedList<Movimentos> movimentosHotel;
@@ -55,24 +45,25 @@ public class Hotel {
     public Hotel(String pathFile) {
         this.versao = 0;
         this.nomeHotel = null;
-        this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
-        this.pathFile = pathFile;
         this.divisoesHotel = new GrafoHotel<Divisao>(getNumeroDeDivisoes(this.nomeHotel));
+        this.loadMapaHotel(pathFile);
+        this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
         this.movimentosHotel = new DoubleLinkedOrderedList<>();
         this.jsonMovimentos = new JSONMovimentos(this.nomeHotel, this.versao, this.movimentosHotel);
-        this.listaMovimentos = new DoubleLinkedOrderedList<>();
+        this.listaMovimentos = new DoubleLinkedOrderedList<JSONMovimentos>();
     }
 
     /**
      * Este método vai possibilitar estruturar o grafo conforme o ficheiro JSON
      */
-    public void loadMapaHotel(){
+    public void loadMapaHotel(String pathFile){
 
         FileReader reader = null;
+        
         try {
-
+           
             JSONParser JSONParser = new JSONParser();
-            reader = new FileReader(this.pathFile);
+            reader = new FileReader(pathFile);
             Object obj = JSONParser.parse(reader);
             JSONObject jsonObject = (JSONObject) obj;
 
@@ -423,7 +414,7 @@ public class Hotel {
      *
      * @param divisao a divisão na qual queremos obter as divisões adjacentes
      */
-    public int imprimeDivisoesAdjacentes(Divisao divisao) {
+    public void imprimeDivisoesAdjacentes(Divisao divisao) {
         Iterator itr_divisoes
                 = this.divisoesHotel.getVerticesAdjacentes(divisao);
         int contador = 1;
@@ -433,7 +424,7 @@ public class Hotel {
             Divisao aux_divisao = (Divisao) itr_divisoes.next();
             System.out.println(  contador++ + "-> " + aux_divisao.getNome() + "\n");
         }
-        return contador;
+        //return contador;
     }
     
     public Divisao getEntrada(){

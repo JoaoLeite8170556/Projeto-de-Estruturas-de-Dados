@@ -6,7 +6,6 @@
 package Classes;
 
 import Colecoes.DoubleLinkedOrderedList;
-import Enumerações.TipoSala;
 import Excepcoes.ElementNonComparable;
 import java.io.File;
 import java.io.FileNotFoundException;
