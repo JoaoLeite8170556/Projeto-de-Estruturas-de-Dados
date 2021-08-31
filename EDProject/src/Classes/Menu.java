@@ -15,6 +15,8 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -35,7 +37,14 @@ public class Menu {
     
     
     public Menu() {
-        this.importTemp = new Import();
+        try {
+            this.importTemp = new Import();
+            
+            this.hotel = new Hotel(this.escolheMapa());
+            this.gestaoHotel = new GestaoHotel(hotel);
+        } catch (FileNotFoundException | ParseException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     
@@ -124,7 +133,6 @@ public class Menu {
             int escolha = scanner.nextInt();
             switch (escolha) {
                 case 1:
-                    Hotel hotel21 = new Hotel("../Hoteis/mapa.json");
                     gestaoHotel.modoManual();
                     break;
                 case 2:
