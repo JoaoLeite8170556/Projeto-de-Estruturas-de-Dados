@@ -57,12 +57,15 @@ public class GestaoHotel {
         if (pessoaEscolhida != null) {
             return pessoaEscolhida;
         } else {
-            pessoaDesconhecida(escolha);
+            if (pessoaDesconhecida(escolha)!=-1){
+                return hotel.getListaDePessoas().last();
+            }
+            
         }
         return null;
     }
 
-    private void pessoaDesconhecida(String escolha) throws EmptyExcpetion {
+    private int pessoaDesconhecida(String escolha) throws EmptyExcpetion {
         
         Scanner scanner = new Scanner(System.in);
         
@@ -77,6 +80,7 @@ public class GestaoHotel {
                 System.out.println("Você está no sistema com o id: "
                         + hotel.getListaDePessoas().last().getId() + "\n");
                 escolha = "valido";
+                return hotel.getListaDePessoas().last().getId();
             } else if (escolha.equals("2")) {
                 System.out.println("Nao se registou nao vai ser premitido entrar no hotel!! \n");
                 escolha = "valido";
@@ -84,6 +88,7 @@ public class GestaoHotel {
                 System.out.println("!!Escolha invalida!! \n");
             }
         }
+        return -1;
     }
 
     public void modoManual() throws EmptyExcpetion, ElementNonComparable{
@@ -96,19 +101,18 @@ public class GestaoHotel {
         
         Divisao divisaoPessoa = hotel.encontraPessoaDivisao(pessoaAux);
         
-        if (divisaoPessoa != null) {
-            Divisao divisaoEntrada = hotel.getEntrada();
+        if (divisaoPessoa == null) {
             while (!escolha.equals("valido")) {
 
-                System.out.println("Pretende entrar no" + divisaoEntrada.getNome()
+                System.out.println("Pretende entrar no" + hotel.getEntrada().getNome()
                         + "\n");
                 System.out.println("1->Sim\n");
                 System.out.println("2->Não\n");
                 escolha = scanner.nextLine();
                 if (escolha.equals("1")) {
                     
-                    this.hotel.addPessoaEmDivisao(divisaoPessoa, pessoaAux);
-                    adicionaMovimento(divisaoPessoa, pessoaAux);
+                    this.hotel.addPessoaEmDivisao(hotel.getEntrada(), pessoaAux);
+                    adicionaMovimento(hotel.getEntrada(), pessoaAux);
                     escolha = "valido";
                 } else if (escolha.equals("2")) {
                     System.out.println("Passou a sua vez....");

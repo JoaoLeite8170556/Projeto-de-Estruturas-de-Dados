@@ -124,6 +124,7 @@ public class Menu {
             int escolha = scanner.nextInt();
             switch (escolha) {
                 case 1:
+                    Hotel hotel21 = new Hotel("../Hoteis/mapa.json");
                     gestaoHotel.modoManual();
                     break;
                 case 2:

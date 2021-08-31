@@ -426,7 +426,7 @@ public class Hotel {
     }
     
     public Divisao getEntrada(){
-        return findDivision("Hall de Entrada");
+        return findDivision("Hall de entrada");
     }
     
    public Divisao encontraPessoaDivisao(Pessoa pessoa){
