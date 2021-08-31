@@ -12,20 +12,16 @@ package Classes;
 public class Mapa {
     
     private String fileName;
-    private String nomeMapa;
     
     
-    public Mapa(String file, String nomeMapa){
+    public Mapa(String file){
         this.fileName=file;
-        this.nomeMapa=nomeMapa;
     }
 
     public String getFileName() {
         return fileName;
     }
 
-    public String getNomeMapa() {
-        return nomeMapa;
-    }
+    
     
 }

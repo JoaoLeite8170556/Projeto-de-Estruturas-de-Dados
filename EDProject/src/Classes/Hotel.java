@@ -410,21 +410,19 @@ public class Hotel {
     }
     
     /**
-     * Este método vai possibilitar mostrar as divisões adjacentes
+     * Este método vai possibilitar mostrar as divisões adjacentes a determinada Divisão
      *
      * @param divisao a divisão na qual queremos obter as divisões adjacentes
      */
-    public void imprimeDivisoesAdjacentes(Divisao divisao) {
-        Iterator itr_divisoes
+    public int imprimeDivisoesAdjacentes(Divisao divisao) {
+        Iterator<Divisao> itr_divisoes
                 = this.divisoesHotel.getVerticesAdjacentes(divisao);
         int contador = 1;
         System.out.println("Divisoes Adjacentes: " + divisao.getNome() + "\n");
         while (itr_divisoes.hasNext()) {
-
-            Divisao aux_divisao = (Divisao) itr_divisoes.next();
-            System.out.println(  contador++ + "-> " + aux_divisao.getNome() + "\n");
+            System.out.println(  contador++ + "-> " + itr_divisoes.next().getNome() + "\n");
         }
-        //return contador;
+        return contador;
     }
     
     public Divisao getEntrada(){
@@ -432,7 +430,7 @@ public class Hotel {
     }
     
    public Divisao encontraPessoaDivisao(Pessoa pessoa){
-        Iterator<Divisao> itr = divisoesHotel.getTodasDivisoes().iterator();
+        Iterator<Divisao> itr = this.divisoesHotel.getTodasDivisoes().iterator();
         Divisao divisaoAux;
         while(itr.hasNext()){
             divisaoAux=itr.next();

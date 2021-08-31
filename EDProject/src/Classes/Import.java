@@ -6,6 +6,7 @@
 package Classes;
 
 import Colecoes.DoubleLinkedOrderedList;
+import Colecoes.UnorderedArrayList;
 import Excepcoes.ElementNonComparable;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.JSONArray;
@@ -84,6 +86,65 @@ public class Import {
     }
     
     
+    private Iterator obtemMapasHoteis(){
+        UnorderedArrayList<Mapa> listaDeMapas = new UnorderedArrayList<>();
+        
+        File file = new File("../Hoteis");
+        File listOfFiles[] = file.listFiles();
+        
+        int i=0;
+        
+        for(int j=listOfFiles.length; i<j; i++){
+            File arquivos = listOfFiles[i];
+            Mapa mapa = new Mapa(arquivos.getName());
+            listaDeMapas.addToRear(mapa);
+        }
+        
+        return listaDeMapas.iterator();
+    }
        
-
+    /**
+     * Método que vai permitir escolher o hotel para a nossa aplicação
+     * @param escolhaHotel o numero a que o hotel corresponde
+     * @return o nome do hotel escolhido
+     */
+    public String escolheHotel(String escolhaHotel) throws FileNotFoundException, ParseException{
+        int count =1;
+        boolean found = false;
+        Iterator itr = this.obtemMapasHoteis();
+        
+        while(itr.hasNext() && !found){
+            Mapa hotel = (Mapa) itr.next();
+            
+            if(Integer.parseInt(escolhaHotel)==count){
+                found=true;
+                return hotel.getFileName();
+            }else{
+                count++;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Este metodo vai imprimir todos os hoteis e retornar o seu número
+     * @return número de hoteis
+     */
+    public int mostraHoteis() throws FileNotFoundException, ParseException{
+        Iterator itr = obtemMapasHoteis();
+        int num = 1;
+        
+        while(itr.hasNext()){
+            Mapa hotel = (Mapa) itr.next();
+            System.out.println(num + ") "+ hotel.getFileName());
+            
+            if(itr.hasNext()){
+                num++;
+            }
+        }
+        return num;
+    }
+    
+    
+    
 }

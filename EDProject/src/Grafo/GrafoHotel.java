@@ -36,7 +36,7 @@ public class GrafoHotel<T> extends GraphWeight<T>{
      * @return lista de vertices adjacentes
      */
     public Iterator<T> getVerticesAdjacentes(T vertex){
-        UnorderedArrayList<T> tempList = new UnorderedArrayList<T>();
+        UnorderedDoubleLinkedList<T> tempList = new UnorderedDoubleLinkedList<T>();
         
         int index = this.getIndex(vertex);
         

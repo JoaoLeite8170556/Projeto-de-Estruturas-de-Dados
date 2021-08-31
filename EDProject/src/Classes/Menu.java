@@ -31,9 +31,11 @@ public class Menu {
     
     private Hotel hotel;
     private GestaoHotel gestaoHotel;
+    private Import importTemp;
     
     
     public Menu() {
+        this.importTemp = new Import();
     }
     
     
@@ -42,83 +44,14 @@ public class Menu {
     
    
     
-    /**
-     * Este método vai retornar todos os Hoteis da pasta Hoteis
-     * @return iterador com a lista de mapas presentes na pasta "./Hoteis"
-     */
-    private Iterator arrayDeHoteis() throws FileNotFoundException, ParseException {
-
-        UnorderedArrayList<Mapa> hoteis = new UnorderedArrayList<Mapa>();
-
-        File[] listaDeFicheiros = new File("../Hoteis").listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                if(name.toLowerCase().endsWith(".json")){
-                    return true;
-                }else{
-                    return false;
-                }
-            }
-        });
-        
-        
-        for(File fileName : listaDeFicheiros){
-            JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("../Hoteis/")+fileName.getName());
-            
-            String[] mapaNameSlited = fileName.getName().split(".json");
-            
-            Mapa mapa = new Mapa(mapaNameSlited[0],jsonObject.get("nome").toString());
-            hoteis.addToFront(mapa);
-        }
-        return hoteis.iterator();
-    }
+   
     
  
-    /**
-     * Método que vai permitir escolher o hotel para a nossa aplicação
-     * @param escolhaHotel o numero a que o hotel corresponde
-     * @return o nome do hotel escolhido
-     */
-    public String escolheHotel(String escolhaHotel) throws FileNotFoundException, ParseException{
-        int count =1;
-        boolean found = false;
-        Iterator itr = this.arrayDeHoteis();
-        
-        while(itr.hasNext() && !found){
-            Mapa hotel = (Mapa) itr.next();
-            
-            if(Integer.parseInt(escolhaHotel)==count){
-                found=true;
-                return hotel.getFileName();
-            }else{
-                count++;
-            }
-        }
-        return null;
-    }
     
     
-    /**
-     * Este metodo vai imprimir todos os hoteis e retornar o seu número
-     * @return número de hoteis
-     */
-    private int mostraHoteis() throws FileNotFoundException, ParseException{
-        Iterator itr = arrayDeHoteis();
-        int num = 1;
-        
-        while(itr.hasNext()){
-            Mapa hotel = (Mapa) itr.next();
-            System.out.println(num + ") "+ hotel.getNomeMapa());
-            
-            if(itr.hasNext()){
-                num++;
-            }
-        }
-        return num;
-    }
     
-    public void menuHotel() throws FileNotFoundException, ParseException{
+    
+    /*public void menuHotel() throws FileNotFoundException, ParseException{
         String escolha = "";
         
         
@@ -150,7 +83,7 @@ public class Menu {
                 System.out.println("Opção inválida");
             }
         }
-    }
+    }*/
     
      public void modoDeJogo() throws EmptyExcpetion, ElementNonComparable{
         int opcao = 0;
@@ -210,6 +143,33 @@ public class Menu {
                     break;
             }
         }
+    }
+    
+    
+    public String escolheMapa() throws FileNotFoundException, ParseException{
+
+        String escolha = "";
+        String fileMapa = "";
+        boolean validPath = false;
+        
+        while(!validPath){
+            int number = importTemp.mostraHoteis();
+            
+            System.out.println("Escolha o mapa que quer jogar!!!!!"+" \n");
+            
+            Scanner scanner = new Scanner(System.in);
+            
+            escolha = scanner.nextLine();
+            
+            if(escolha.matches("[1"+ number + "]")){
+                if(importTemp.escolheHotel(escolha)!=null){
+                    fileMapa = importTemp.escolheHotel(escolha);
+                    validPath = true;
+                }
+            }
+        }
+        
+        return fileMapa;
     }
 
 }

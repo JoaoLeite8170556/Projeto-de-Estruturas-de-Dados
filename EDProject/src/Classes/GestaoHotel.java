@@ -123,9 +123,9 @@ public class GestaoHotel {
 
                 System.out.println("Escolha a divisao para "
                         + "a qual se pretende mover:\n");
-                this.hotel.imprimeDivisoesAdjacentes(divisaoPessoa);
+                int contAux = this.hotel.imprimeDivisoesAdjacentes(divisaoPessoa);
                 escolha = scanner.nextLine();
-                int contAux=0;
+
                 if (!escolha.matches("[1-" + contAux + "]")) {
                     System.out.println("Invalid option");
                 } else {
@@ -158,6 +158,16 @@ public class GestaoHotel {
             throws ElementNonComparable {
         this.hotel.getMovimentosHotel().add(new Movimentos(pessoa.getId(),
                 divisao.getNome()));
+    }
+    
+    public void imprimeDivisaoAdjacentes(String divisao){
+        
+        Divisao divisaoAux = this.hotel.findDivision(divisao);
+        
+        int itr = this.hotel.imprimeDivisoesAdjacentes(divisaoAux);
+        
+        
+        System.out.println(itr);
     }
 
 }
