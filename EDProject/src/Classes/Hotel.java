@@ -179,16 +179,35 @@ public class Hotel {
             if (aux_divisaoInicial != divisaoDestino) {
 
                 this.divisoesHotel.setEdgeWeight(aux_divisaoInicial,
-                        divisaoDestino,
+                        divisaoInicial,
                         this.divisoesHotel.getEdgeWeight(aux_divisaoInicial,
-                                divisaoDestino) - 1);
+                                divisaoInicial) - 1);
             }
         }
     }
     
-   
-    
-    
+    /**
+     * Este método vai permitir atualizar os pesos entre duas divisões
+     *
+     * @param divisaoInicial divisao inicial
+     * @param divisaoDestino divisão destino
+     */
+    public void atualizaPesosEntrada(Divisao entrada) {
+
+        Iterator itr_divisaoAdjacentes
+                = this.divisoesHotel.getVerticesAdjacentes(entrada);
+
+        while (itr_divisaoAdjacentes.hasNext()) {
+
+            Divisao aux_divisaoAdjacente = (Divisao) itr_divisaoAdjacentes.next();
+
+            this.divisoesHotel.setEdgeWeight(entrada,
+                    aux_divisaoAdjacente,
+                    this.divisoesHotel.getEdgeWeight(entrada,
+                            aux_divisaoAdjacente) + 1);
+
+        }
+    }
     
     public UnorderedDoubleLinkedList<Pessoa> getListaDePessoas() {
         return listaDePessoas;
@@ -418,10 +437,11 @@ public class Hotel {
     public int imprimeDivisoesAdjacentes(Divisao divisao) {
         Iterator<Divisao> itr_divisoes
                 = this.divisoesHotel.getVerticesAdjacentes(divisao);
-        int contador = 1;
+        int contador = 0;
         System.out.println("Divisoes Adjacentes: " + divisao.getNome() + "\n");
         while (itr_divisoes.hasNext()) {
-            System.out.println(  contador++ + "-> " + itr_divisoes.next().getNome() + "\n");
+            contador++;
+            System.out.println(  contador + "-> " + itr_divisoes.next().getNome() + "\n");
         }
         return contador;
     }

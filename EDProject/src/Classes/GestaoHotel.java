@@ -93,7 +93,7 @@ public class GestaoHotel {
 
     public void modoManual() throws EmptyExcpetion, ElementNonComparable{
 
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in, "ISO-8859-1");
         String escolha = "vazia";
         DoubleLinkedOrderedList<Movimentos> listaMovimentos 
                 = hotel.getMovimentosHotel();
@@ -113,6 +113,7 @@ public class GestaoHotel {
                     
                     this.hotel.addPessoaEmDivisao(hotel.getEntrada(), pessoaAux);
                     adicionaMovimento(hotel.getEntrada(), pessoaAux);
+                    this.hotel.atualizaPesosEntrada(hotel.getEntrada());
                     escolha = "valido";
                 } else if (escolha.equals("2")) {
                     System.out.println("Passou a sua vez....");
@@ -135,16 +136,17 @@ public class GestaoHotel {
                 } else {
                     Iterator itr
                             = this.hotel.getDivisoes().getVerticesAdjacentes(divisaoPessoa);
-                    int countAux2 = 0;
+                    int countAux2 = 1;
                     while (itr.hasNext()) {
                         Divisao conecao = (Divisao) itr.next();
-                        if (countAux2++ == auxEscolha) {
+                        if (countAux2 == auxEscolha) {
                             hotel.addPessoaEmDivisao(conecao, pessoaAux);
                             hotel.removePessoaEmDivisao(divisaoPessoa, pessoaAux);
                             adicionaMovimento(divisaoPessoa, pessoaAux);
                             hotel.atualizaPesos(divisaoPessoa, conecao);
                             escolha = "valido";
                         }
+                        countAux2++;
                     }
 
                 }

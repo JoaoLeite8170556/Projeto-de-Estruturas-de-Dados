@@ -148,7 +148,7 @@ public class Menu {
                     hotel.imprimePessoas();
                     break;
                 case 5:
-
+                    System.out.println(hotel.getDivisoes().toString());
                     break;
                 case 0:
                     opcao = -1;

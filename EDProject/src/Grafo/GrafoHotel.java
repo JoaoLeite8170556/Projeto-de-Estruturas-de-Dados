@@ -157,107 +157,62 @@ public class GrafoHotel<T> extends GraphWeight<T>{
      * ligações e os vertices com as suas ligações correspondentes.
      *
      * @return a string com os vertices e as suas ligaçoes
-     
-    @Override
+     **/
+   @Override
     public String toString() {
-        if (numVertices == 0) {
+        if (numVertices == 0)
             return "Graph is empty";
-        }
 
-        String result = new String("");
+        StringBuilder result = new StringBuilder();
 
-        /* Print the adjacency Matrix 
-        result += "----------------------------------Matriz de adjacência----------------------------------\n";
-        result += "----------------------------------------------------------------------------------------\n";
-        result += "Divisões\t\t";
-
-        for (int i = 0; i < numVertices; i++) {
-            result += this.vertices[i] + " \t";
-
-        }
-        result += "\n";
+        // Print the adjacency Matrix
+        result.append("Adjacency Matrix\n");
+        result.append("----------------\n");
+        result.append("index\t");
 
         for (int i = 0; i < numVertices; i++) {
-            Divisao temp = (Divisao) this.vertices[i];
-            if (temp.length() < 8) {
-                result += this.vertices[i] + "\t\t\t";
-            } else if (temp.length() > 15) {
-                result += this.vertices[i] + "\t";
-            } else {
-                result += this.vertices[i] + "\t\t";
-            }
+            result.append(i);
+            if (i < 10)
+                result.append(" ");
+        }
+        result.append("\n\n");
+
+        for (int i = 0; i < numVertices; i++) {
+            result.append(i).append("\t\t");
 
             for (int j = 0; j < numVertices; j++) {
-                temp = (String) this.vertices[j];
-
-                if (weights[i][j] < Double.POSITIVE_INFINITY) {
-
-                    if (temp.length() > 13) {
-
-                        result += "   True " + "\t\t";
-
-                    } else if (temp.equals("Escada 4") || temp.equals("Segurança")) {
-                        result += "   True   " + " ";
-                    } else {
-
-                        result += "   True " + "\t";
-                    }
-
-                } else {
-
-                    if (temp.length() > 13) {
-
-                        result += "  False  " + "\t\t";
-
-                    } else if (temp.equals("Escada 4") || temp.equals("Segurança")) {
-                        result += "   False  " + "  ";
-                    } else {
-
-                        result += "  False  " + "\t";
-
-                    }
-                }
+                if (weights[i][j] < Double.POSITIVE_INFINITY)
+                    result.append(weights[i][j]);
+                else
+                    result.append("0 ");
             }
-            result += "\n";
+            result.append("\n");
         }
-        result += "\n\n------------------Peso das Arestas------------------";
-        result += "\n-----------------------------------------------------\n";
-        result += "Aresta \t\t\t\t\t\tPeso\n\n";
+
+        /* Print the vertex values /
+        result.append("\n\nVertex Values");
+        result.append("\n-------------\n");
+        result.append("index\tvalue\n\n");
+
+        for (int i = 0; i < numVertices; i++) {
+            result.append(i).append("\t\t");
+            result.append(vertices[i].toString()).append("\n");
+        }
+
+        / Print the weights of the edges /
+        /result.append("\n\nWeights of Edges");
+        result.append("\n----------------\n");
+        result.append("index\tweight\n\n");
 
         for (int i = 0; i < numVertices; i++) {
             for (int j = numVertices - 1; j > i; j--) {
-                if (this.weights[i][j] < Double.POSITIVE_INFINITY) {
-                    String tmp = "";
-                    result += this.vertices[i] + " para " + this.vertices[j];
-                    tmp = this.vertices[i] + " para " + this.vertices[j];
-
-                    if (tmp.length() < 40 && tmp.length() > 31) {
-                        result += "\t\t";
-                    } else if (tmp.length() < 32 && tmp.length() > 23) {
-                        result += "\t\t\t";
-                    } else {
-                        result += "\t\t\t\t";
-                    }
-
-                    result += this.weights[i][j] + "\n";
-                    result += this.vertices[j] + " para " + this.vertices[i];
-
-                    if (tmp.length() < 40 && tmp.length() > 31) {
-                        result += "\t\t";
-                    } else if (tmp.length() < 33 && tmp.length() >= 24) {
-                        result += "\t\t\t";
-                    } else {
-                        result += "\t\t\t\t";
-                    }
-
-                    result += this.weights[j][i] + "\n";
+                if (weights[i][j] < Double.POSITIVE_INFINITY) {
+                    //result.append((vertices[i]).getName()).append(" to ").append(((Vertex) vertices[j]).getName()).append("\t");
+                    result.append(adjMatrix[i][j]).append("\n");
                 }
-
             }
+        }*/
 
-        }
-
-        result += "\n";
-        return result;
-    }**/
+        return result.toString();
+    }
 }
