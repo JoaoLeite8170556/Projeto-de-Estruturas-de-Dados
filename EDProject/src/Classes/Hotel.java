@@ -339,29 +339,7 @@ public class Hotel {
         return (divisao.getListaDePessoas().size() <= divisao.getNumeroPessoas());
     }
 
-    /**
-     * Este método vai permitir guardar pessoas nas divisão analisando certas
-     * variaveis como tipo de sala que esta a entrar ou tipo de pessoa que é.
-     *
-     * @param pessoa pessoa que vai ser mover para a divisão.
-     * @param divisao a divisão.
-     */
-    private void verificaTipoPessoa(Pessoa pessoa, Divisao divisao) {
-
-        Iterator itr = divisao.getListaDePessoas().iterator();
-
-        while (itr.hasNext()) {
-            if (verificaSalaReservado(divisao.getNome()) && pessoa.getTipo().equals("FUNCIONARIO") && verificaLotacao(divisao) == 0) {
-                divisao.getListaDePessoas().addToRear(pessoa);
-            } else if (verificaSalaQuarentena(divisao.getNome()) && pessoa.getTipo().equals("HOSPEDE") && verificaLotacao(divisao) == 0) {
-                divisao.getListaDePessoas().addToRear(pessoa);
-            } else if (!verificaSalaReservado(divisao.getNome()) && !verificaSalaQuarentena(divisao.getNome()) && verificaLotacao(divisao) == 1) {
-                divisao.getListaDePessoas().addToRear(pessoa);
-            } else {
-                System.out.println("IMPOSSÍVEL!!!! Não pode entrar!!!!");
-            }
-        }
-    }
+    
 
     /**
      * Este método vai possibilitar a lotação da divisão chegar ao limite
@@ -384,18 +362,6 @@ public class Hotel {
     private boolean verificaSalaQuarentena(String divisao) {
         Divisao auxDivisao = findDivision(divisao);
         return auxDivisao.getTipoSala().equals("QUARENTENA");
-    }
-
-    /**
-     * Verifica se a sala atual corresponde a sala reservada
-     *
-     * @param divisao a divisao queremos verificar
-     * @return true se a divisão for do tipo "reservada"
-     */
-    private boolean verificaSalaReservado(String divisao) {
-        Divisao auxDivisao = findDivision(divisao);
-
-        return auxDivisao.getTipoSala().equals("RESERVADO");
     }
 
     /**

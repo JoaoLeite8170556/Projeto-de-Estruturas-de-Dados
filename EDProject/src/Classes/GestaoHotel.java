@@ -7,6 +7,8 @@ package Classes;
 
 import Colecoes.DoubleLinkedOrderedList;
 import Colecoes.UnorderedDoubleLinkedList;
+import Enumerações.Tipo;
+import Enumerações.TipoSala;
 import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
 import java.util.Iterator;
@@ -93,7 +95,7 @@ public class GestaoHotel {
 
     public void modoManual() throws EmptyExcpetion, ElementNonComparable{
 
-        Scanner scanner = new Scanner(System.in, "ISO-8859-1");
+        Scanner scanner = new Scanner(System.in);
         String escolha = "vazia";
         DoubleLinkedOrderedList<Movimentos> listaMovimentos 
                 = hotel.getMovimentosHotel();
@@ -140,10 +142,21 @@ public class GestaoHotel {
                     while (itr.hasNext()) {
                         Divisao conecao = (Divisao) itr.next();
                         if (countAux2 == auxEscolha) {
-                            hotel.addPessoaEmDivisao(conecao, pessoaAux);
-                            hotel.removePessoaEmDivisao(divisaoPessoa, pessoaAux);
+                            
+                            this.hotel.addPessoaEmDivisao(conecao, pessoaAux);
+                           
+                            
+                           if(conecao.getTipoSala() == TipoSala.RESERVADO && pessoaAux.getTipo() == Tipo.HOSPEDE){
+                               System.out.println("ALERTA !!!!!"+"\n"+"Entrou numa Divisão para Funcionários!!!!");
+                           }else if(conecao.getTipoSala() == TipoSala.QUARENTENA){
+                               System.out.println("ALERTA !!!!!"+"\n"+"Entrou numa Divisão de Quarentena!!!!");
+                           }
+                           if(conecao.getNumeroPessoas() >= conecao.getListaDePessoas().size()){
+                               System.out.println("ALERTA !!!!!"+"\n"+"Atingiu a Capacidade máxima da Divisão!!!!");
+                           }
+                            this.hotel.removePessoaEmDivisao(divisaoPessoa, pessoaAux);
                             adicionaMovimento(divisaoPessoa, pessoaAux);
-                            hotel.atualizaPesos(divisaoPessoa, conecao);
+                            this.hotel.atualizaPesos(divisaoPessoa, conecao);
                             escolha = "valido";
                         }
                         countAux2++;
