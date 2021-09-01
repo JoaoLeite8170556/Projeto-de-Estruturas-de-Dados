@@ -222,10 +222,10 @@ public class GestaoHotel {
         Divisao divisaoAtual = this.hotel.encontraPessoaDivisao(pessoa); 
         Divisao divisaoQuarentena = this.hotel.getSalaQuarentena();
         Iterator itr = hotel.getDivisoes().iteratorShortestPath(divisaoAtual, divisaoQuarentena);
-        itr.next();
+        
         Divisao divAux = null;
-        Divisao divAnterior = null;
         if(pessoa.getTipo() == Tipo.FUNCIONARIO){
+            itr.next();
             System.out.println("Deve seguir a seguinte sequencia: \n");
             while(itr.hasNext()){
                 divAux= (Divisao) itr.next();
@@ -233,23 +233,27 @@ public class GestaoHotel {
             }
         }else{
             System.out.println("Deve seguir a seguinte sequencia: \n");
+            
             caminhoMaisCurtoSalaQuarentenaHospede(itr, divisaoQuarentena);
         }
     }
     
     private void caminhoMaisCurtoSalaQuarentenaHospede(Iterator itr, Divisao divisaoQuarentena) {
-        itr.next();
+        
+        Divisao divAtual = (Divisao) itr.next();
         Divisao divAux = (Divisao) itr.next();
-        if (itr.hasNext()) {
+        if (itr.hasNext()==true) {
             if (divAux.getTipoSala() == TipoSala.RESERVADO) {
-                Iterator itrAdjacente = this.hotel.getDivisoes().getVerticesAdjacentes(divAux);
+                Iterator itrAdjacente = this.hotel.getDivisoes().getVerticesAdjacentes(divAtual);
                 caminhoMaisCurtoSalaQuarentenaHospede(
                         hotel.getDivisoes().iteratorShortestPath(divisaoMenosPessoas(itrAdjacente), divisaoQuarentena), 
                         divisaoQuarentena);
-            } else if (divAux!= divisaoQuarentena) {
+            } else {
+                
+                System.out.println("->" + divAtual.getNome() + "\n");
                 
                 caminhoMaisCurtoSalaQuarentenaHospede(
-                        hotel.getDivisoes().iteratorShortestPath(divAux, divisaoQuarentena), 
+                        hotel.getDivisoes().iteratorShortestPath(divAtual, divisaoQuarentena), 
                         divisaoQuarentena);
             }
         }else{
