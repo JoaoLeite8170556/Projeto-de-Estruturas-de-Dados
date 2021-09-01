@@ -12,7 +12,7 @@ import Colecoes.*;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class JSONMovimentos {
+public class JSONMovimentos implements Comparable{
        
     private String nomeHotel;
     private int versao;
@@ -21,7 +21,7 @@ public class JSONMovimentos {
     public JSONMovimentos(String nomeHotel, int versao, DoubleLinkedOrderedList<Movimentos> listaMovimentos){
        this.setNomeHotel(nomeHotel);
        this.setVersao(versao);
-       this.movimentos = new DoubleLinkedOrderedList<Movimentos>();
+       this.movimentos = listaMovimentos;
     }
 
     public String getNomeHotel() {
@@ -42,6 +42,20 @@ public class JSONMovimentos {
 
     public DoubleLinkedOrderedList<Movimentos> getMovimentos() {
         return movimentos;
+    }
+    
+    @Override
+    public int compareTo(Object o) {
+        JSONMovimentos json = (JSONMovimentos) o;
+        
+        
+        if(getVersao() < json.getVersao()){
+            return 1;
+        }else if(getVersao()>json.getVersao()){
+            return -1;
+        }else{
+            return 0;
+        }
     }
      
 }

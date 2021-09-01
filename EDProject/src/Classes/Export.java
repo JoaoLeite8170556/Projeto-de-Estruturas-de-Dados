@@ -29,17 +29,19 @@ public class Export {
         
     }
     
-    
-    public void escreveMovimentosJSON(DoubleLinkedOrderedList<JSONMovimentos> listaDeMovimentos) throws IOException{
+    /**
+     * Este método vai possibilitar escrever a Lista de JSONMovimentos no ficheiro JSON
+     * @param listaDeMovimentos a lista de JSONMovimentos
+     * @throws IOException 
+     */
+   public void escreveMovimentosJSON(DoubleLinkedOrderedList<JSONMovimentos> listaDeMovimentos) throws IOException{
         
         JSONObject jsonObject = new JSONObject();
         
         JSONArray array = new JSONArray();
         
-        Iterator<JSONMovimentos> itr = listaDeMovimentos.iterator();
-        
-        while(itr.hasNext()){
-            array.add((jsonMovimentos(itr.next())));
+        for (JSONMovimentos jsonMovimentosTemp : listaDeMovimentos) {
+            array.add((jsonMovimentos(jsonMovimentosTemp)));
         }
         
         jsonObject.put("movimentosHoteis",array);
@@ -55,7 +57,7 @@ public class Export {
      * @param movimentos
      * @return 
      */
-    private JSONObject jsonMovimentos(JSONMovimentos movimentos){
+   private JSONObject jsonMovimentos(JSONMovimentos movimentos){
 
         JSONObject jsonMovimentos = new JSONObject();
 
@@ -65,14 +67,17 @@ public class Export {
 
         JSONArray jsonListaMovimentos = new JSONArray();
 
-        Iterator<Movimentos> itr = movimentos.getMovimentos().iterator();
+        Iterator itr = movimentos.getMovimentos().iterator();
 
         while (itr.hasNext()) {
+            Movimentos movimentosAux = (Movimentos) itr.next();
+            
             JSONObject informacao = new JSONObject();
-            informacao.put("idPessoa", itr.next().getIdPessoa());
-            informacao.put("divisao", itr.next().getNomeDivisao());
+            
+            informacao.put("idPessoa", movimentosAux.getIdPessoa());
+            informacao.put("divisao", movimentosAux.getNomeDivisao());
 
-            Date date = itr.next().getDataHoraAtual();
+            Date date = movimentosAux.getDataHoraAtual();
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
             informacao.put("dataHora", formatter.format(date));

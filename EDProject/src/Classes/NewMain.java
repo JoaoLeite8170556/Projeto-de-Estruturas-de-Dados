@@ -52,10 +52,6 @@ public class NewMain {
         }*/
         
         Menu menu = new Menu();
-        
-        
-        menu.modoManual();
-        
         //System.out.println(import1.escolheHotel(import1.));
     }
     

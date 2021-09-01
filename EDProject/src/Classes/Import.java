@@ -30,9 +30,7 @@ import org.json.simple.parser.ParseException;
 public class Import {
     
     
-    public Import(){
-        
-    }
+    
     
      /**
      * Este metodo vai ler o ficheiro json e guardar a informação numa lista.

@@ -5,6 +5,7 @@
  */
 package Classes;
 
+import Colecoes.DoubleLinkedOrderedList;
 import Colecoes.UnorderedArrayList;
 import Colecoes.UnorderedDoubleLinkedList;
 import Excepcoes.ElementNonComparable;
@@ -14,6 +15,7 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -35,17 +37,37 @@ public class Menu {
     private Hotel hotel;
     private GestaoHotel gestaoHotel;
     private Import importTemp;
+    private Export export;
+    private DoubleLinkedOrderedList<JSONMovimentos> listaJsonMovimentos;
     
-    
-    public Menu() {
-        try {
+    public Menu() throws IOException {
+         try {
+            
+            this.export= new Export();
             this.importTemp = new Import();
             
             this.hotel = new Hotel(this.escolheMapa());
-            this.gestaoHotel = new GestaoHotel(hotel);
+            
+            File file = new File("../movimentos.json");
+            
+            if(file.exists()){
+                this.listaJsonMovimentos = this.importTemp.readFileMovimentos();
+            }else{
+                this.listaJsonMovimentos = new DoubleLinkedOrderedList<JSONMovimentos>();
+            }
+            this.gestaoHotel = new GestaoHotel(this.hotel);
+            
+            
+            
         } catch (FileNotFoundException | ParseException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | ElementNonComparable ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
         }
+         
+        try {
+            this.menuHotel();
+        } catch (EmptyExcpetion | ElementNonComparable ex) {}
     }
     
     
@@ -54,74 +76,13 @@ public class Menu {
     public UnorderedDoubleLinkedList<Divisao> retornaDivisoes(){
         return this.hotel.getDivisoes().getTodasDivisoes();
     }
-   
     
-   
-    
- 
-    
-    
-    
-    
-    /*public void menuHotel() throws FileNotFoundException, ParseException{
-        String escolha = "";
-        
-        
-        boolean nomeDoMapa = false;
-        boolean caminhoValido = false;
-        
-        
-        String nomeMapa = "";
-        
-        System.out.println("---------------------------------------"+ "\n");
-        System.out.println("Bem vindo ao Hotel: Toca"+"\n");
-        
-        while(!nomeDoMapa || !caminhoValido){
-            int number = mostraHoteis();
-            
-            System.out.println("Escolha a opção: "+"\n");
-
-            Scanner scanner = new Scanner(System.in);
-            
-            escolha = scanner.nextLine();
-            
-            if(escolha.matches("1-"+ number+"]")){
-                if(escolheHotel(escolha) != null){
-                    nomeMapa = escolheHotel(escolha);
-                    this.hotel = new Hotel(nomeMapa);
-                    caminhoValido = true;
-                }
-            }else{
-                System.out.println("Opção inválida");
-            }
-        }
-    }*/
-    
-     public void modoDeJogo() throws EmptyExcpetion, ElementNonComparable{
-        int opcao = 0;
-        while(opcao != -1){
-            System.out.println("---------------------------");
-            System.out.println("1 -> Modo Manual");
-            System.out.println("2 -> Modo Automatico");
-            System.out.println("0 -> Sair");
-            System.out.println("---------------------------");
-            
-            switch(opcao){
-                case 1:
-                    modoManual();
-                    break;
-                case 2:
-                    //gestaoHotel.modoAutomatico();
-                    break;
-                case 0:
-                    opcao=-1;
-                    break;
-            }
-        }
-    }
-     
-     
-    public void modoManual() throws EmptyExcpetion, ElementNonComparable {
+    /**
+     * Metodo que é o menu com as opções para usar no Programa
+     * @throws EmptyExcpetion
+     * @throws ElementNonComparable 
+     */
+    private void menuHotel() throws EmptyExcpetion, ElementNonComparable {
         int opcao = 0;
         Scanner scanner = new Scanner(System.in);
         while (opcao != -1) {
@@ -160,16 +121,29 @@ public class Menu {
                     gestaoHotel.caminhoMaisCurtoSalaQuarentena();
                     break;
                 case 0:
+                    this.listaJsonMovimentos.add(new JSONMovimentos(this.hotel.getNomeHotel(), this.hotel.getVersao(), this.hotel.getMovimentosHotel()));
+                {
+                    try {
+                        this.export.escreveMovimentosJSON(this.listaJsonMovimentos);
+                    } catch (IOException ex) {}
+                }
                     opcao = -1;
                     break;
+
             }
         }
     }
     
     
     
-    
-    public String escolheMapa() throws FileNotFoundException, ParseException{
+    /**
+     * Este metodo vai pedir ao utilizador para escolher o mapa do hotel para usar no
+     * programa
+     * @return
+     * @throws FileNotFoundException
+     * @throws ParseException 
+     */
+    private String escolheMapa() throws FileNotFoundException, ParseException{
 
         String escolha = "";
         String fileMapa = "";

@@ -96,8 +96,6 @@ public class GestaoHotel {
 
         Scanner scanner = new Scanner(System.in);
         String escolha = "vazia";
-        DoubleLinkedOrderedList<Movimentos> listaMovimentos
-                = hotel.getMovimentosHotel();
         Pessoa pessoaAux = escolhePessoa();
 
         Divisao divisaoPessoa = hotel.encontraPessoaDivisao(pessoaAux);
@@ -105,7 +103,7 @@ public class GestaoHotel {
         if (divisaoPessoa == null) {
             while (!escolha.equals("valido")) {
 
-                System.out.println("Pretende entrar no" + hotel.getEntrada().getNome()
+                System.out.println("Pretende entrar no " + hotel.getEntrada().getNome()
                         + "\n");
                 System.out.println("1->Sim\n");
                 System.out.println("2->Não\n");
