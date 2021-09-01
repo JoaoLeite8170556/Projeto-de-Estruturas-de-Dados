@@ -27,6 +27,10 @@ public class Divisao {
         this.listaDePessoas = new UnorderedDoubleLinkedList<Pessoa>();
         
     }
+
+    public int getCapacidadeMaxima() {
+        return capacidadeMaxima;
+    }
     
     
     public Divisao(String nome) {

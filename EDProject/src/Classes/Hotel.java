@@ -416,6 +416,18 @@ public class Hotel {
         return findDivision("Hall de entrada");
     }
     
+    public Divisao getSalaQuarentena(){
+        Iterator itr = this.divisoesHotel.getTodasDivisoes().iterator();
+
+        while(itr.hasNext()){
+            Divisao divisao = (Divisao) itr.next();
+            if(divisao.getTipoSala()==TipoSala.QUARENTENA){
+                return divisao;
+            }
+        }
+        return null;
+    }
+    
    public Divisao encontraPessoaDivisao(Pessoa pessoa){
         Iterator<Divisao> itr = this.divisoesHotel.getTodasDivisoes().iterator();
         Divisao divisaoAux;

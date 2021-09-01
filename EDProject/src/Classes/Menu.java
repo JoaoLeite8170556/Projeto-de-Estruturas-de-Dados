@@ -131,6 +131,8 @@ public class Menu {
             System.out.println("3 -> Criar Funcionario");
             System.out.println("4 -> Ver Lista de Pessoas");
             System.out.println("5 -> Ver Mapa de Hotel");
+            System.out.println("6 -> Lista de Movimentos do Hotel");
+            System.out.println("7 -> Caminho mais apropriado sala quarentena");
             System.out.println("0 -> Sair");
             System.out.println("---------------------------");
             int escolha = scanner.nextInt();
@@ -150,12 +152,21 @@ public class Menu {
                 case 5:
                     System.out.println(hotel.getDivisoes().toString());
                     break;
+                    
+                case 6:
+                    System.out.println(hotel.getMovimentosHotel().toString());
+                    break;
+                case 7:
+                    gestaoHotel.caminhoMaisCurtoSalaQuarentena();
+                    break;
                 case 0:
                     opcao = -1;
                     break;
             }
         }
     }
+    
+    
     
     
     public String escolheMapa() throws FileNotFoundException, ParseException{
