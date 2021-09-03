@@ -59,10 +59,10 @@ public class Movimentos implements Comparable{
     public int compareTo(Object obj) {
         Movimentos movimentos = (Movimentos) obj;
 
-        if (getIdPessoa() > movimentos.getIdPessoa()) {
+        if (getDataHoraAtual().after(movimentos.getDataHoraAtual()) ) {
             return 1;
         } else {
-            if (getIdPessoa() < movimentos.getIdPessoa()) {
+            if (getDataHoraAtual().before(movimentos.getDataHoraAtual())) {
                 return -1;
             } else {
                 return 0;
