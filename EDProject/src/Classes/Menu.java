@@ -93,11 +93,12 @@ public class Menu {
             System.out.println("1 -> Mover Pessoas");
             System.out.println("2 -> Criar Hospede");
             System.out.println("3 -> Criar Funcionario");
-            System.out.println("4 -> Ver Lista de Pessoas");
-            System.out.println("5 -> Ver Mapa de Hotel");
-            System.out.println("6 -> Lista de Movimentos do Hotel");
-            System.out.println("7 -> Caminho mais apropriado sala quarentena");
-            System.out.println("8 -> Contactos com a pessoa");
+            System.out.println("4 -> Criar Funcionario");
+            System.out.println("5 -> Ver Lista de Pessoas");
+            System.out.println("6 -> Ver Mapa de Hotel");
+            System.out.println("7 -> Lista de Movimentos do Hotel");
+            System.out.println("8 -> Caminho mais apropriado sala quarentena");
+            System.out.println("9 -> Contactos com a pessoa");
             System.out.println("0 -> Sair");
             System.out.println("---------------------------");
             int escolha = scanner.nextInt();

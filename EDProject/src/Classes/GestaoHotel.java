@@ -6,6 +6,7 @@
 package Classes;
 
 import Colecoes.DoubleLinkedOrderedList;
+import Colecoes.UnorderedArrayList;
 import Colecoes.UnorderedDoubleLinkedList;
 import Enumerações.Tipo;
 import Enumerações.TipoSala;
@@ -161,18 +162,24 @@ public class GestaoHotel implements InterfaceGestaoHotel{
         if (divisao.getNome().equals(hotel.getEntrada().getNome())) {
             querSair = desejaSair(escolha, pessoa);
         }
+        int lugaresVagos = divisao.getCapacidadeMaxima() - divisao.getNumeroPessoas();
+        
         if (querSair != true) {
-            if (divisao.getNumeroPessoas() == divisao.getCapacidadeMaxima()) {
-                System.out.println("ALERTA !!!!!" + "\n" + "Atingiu a Capacidade máxima da Divisão!!!!");
+            if (lugaresVagos == 0) {
+                System.out.println("ALERTA !!!!!" + "\n" + "Capacidade máxima "
+                        + "da Divisão já atingida!!!!");
             } else if (divisao.getTipoSala() == TipoSala.RESERVADO && pessoa.getTipo() == Tipo.HOSPEDE) {
+                verificaPertoLotacaoMax(lugaresVagos);
                 System.out.println("ALERTA !!!!!" + "\n" + "Entrou numa Divisão para Funcionários!!!!");
                 confirmacaoMovimento(pessoa, divisaoPessoa, divisao);
                 escolha = "valido";
             } else if (divisao.getTipoSala() == TipoSala.QUARENTENA) {
+                verificaPertoLotacaoMax(lugaresVagos);
                 System.out.println("ALERTA !!!!!" + "\n" + "Entrou numa Divisão de Quarentena!!!!");
                 confirmacaoMovimento(pessoa, divisaoPessoa, divisao);
                 escolha = "valido";
             } else {
+                verificaPertoLotacaoMax(lugaresVagos);
                 movePessoa(pessoa, divisaoPessoa, divisao);
                 escolha = "valido";
             }
@@ -181,6 +188,20 @@ public class GestaoHotel implements InterfaceGestaoHotel{
         }
 
         return escolha;
+    }
+    
+    private void verificaPertoLotacaoMax(Integer lugaresVagos) throws EmptyExcpetion{
+        UnorderedArrayList<Integer> arrayList = new UnorderedArrayList<>();
+        arrayList.addToRear(2);
+        arrayList.addToRear(3);
+        
+        if (lugaresVagos ==1){
+            System.out.println("ALERTA !!!!!" + "\n" + "Atingiu a Capacidade "
+                    + "máxima da Divisão!!!! \n");
+        }else if(arrayList.contains(lugaresVagos)){
+            System.out.println("ALERTA !!!!!" + "\n" + "A divisao esta próxima "
+                    + "da lotação máxima!!\n");
+        }
     }
 
     private boolean desejaSair(String escolha, Pessoa pessoa) throws EmptyExcpetion, ElementNonComparable {
