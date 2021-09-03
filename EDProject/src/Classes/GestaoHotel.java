@@ -85,7 +85,7 @@ public class GestaoHotel implements InterfaceGestaoHotel{
                 escolha = "valido";
                 return hotel.getListaDePessoas().last().getId();
             } else if (escolha.equals("2")) {
-                System.out.println("Nao se registou nao vai ser premitido entrar no hotel!! \n");
+                System.out.println("Nao se registou não vai ser premitido entrar no hotel!! \n");
                 escolha = "valido";
             } else {
                 System.out.println("!!Escolha invalida!! \n");
@@ -193,7 +193,7 @@ public class GestaoHotel implements InterfaceGestaoHotel{
             System.out.println("2->Não\n");
             escolha = scanner.nextLine();
             if (escolha.equals("1")) {
-                System.out.println("Muito obrigado pela sua estadia!!\n");
+                System.out.println("Muito obrigado pela sua estadia, volte sempre!!\n");
                 this.hotel.addPessoaEmDivisao(hotel.getEntrada(), pessoa);
                 this.hotel.atualizaPesos(hotel.encontraPessoaDivisao(pessoa),
                         hotel.getEntrada());
@@ -285,7 +285,7 @@ public class GestaoHotel implements InterfaceGestaoHotel{
                 caminhoMaisCurtoSalaQuarentenaHospede(itr, divisaoQuarentena);
             }
         }else{
-            System.out.println("A pessoa nao esta em nenhuma divisao!!");
+            System.out.println("A pessoa não está em nenhuma divisao!!");
         }
     }
 

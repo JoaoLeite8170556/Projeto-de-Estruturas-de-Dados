@@ -97,7 +97,7 @@ public class Menu {
             System.out.println("5 -> Ver Mapa de Hotel");
             System.out.println("6 -> Lista de Movimentos do Hotel");
             System.out.println("7 -> Caminho mais apropriado sala quarentena");
-            
+            System.out.println("8 -> Contactos com a pessoa");
             System.out.println("0 -> Sair");
             System.out.println("---------------------------");
             int escolha = scanner.nextInt();

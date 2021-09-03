@@ -4,17 +4,8 @@
  * and open the template in the editor.
  */
 package Classes;
-
-import Excepcoes.ElementNonComparable;
-import Excepcoes.EmptyExcpetion;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import org.json.simple.parser.ParseException;
 
 /**
  * Main do Projeto

@@ -30,9 +30,6 @@ import org.json.simple.parser.ParseException;
  */
 public class Import implements InterfaceImport{
     
-    
-    
-    
      /**
      * Este metodo vai ler o ficheiro json e guardar a informação numa lista.
      *

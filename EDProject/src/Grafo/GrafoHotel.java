@@ -11,6 +11,7 @@ import Colecoes.GraphWeight;
 import Colecoes.UnorderedArrayList;
 import Colecoes.UnorderedDoubleLinkedList;
 import Excepcoes.EmptyExcpetion;
+import Interfaces.InterfaceGrafoHotel;
 import java.util.Iterator;
 
 
@@ -19,7 +20,7 @@ import java.util.Iterator;
  * @author Celio Macedo Nº 8170358
  * @author João Leite Nº 8170556
  */
-public class GrafoHotel<T> extends GraphWeight<T>{
+public class GrafoHotel<T> extends GraphWeight<T> implements InterfaceGrafoHotel<T>{
 
     public GrafoHotel(int n) {
         super();
@@ -35,6 +36,7 @@ public class GrafoHotel<T> extends GraphWeight<T>{
      * @param vertex vertice na qual queremos obter os vertices vizinhos
      * @return lista de vertices adjacentes
      */
+    @Override
     public Iterator<T> getVerticesAdjacentes(T vertex){
         UnorderedDoubleLinkedList<T> tempList = new UnorderedDoubleLinkedList<T>();
         
