@@ -187,10 +187,9 @@ public class Hotel {
     }
     
     /**
-     * Este método vai permitir atualizar os pesos entre duas divisões
+     * Este método vai permitir atualizar os pesos quando uma pessoa entra do hotels
      *
-     * @param divisaoInicial divisao inicial
-     * @param divisaoDestino divisão destino
+     * @param entrada divisao entrada
      */
     public void atualizaPesosEntrada(Divisao entrada) {
 
@@ -205,6 +204,29 @@ public class Hotel {
                     aux_divisaoAdjacente,
                     this.divisoesHotel.getEdgeWeight(entrada,
                             aux_divisaoAdjacente) + 1);
+
+        }
+    }
+    
+    
+    /**
+     * Este método vai permitir atualizar os pesos quando uma pessoa sai do hotel
+     *
+     * @param saida divisao saida
+     */
+    public void atualizaPesosSaida(Divisao saida) {
+
+        Iterator itr_divisaoAdjacentes
+                = this.divisoesHotel.getVerticesAdjacentes(saida);
+
+        while (itr_divisaoAdjacentes.hasNext()) {
+
+            Divisao aux_divisaoAdjacente = (Divisao) itr_divisaoAdjacentes.next();
+
+            this.divisoesHotel.setEdgeWeight(saida,
+                    aux_divisaoAdjacente,
+                    this.divisoesHotel.getEdgeWeight(saida,
+                            aux_divisaoAdjacente) -1);
 
         }
     }
@@ -305,6 +327,17 @@ public class Hotel {
     public void removePessoaEmDivisao(Divisao divisao, Pessoa pessoa) throws EmptyExcpetion {
       
         divisao.getListaDePessoas().remove(pessoa);
+       
+    }
+    
+     /**
+     * Este método vai remover uma pessoa quando ele sair do Hotel.
+     *
+     * @param pessoa pessoa
+     */
+    public void removePessoaHotel(Pessoa pessoa) throws EmptyExcpetion {
+      
+        this.listaDePessoas.remove(pessoa);
        
     }
 

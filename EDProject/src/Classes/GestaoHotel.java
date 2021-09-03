@@ -28,7 +28,7 @@ public class GestaoHotel {
         this.hotel = hotel;
     }
 
-    private Pessoa escolhePessoa() throws EmptyExcpetion {
+    public Pessoa escolhePessoa() throws EmptyExcpetion {
 
         UnorderedDoubleLinkedList<Pessoa> listaTemp = hotel.getListaDePessoas();
 
@@ -138,22 +138,10 @@ public class GestaoHotel {
                     int countAux2 = 1;
                     while (itr.hasNext()) {
                         Divisao conecao = (Divisao) itr.next();
+
                         if (countAux2 == auxEscolha) {
 
-                            if (conecao.getNumeroPessoas() == conecao.getCapacidadeMaxima()) {
-                                System.out.println("ALERTA !!!!!" + "\n" + "Atingiu a Capacidade máxima da Divisão!!!!");
-                            } else if (conecao.getTipoSala() == TipoSala.RESERVADO && pessoaAux.getTipo() == Tipo.HOSPEDE) {
-                                System.out.println("ALERTA !!!!!" + "\n" + "Entrou numa Divisão para Funcionários!!!!");
-                                confirmacaoMovimento(pessoaAux, divisaoPessoa, conecao);
-                                escolha = "valido";
-                            } else if (conecao.getTipoSala() == TipoSala.QUARENTENA) {
-                                System.out.println("ALERTA !!!!!" + "\n" + "Entrou numa Divisão de Quarentena!!!!");
-                                confirmacaoMovimento(pessoaAux, divisaoPessoa, conecao);
-                                escolha = "valido";
-                            } else {
-                                movePessoa(pessoaAux, divisaoPessoa, conecao);
-                                escolha = "valido";
-                            }
+                            escolha = validacoes(pessoaAux, conecao, escolha);
                         }
                         countAux2++;
                     }
@@ -162,6 +150,63 @@ public class GestaoHotel {
             }
 
         }
+    }
+
+    private String validacoes(Pessoa pessoa, Divisao divisao, String escolha) throws ElementNonComparable, EmptyExcpetion {
+        Divisao divisaoPessoa = hotel.encontraPessoaDivisao(pessoa);
+        boolean querSair = false;
+        if (divisao.getNome().equals(hotel.getEntrada().getNome())) {
+            querSair = desejaSair(escolha, pessoa);
+        }
+        if (querSair != true) {
+            if (divisao.getNumeroPessoas() == divisao.getCapacidadeMaxima()) {
+                System.out.println("ALERTA !!!!!" + "\n" + "Atingiu a Capacidade máxima da Divisão!!!!");
+            } else if (divisao.getTipoSala() == TipoSala.RESERVADO && pessoa.getTipo() == Tipo.HOSPEDE) {
+                System.out.println("ALERTA !!!!!" + "\n" + "Entrou numa Divisão para Funcionários!!!!");
+                confirmacaoMovimento(pessoa, divisaoPessoa, divisao);
+                escolha = "valido";
+            } else if (divisao.getTipoSala() == TipoSala.QUARENTENA) {
+                System.out.println("ALERTA !!!!!" + "\n" + "Entrou numa Divisão de Quarentena!!!!");
+                confirmacaoMovimento(pessoa, divisaoPessoa, divisao);
+                escolha = "valido";
+            } else {
+                movePessoa(pessoa, divisaoPessoa, divisao);
+                escolha = "valido";
+            }
+        } else {
+            escolha = "valido";
+        }
+
+        return escolha;
+    }
+
+    private boolean desejaSair(String escolha, Pessoa pessoa) throws EmptyExcpetion, ElementNonComparable {
+        Scanner scanner = new Scanner(System.in);
+
+        while (!escolha.equals("valido")) {
+
+            System.out.println("Pretende Sair do Hotel \n");
+            System.out.println("1->Sim\n");
+            System.out.println("2->Não\n");
+            escolha = scanner.nextLine();
+            if (escolha.equals("1")) {
+                System.out.println("Muito obrigado pela sua estadia!!\n");
+                this.hotel.addPessoaEmDivisao(hotel.getEntrada(), pessoa);
+                this.hotel.atualizaPesos(hotel.encontraPessoaDivisao(pessoa),
+                        hotel.getEntrada());
+                adicionaMovimento(hotel.getEntrada(), pessoa);
+                this.hotel.removePessoaEmDivisao(hotel.getEntrada(), pessoa);
+                this.hotel.atualizaPesosSaida(hotel.getEntrada());
+                this.hotel.removePessoaHotel(pessoa);
+                return true;
+            } else if (escolha.equals("2")) {
+                System.out.println("Bom proveito da sua estadia!!\n");
+            } else {
+                System.out.println("!!Escolha invalida!! \n");
+            }
+        }
+        return false;
+
     }
 
     private void confirmacaoMovimento(Pessoa pessoa, Divisao divisaoInicial, Divisao divisaoDestino)
@@ -195,10 +240,6 @@ public class GestaoHotel {
         this.hotel.atualizaPesos(divisaoInicial, divisaoDestino);
     }
 
-    public Hotel getHotel() {
-        return hotel;
-    }
-
     private void adicionaMovimento(Divisao divisao, Pessoa pessoa)
             throws ElementNonComparable {
         this.hotel.getMovimentosHotel().add(new Movimentos(pessoa.getId(),
@@ -213,72 +254,74 @@ public class GestaoHotel {
 
         System.out.println(itr);
     }
-    
-    public void caminhoMaisCurtoSalaQuarentena() 
-            throws EmptyExcpetion{
+
+    public void caminhoMaisCurtoSalaQuarentena()
+            throws EmptyExcpetion {
         Pessoa pessoa = escolhePessoa();
-        Divisao divisaoAtual = this.hotel.encontraPessoaDivisao(pessoa); 
-        Divisao divisaoQuarentena = this.hotel.getSalaQuarentena();
-        Iterator itr = hotel.getDivisoes().iteratorShortestPath(divisaoAtual, divisaoQuarentena);
-        
-        Divisao divAux = null;
-        if(pessoa.getTipo() == Tipo.FUNCIONARIO){
-            itr.next();
-            System.out.println("Deve seguir a seguinte sequencia: \n");
-            while(itr.hasNext()){
-                divAux= (Divisao) itr.next();
-                System.out.println("->" + divAux.getNome() + "\n");
+        if (this.hotel.encontraPessoaDivisao(pessoa) != null){
+            Divisao divisaoAtual = this.hotel.encontraPessoaDivisao(pessoa);
+            Divisao divisaoQuarentena = this.hotel.getSalaQuarentena();
+            Iterator itr = hotel.getDivisoes().iteratorShortestPath(divisaoAtual, divisaoQuarentena);
+
+            Divisao divAux = null;
+            if (pessoa.getTipo() == Tipo.FUNCIONARIO) {
+                itr.next();
+                System.out.println("Deve seguir a seguinte sequencia: \n");
+                while (itr.hasNext()) {
+                    divAux = (Divisao) itr.next();
+                    System.out.println("->" + divAux.getNome() + "\n");
+                }
+            } else {
+                System.out.println("Deve seguir a seguinte sequencia: \n");
+
+                caminhoMaisCurtoSalaQuarentenaHospede(itr, divisaoQuarentena);
             }
         }else{
-            System.out.println("Deve seguir a seguinte sequencia: \n");
-            
-            caminhoMaisCurtoSalaQuarentenaHospede(itr, divisaoQuarentena);
+            System.out.println("A pessoa nao esta em nenhuma divisao!!");
         }
     }
-    
+
     private void caminhoMaisCurtoSalaQuarentenaHospede(Iterator itr, Divisao divisaoQuarentena) {
-        
+
         Divisao divAtual = (Divisao) itr.next();
         Divisao divAux = (Divisao) itr.next();
-        if (itr.hasNext()==true) {
+        if (itr.hasNext() == true) {
             if (divAux.getTipoSala() == TipoSala.RESERVADO) {
                 Iterator itrAdjacente = this.hotel.getDivisoes().getVerticesAdjacentes(divAtual);
                 caminhoMaisCurtoSalaQuarentenaHospede(
-                        hotel.getDivisoes().iteratorShortestPath(divisaoMenosPessoas(itrAdjacente), divisaoQuarentena), 
+                        hotel.getDivisoes().iteratorShortestPath(divisaoMenosPessoas(itrAdjacente), divisaoQuarentena),
                         divisaoQuarentena);
             } else {
-                
+
                 System.out.println("->" + divAtual.getNome() + "\n");
-                
+
                 caminhoMaisCurtoSalaQuarentenaHospede(
-                        hotel.getDivisoes().iteratorShortestPath(divAtual, divisaoQuarentena), 
+                        hotel.getDivisoes().iteratorShortestPath(divAtual, divisaoQuarentena),
                         divisaoQuarentena);
             }
-        }else{
-                 System.out.println("->" + divAux.getNome() + "\n");
-            }
+        } else {
+            System.out.println("->" + divAux.getNome() + "\n");
+        }
 
     }
-    
-    private Divisao divisaoMenosPessoas(Iterator itr){
+
+    private Divisao divisaoMenosPessoas(Iterator itr) {
         Divisao divAux = null;
         Divisao divisaoMenosPessoas = null;
-        while(itr.hasNext()){
-            divAux = (Divisao)itr.next();
-            if(divisaoMenosPessoas==null){
-                divisaoMenosPessoas=divAux;
-            }else{
-                if(divisaoMenosPessoas.getListaDePessoas().size()>divAux.getListaDePessoas().size()
-                        && divAux.getTipoSala()!= TipoSala.RESERVADO){
-                    divisaoMenosPessoas=divAux;
+        while (itr.hasNext()) {
+            divAux = (Divisao) itr.next();
+            if (divisaoMenosPessoas == null) {
+                divisaoMenosPessoas = divAux;
+            } else {
+                if (divisaoMenosPessoas.getListaDePessoas().size() > divAux.getListaDePessoas().size()
+                        && divAux.getTipoSala() != TipoSala.RESERVADO) {
+                    divisaoMenosPessoas = divAux;
                 }
             }
-            
+
         }
         System.out.println("->" + divisaoMenosPessoas.getNome() + "\n");
         return divisaoMenosPessoas;
     }
-
-    
 
 }
