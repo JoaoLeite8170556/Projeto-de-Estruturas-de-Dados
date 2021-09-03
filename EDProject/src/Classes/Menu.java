@@ -93,7 +93,7 @@ public class Menu {
             System.out.println("1 -> Mover Pessoas");
             System.out.println("2 -> Criar Hospede");
             System.out.println("3 -> Criar Funcionario");
-            System.out.println("4 -> Criar Funcionario");
+            System.out.println("4 -> Ver localização Pessoa");
             System.out.println("5 -> Ver Lista de Pessoas");
             System.out.println("6 -> Ver Mapa de Hotel");
             System.out.println("7 -> Lista de Movimentos do Hotel");
@@ -113,19 +113,21 @@ public class Menu {
                     hotel.inserirFuncionario();
                     break;
                 case 4:
-                    hotel.imprimePessoas();
+                    this.gestaoHotel.escolhePessoaParaEncontrar();
                     break;
                 case 5:
+                    this.hotel.imprimePessoas();
+                    break;
+                case 6:
                     System.out.println(hotel.getDivisoes().toString());
                     break;
-                    
-                case 6:
+                case 7:
                     System.out.println(hotel.getMovimentosHotel().toString());
                     break;
-                case 7:
+                case 8:
                     gestaoHotel.caminhoMaisCurtoSalaQuarentena();
                     break;
-                 case 8:
+                 case 9:
                     this.aux=definaIntrevaloDeTempo();
                     imprimeDivisoesDasPessoas();
                     break;

@@ -352,5 +352,31 @@ public class GestaoHotel implements InterfaceGestaoHotel{
         System.out.println("->" + divisaoMenosPessoas.getNome() + "\n");
         return divisaoMenosPessoas;
     }
+    
+    /**
+     * Metodo que vai possibilitar retornar a localização atual de uma pessoa
+     */
+    public void escolhePessoaParaEncontrar(){
+        System.out.println("Escolha qual a Pessoa que pretende obter localização atual!!!!");
+        
+        
+        for (Pessoa pessoa : this.hotel.getListaDePessoas()) {
+            System.out.println("-> ");
+            System.out.println(pessoa.getId());
+            System.out.println("\n");
+        }
+        
+        System.out.println("Escolha a opção: " + "\n");
 
+        Scanner scanner = new Scanner(System.in);
+
+        String escolha = scanner.nextLine();
+
+        Pessoa pessoaEscolhida = this.hotel.encontraPessoa(escolha);
+        
+        Divisao div = this.hotel.encontraPessoaDivisao(pessoaEscolhida);
+        
+        System.out.println("A divisão atual da pessoa: "+pessoaEscolhida.getId()+"\n"+
+                "é "+div.getNome());
+    }
 }
