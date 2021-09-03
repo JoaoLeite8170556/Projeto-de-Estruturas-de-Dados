@@ -11,6 +11,7 @@ import Enumerações.Tipo;
 import Enumerações.TipoSala;
 import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
+import Interfaces.InterfaceGestaoHotel;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -20,7 +21,7 @@ import java.util.Scanner;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class GestaoHotel {
+public class GestaoHotel implements InterfaceGestaoHotel{
 
     private Hotel hotel;
 
@@ -28,6 +29,7 @@ public class GestaoHotel {
         this.hotel = hotel;
     }
 
+    @Override
     public Pessoa escolhePessoa() throws EmptyExcpetion {
 
         UnorderedDoubleLinkedList<Pessoa> listaTemp = hotel.getListaDePessoas();
@@ -92,6 +94,7 @@ public class GestaoHotel {
         return -1;
     }
 
+    @Override
     public void modoManual() throws EmptyExcpetion, ElementNonComparable {
 
         Scanner scanner = new Scanner(System.in);
@@ -255,6 +258,11 @@ public class GestaoHotel {
         System.out.println(itr);
     }
 
+    /**
+     *
+     * @throws EmptyExcpetion
+     */
+    @Override
     public void caminhoMaisCurtoSalaQuarentena()
             throws EmptyExcpetion {
         Pessoa pessoa = escolhePessoa();

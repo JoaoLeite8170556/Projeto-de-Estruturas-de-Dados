@@ -5,6 +5,7 @@
  */
 package Classes;
 import Colecoes.*;
+import Interfaces.InterfaceExport;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,12 +20,8 @@ import org.json.simple.JSONObject;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class Export {
+public class Export implements InterfaceExport{
         
-        
-    private Hotel hotel;
-
-
     public Export(){
         
     }
@@ -34,6 +31,7 @@ public class Export {
      * @param listaDeMovimentos a lista de JSONMovimentos
      * @throws IOException 
      */
+    @Override
    public void escreveMovimentosJSON(DoubleLinkedOrderedList<JSONMovimentos> listaDeMovimentos) throws IOException{
         
         JSONObject jsonObject = new JSONObject();

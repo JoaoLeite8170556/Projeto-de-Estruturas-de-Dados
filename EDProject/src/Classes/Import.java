@@ -8,6 +8,7 @@ package Classes;
 import Colecoes.DoubleLinkedOrderedList;
 import Colecoes.UnorderedArrayList;
 import Excepcoes.ElementNonComparable;
+import Interfaces.InterfaceImport;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,7 +28,7 @@ import org.json.simple.parser.ParseException;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class Import {
+public class Import implements InterfaceImport{
     
     
     
@@ -41,6 +42,7 @@ public class Import {
      * @throws ParseException
      * @throws java.text.ParseException
      */
+    @Override
     public DoubleLinkedOrderedList<JSONMovimentos> readFileMovimentos() throws FileNotFoundException, IOException, ParseException, ElementNonComparable {
         
         DoubleLinkedOrderedList<JSONMovimentos> tempList = new DoubleLinkedOrderedList<JSONMovimentos>();
@@ -106,6 +108,7 @@ public class Import {
      * @param escolhaHotel o numero a que o hotel corresponde
      * @return o nome do hotel escolhido
      */
+    @Override
     public String escolheHotel(String escolhaHotel) throws FileNotFoundException, ParseException{
         int count =1;
         boolean found = false;
@@ -128,6 +131,7 @@ public class Import {
      * Este metodo vai imprimir todos os hoteis e retornar o seu número
      * @return número de hoteis
      */
+    @Override
     public int mostraHoteis() throws FileNotFoundException, ParseException{
         Iterator itr = obtemMapasHoteis();
         int num = 1;

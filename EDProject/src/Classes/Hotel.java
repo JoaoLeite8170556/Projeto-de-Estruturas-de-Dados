@@ -10,6 +10,7 @@ import Enumerações.Tipo;
 import Enumerações.TipoSala;
 import Excepcoes.EmptyExcpetion;
 import Grafo.GrafoHotel;
+import Interfaces.InterfaceHotel;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,7 +27,7 @@ import org.json.simple.parser.ParseException;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class Hotel {
+public class Hotel implements InterfaceHotel{
 
     private final UnorderedDoubleLinkedList<Pessoa> listaDePessoas;
     //private String pathFile;
@@ -276,6 +277,7 @@ public class Hotel {
     /**
      * Este metodo vai possibilitar a adição de Hospede
      */
+    @Override
     public void inserirHospede() throws EmptyExcpetion {
 
 
@@ -287,6 +289,7 @@ public class Hotel {
     /**
      * Este metodo vai possibilitar a adição de Funcionario
      */
+    @Override
     public void inserirFuncionario() throws EmptyExcpetion {
 
         this.listaDePessoas.addToRear(new Pessoa(Tipo.FUNCIONARIO));
@@ -297,6 +300,7 @@ public class Hotel {
     /**
      * Este método vai imprimir todas as Pessoas inseridos no Hotel
      */
+    @Override
     public void imprimePessoas(){
         Iterator<Pessoa> itr = this.listaDePessoas.iterator();
         System.out.println("Lista de Pessoas: ");
@@ -314,6 +318,7 @@ public class Hotel {
      * @param Divisao a divisao onde ela vai
      * @param pessoa a pessoa que se moveu para lá
      */
+    @Override
     public void addPessoaEmDivisao(Divisao divisao, Pessoa pessoa) {
         divisao.getListaDePessoas().addToRear(pessoa);
     }
@@ -324,6 +329,7 @@ public class Hotel {
      * @param Divisao Divisão
      * @param pessoa pessoa
      */
+    @Override
     public void removePessoaEmDivisao(Divisao divisao, Pessoa pessoa) throws EmptyExcpetion {
       
         divisao.getListaDePessoas().remove(pessoa);
@@ -348,6 +354,7 @@ public class Hotel {
      * @return a Divisao caso seja encontrado, se não for encontrada retorna
      * null
      */
+    @Override
     public Divisao findDivision(String divisao) {
         Iterator itr = this.divisoesHotel.getTodasDivisoes().iterator();
         Divisao aux = null;
@@ -361,57 +368,7 @@ public class Hotel {
         return null;
     }
 
-    /**
-     * Este método vai verificar a lotação atual de uma determinada Divisao.
-     *
-     * @param divisao a divisão, na qual queremos aceder
-     * @return true se o número de pessoas for menor que a lotação máxima
-     * permitida
-     */
-    private boolean verificaLotacaoAtual(Divisao divisao) {
-        return (divisao.getListaDePessoas().size() <= divisao.getNumeroPessoas());
-    }
-
-    
-
-    /**
-     * Este método vai possibilitar a lotação da divisão chegar ao limite
-     * apresenta a seguinte mensagem
-     *
-     * @param divisao a divisão em causa.
-     */
-    private void alertaLotacao(Divisao divisao) {
-        if (verificaLotacao(divisao) == 0) {
-            System.out.println("Atingiu limite da Divisão, não pode entrar!!!!");
-        }
-    }
-
-    /**
-     * Verifica se a sala atual corresponde a sala de quarentena
-     *
-     * @param divisao na qual queremos pesquisar
-     * @return true se a divisao for do tipo "Quarentena"
-     */
-    private boolean verificaSalaQuarentena(String divisao) {
-        Divisao auxDivisao = findDivision(divisao);
-        return auxDivisao.getTipoSala().equals("QUARENTENA");
-    }
-
-    /**
-     * Metodo que verifica se a lotacao atual da divisao ja atingiu a lotacao
-     * máxima
-     *
-     * @param divisao a divisao na qual vamos fazer a verificação
-     * @return retorna 1 se a lotação estiver OK, 0 se atingir o máximo
-     */
-    private int verificaLotacao(Divisao divisao) {
-
-        if (divisao.getListaDePessoas().size() <= divisao.getNumeroPessoas()) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+   
 
      /**
      * verificar se a pessoa existe 
@@ -433,6 +390,7 @@ public class Hotel {
      *
      * @param divisao a divisão na qual queremos obter as divisões adjacentes
      */
+    @Override
     public int imprimeDivisoesAdjacentes(Divisao divisao) {
         Iterator<Divisao> itr_divisoes
                 = this.divisoesHotel.getVerticesAdjacentes(divisao);
@@ -449,6 +407,7 @@ public class Hotel {
         return findDivision("Hall de entrada");
     }
     
+    @Override
     public Divisao getSalaQuarentena(){
         Iterator itr = this.divisoesHotel.getTodasDivisoes().iterator();
 
@@ -461,6 +420,7 @@ public class Hotel {
         return null;
     }
     
+    @Override
    public Divisao encontraPessoaDivisao(Pessoa pessoa){
         Iterator<Divisao> itr = this.divisoesHotel.getTodasDivisoes().iterator();
         Divisao divisaoAux;
