@@ -115,6 +115,7 @@ public class Menu {
                     break;
                 case 6:
                     System.out.println(hotel.getDivisoes().toString());
+                    this.hotel.getDivisoes().getTodasDivisoes();
                     break;
                 case 7:
                     System.out.println(hotel.getMovimentosHotel().toString());
@@ -123,8 +124,7 @@ public class Menu {
                     gestaoHotel.caminhoMaisCurtoSalaQuarentena();
                     break;
                 case 9:
-                    this.aux = definaIntrevaloDeTempo();
-                    imprimeDivisoesDasPessoas();
+                    this.gestaoHotel.imprimeDivisoesDasPessoas();
                     break;
                 case 0:
                     this.listaJsonMovimentos.add(new JSONMovimentos(this.hotel.getNomeHotel(), this.hotel.getVersao(), this.hotel.getMovimentosHotel()));
@@ -191,134 +191,6 @@ public class Menu {
         return tempoTemp;
     }
 
-    /**
-     * Método que permite obter todos os movimentos realizados em determinado
-     * periodo de tempo
-     *
-     * @param date a diferença no horario
-     * @return
-     * @throws ElementNonComparable
-     */
-    private DoubleLinkedOrderedList<Movimentos> movimentosNoIntervalo(int date, Iterator itr) throws ElementNonComparable {
-
-        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<Movimentos>();
-
-        Calendar c = Calendar.getInstance();
-
-        c.add(Calendar.HOUR, -date);
-
-        Date updateDate = c.getTime();
-        Movimentos movimentos = null;
-        while (itr.hasNext()) {
-            movimentos = (Movimentos) itr.next();
-            if (movimentos.getDataHoraAtual().compareTo(updateDate) == 1) {
-                listaDeMovimentos.add(movimentos);
-            }
-        }
-        return listaDeMovimentos;
-    }
-
-    /**
-     * Metodo que vai possibilitar todos os movimentos realizado por determinada
-     * pessoa.
-     *
-     * @return
-     * @throws EmptyExcpetion
-     * @throws ElementNonComparable
-     */
-    private DoubleLinkedOrderedList<Movimentos> movimentosPessoaDiferente(Pessoa pessoa) throws EmptyExcpetion, ElementNonComparable {
-
-        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<>();
-
-        Iterator itr = movimentosNoIntervalo(this.aux, this.hotel.getMovimentosHotel().iterator()).iterator();
-
-        while (itr.hasNext()) {
-            Movimentos move = (Movimentos) itr.next();
-            if (move.getIdPessoa() != pessoa.getId()) {
-                listaDeMovimentos.add(move);
-            }
-        }
-        return listaDeMovimentos;
-    }
-
-    /**
-     * Metodo que vai possibilitar todos os movimentos realizado por determinada
-     * pessoa.
-     *
-     * @return
-     * @throws EmptyExcpetion
-     * @throws ElementNonComparable
-     */
-    private DoubleLinkedOrderedList<Movimentos> movimentosPessoa(Pessoa pessoa) throws EmptyExcpetion, ElementNonComparable {
-
-        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<>();
-
-        Iterator itr = movimentosNoIntervalo(this.aux, this.hotel.getMovimentosHotel().iterator()).iterator();
-
-        while (itr.hasNext()) {
-            Movimentos move = (Movimentos) itr.next();
-            if (move.getIdPessoa() == pessoa.getId()) {
-                listaDeMovimentos.add(move);
-            }
-        }
-        return listaDeMovimentos;
-    }
-
-    /**
-     * Método que vai possibilitar retornar todas as divisoes
-     *
-     * @return
-     * @throws EmptyExcpetion
-     * @throws ElementNonComparable
-     */
-    private DoubleLinkedOrderedList<Movimentos> divisoesPartilhadas() throws EmptyExcpetion, ElementNonComparable {
-        Pessoa pessoa = this.gestaoHotel.escolhePessoa();
-
-        Iterator itrMovPessoa = movimentosPessoa(pessoa).iterator();
-        Iterator itrMovPessoasDiferente = movimentosPessoaDiferente(pessoa).iterator();
-
-        DoubleLinkedOrderedList<Movimentos> listaFinal = new DoubleLinkedOrderedList<>();
-
-        Movimentos movPessoaInical = (Movimentos) itrMovPessoa.next();
-
-        while (itrMovPessoa.hasNext()) {
-            Movimentos movPessoaFinal = (Movimentos) itrMovPessoa.next();
-            
-            verificaSeTemMovimento(movPessoaInical, movPessoaFinal, itrMovPessoasDiferente);
-            movPessoaInical = movPessoaFinal;
-        }
-
-        return listaFinal;
-    }
-
-    private void verificaSeTemMovimento(Movimentos movimentoInicial, Movimentos movimentoFinal,Iterator itr) throws ElementNonComparable {
-        
-        while (itr.hasNext()) {
-
-            Movimentos moveItr2 = (Movimentos) itr.next();
-
-            if (movimentoInicial.getDataHoraAtual().after(moveItr2.getDataHoraAtual())&&
-                    movimentoFinal.getDataHoraAtual().before(moveItr2.getDataHoraAtual())) {
-                if(movimentoInicial.getNomeDivisao().equals(moveItr2.getNomeDivisao())){
-                    System.out.println("->" + moveItr2.getIdPessoa() + "\n");
-                }
-            }
-        }
-    }
-
-    public void imprimeDivisoesDasPessoas() throws EmptyExcpetion, ElementNonComparable {
-        Iterator itr = divisoesPartilhadas().iterator();
-        aux = -1;
-        System.out.println("Esteve em contacto com :\n");
-
-        while (itr.hasNext()) {
-            Movimentos auxItr = (Movimentos) itr.next();
-            //System.out.println(auxItr.toString());
-            if (aux != -1 && aux == auxItr.getIdPessoa()) {
-                System.out.println("->" + aux);
-            }
-            aux = auxItr.getIdPessoa();
-        }
-    }
+    
 
 }

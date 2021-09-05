@@ -1,15 +1,18 @@
 {
   "hotel": "Toca",
-  "versao": 1,
+  "versao": 3,
   "divisoes": [
     {
       "nome":"Hall de entrada",
-      "lotacao": 25
+      "lotacao": 19
     },
     {
       "nome":"Cozinha",
-      "lotacao": 10,
-      "reservado":true
+      "lotacao": 7
+    },
+    {
+      "nome":"Dispensa",
+      "lotacao": 2
     },
     {
       "nome":"Quarto 101",
@@ -17,16 +20,15 @@
     },
     {
       "nome":"Quarto 60",
-      "lotacao": 4,
-      "quarentena":true
+      "lotacao": 2
     },
     {
       "nome":"Quarto 102",
-      "lotacao": 3
+      "lotacao": 2
     },
     {
       "nome":"Quarto 103",
-      "lotacao": 6
+      "lotacao": 2
     },
     {
       "nome":"Quarto 104",
@@ -34,7 +36,7 @@
     },
     {
       "nome":"Quarto 105",
-      "lotacao": 6
+      "lotacao": 2
     },
     {
       "nome":"Quarto 106",
@@ -42,11 +44,11 @@
     },
     {
       "nome":"Restaurante Asiático",
-      "lotacao": 40
+      "lotacao": 5
     },
     {
       "nome":"Restaurante Buffet",
-      "lotacao": 80
+      "lotacao": 6
     },
     {
       "nome":"WC",
@@ -54,7 +56,7 @@
     },
     {
       "nome":"Corredor 1",
-      "lotacao": 15
+      "lotacao": 10
     },
     {
       "nome":"Sala de quarentena 1",
@@ -62,15 +64,17 @@
     },
     {
       "nome":"Sala de quarentena 2",
-      "lotacao": 5
+      "lotacao": 5,
+      "quarentena":true
     },
     {
       "nome":"Salão de jogos",
-      "lotacao": 17
+      "lotacao": 17,
+      "reservado":true
     },
     {
       "nome":"Elevador",
-      "lotacao": 5
+      "lotacao": 3
     },
     {
       "nome": "Garagem",
@@ -96,7 +100,7 @@
     ],
     [
       "Restaurante Buffet",
-      "Quarto 60"
+      "WC"
     ],
     [
       "Hall de entrada",
@@ -109,10 +113,6 @@
     [
       "Hall de entrada",
       "Elevador"
-    ],
-    [
-      "Hall de entrada",
-      "Salão de jogos"
     ],
     [
       "Salão de jogos",
@@ -140,7 +140,7 @@
     ],
     [
       "Elevador",
-      "Quarto 106"
+      "Quarto 1619"
     ],
     [
       "Elevador",
@@ -163,8 +163,12 @@
       "Garagem"
     ],
     [
+      "Cozinha",
+      "Dispensa"
+    ],
+    [
       "Hall de entrada",
-      "Garagem"
+      "Corredor 1"
     ] 
   ]
 }

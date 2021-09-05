@@ -13,6 +13,8 @@ import Enumerações.TipoSala;
 import Excepcoes.ElementNonComparable;
 import Excepcoes.EmptyExcpetion;
 import Interfaces.InterfaceGestaoHotel;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -22,12 +24,14 @@ import java.util.Scanner;
  * @author João Leite Nº 8170556
  * @author Celio Macedo Nº 8170358
  */
-public class GestaoHotel implements InterfaceGestaoHotel{
+public class GestaoHotel implements InterfaceGestaoHotel {
 
     private Hotel hotel;
+    private int aux;
 
     public GestaoHotel(Hotel hotel) {
         this.hotel = hotel;
+
     }
 
     @Override
@@ -134,8 +138,11 @@ public class GestaoHotel implements InterfaceGestaoHotel{
                 int contAux = this.hotel.imprimeDivisoesAdjacentes(divisaoPessoa);
                 escolha = scanner.nextLine();
                 int auxEscolha = Integer.parseInt(escolha);
-                if (!escolha.matches("[1-" + contAux + "]")) {
+                if (!escolha.matches("[0-" + contAux + "]")) {
                     System.out.println("Invalid option");
+                } else if (escolha.equals("0")) {
+                    System.out.println("Passou a sua vez....");
+                    escolha = "valido";
                 } else {
                     Iterator itr
                             = this.hotel.getDivisoes().getVerticesAdjacentes(divisaoPessoa);
@@ -163,7 +170,7 @@ public class GestaoHotel implements InterfaceGestaoHotel{
             querSair = desejaSair(escolha, pessoa);
         }
         int lugaresVagos = divisao.getCapacidadeMaxima() - divisao.getNumeroPessoas();
-        
+
         if (querSair != true) {
             if (lugaresVagos == 0) {
                 System.out.println("ALERTA !!!!!" + "\n" + "Capacidade máxima "
@@ -189,16 +196,16 @@ public class GestaoHotel implements InterfaceGestaoHotel{
 
         return escolha;
     }
-    
-    private void verificaPertoLotacaoMax(Integer lugaresVagos) throws EmptyExcpetion{
+
+    private void verificaPertoLotacaoMax(Integer lugaresVagos) throws EmptyExcpetion {
         UnorderedArrayList<Integer> arrayList = new UnorderedArrayList<>();
         arrayList.addToRear(2);
         arrayList.addToRear(3);
-        
-        if (lugaresVagos ==1){
+
+        if (lugaresVagos == 1) {
             System.out.println("ALERTA !!!!!" + "\n" + "Atingiu a Capacidade "
                     + "máxima da Divisão!!!! \n");
-        }else if(arrayList.contains(lugaresVagos)){
+        } else if (arrayList.contains(lugaresVagos)) {
             System.out.println("ALERTA !!!!!" + "\n" + "A divisao esta próxima "
                     + "da lotação máxima!!\n");
         }
@@ -225,6 +232,7 @@ public class GestaoHotel implements InterfaceGestaoHotel{
                 return true;
             } else if (escolha.equals("2")) {
                 System.out.println("Bom proveito da sua estadia!!\n");
+                return false;
             } else {
                 System.out.println("!!Escolha invalida!! \n");
             }
@@ -287,7 +295,7 @@ public class GestaoHotel implements InterfaceGestaoHotel{
     public void caminhoMaisCurtoSalaQuarentena()
             throws EmptyExcpetion {
         Pessoa pessoa = escolhePessoa();
-        if (this.hotel.encontraPessoaDivisao(pessoa) != null){
+        if (this.hotel.encontraPessoaDivisao(pessoa) != null) {
             Divisao divisaoAtual = this.hotel.encontraPessoaDivisao(pessoa);
             Divisao divisaoQuarentena = this.hotel.getSalaQuarentena();
             Iterator itr = hotel.getDivisoes().iteratorShortestPath(divisaoAtual, divisaoQuarentena);
@@ -305,7 +313,7 @@ public class GestaoHotel implements InterfaceGestaoHotel{
 
                 caminhoMaisCurtoSalaQuarentenaHospede(itr, divisaoQuarentena);
             }
-        }else{
+        } else {
             System.out.println("A pessoa não está em nenhuma divisao!!");
         }
     }
@@ -352,20 +360,19 @@ public class GestaoHotel implements InterfaceGestaoHotel{
         System.out.println("->" + divisaoMenosPessoas.getNome() + "\n");
         return divisaoMenosPessoas;
     }
-    
+
     /**
      * Metodo que vai possibilitar retornar a localização atual de uma pessoa
      */
-    public void escolhePessoaParaEncontrar(){
+    public void escolhePessoaParaEncontrar() {
         System.out.println("Escolha qual a Pessoa que pretende obter localização atual!!!!");
-        
-        
+
         for (Pessoa pessoa : this.hotel.getListaDePessoas()) {
             System.out.println("-> ");
             System.out.println(pessoa.getId());
             System.out.println("\n");
         }
-        
+
         System.out.println("Escolha a opção: " + "\n");
 
         Scanner scanner = new Scanner(System.in);
@@ -373,10 +380,170 @@ public class GestaoHotel implements InterfaceGestaoHotel{
         String escolha = scanner.nextLine();
 
         Pessoa pessoaEscolhida = this.hotel.encontraPessoa(escolha);
-        
+
         Divisao div = this.hotel.encontraPessoaDivisao(pessoaEscolhida);
-        
-        System.out.println("A divisão atual da pessoa: "+pessoaEscolhida.getId()+"\n"+
-                "é "+div.getNome());
+
+        System.out.println("A divisão atual da pessoa: " + pessoaEscolhida.getId() + "\n"
+                + "é " + div.getNome());
+    }
+
+    /**
+     * Método que permite obter todos os movimentos realizados em determinado
+     * periodo de tempo
+     *
+     * @param date a diferença no horario
+     * @return
+     * @throws ElementNonComparable
+     */
+    private DoubleLinkedOrderedList<Movimentos> movimentosNoIntervalo(int date, Iterator itr) throws ElementNonComparable {
+
+        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<Movimentos>();
+
+        Calendar c = Calendar.getInstance();
+
+        c.add(Calendar.HOUR, -date);
+
+        Date updateDate = c.getTime();
+        Movimentos movimentos = null;
+        while (itr.hasNext()) {
+            movimentos = (Movimentos) itr.next();
+            if (movimentos.getDataHoraAtual().compareTo(updateDate) == 1) {
+                listaDeMovimentos.add(movimentos);
+            }
+        }
+        return listaDeMovimentos;
+    }
+
+    /**
+     * Metodo que vai possibilitar todos os movimentos realizado por determinada
+     * pessoa.
+     *
+     * @return
+     * @throws EmptyExcpetion
+     * @throws ElementNonComparable
+     */
+    private DoubleLinkedOrderedList<Movimentos> movimentosPessoaDiferente(Pessoa pessoa) throws EmptyExcpetion, ElementNonComparable {
+
+        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<>();
+
+        Iterator itr = movimentosNoIntervalo(this.aux, this.hotel.getMovimentosHotel().iterator()).iterator();
+
+        while (itr.hasNext()) {
+            Movimentos move = (Movimentos) itr.next();
+            if (move.getIdPessoa() != pessoa.getId()) {
+                listaDeMovimentos.add(move);
+            }
+        }
+        return listaDeMovimentos;
+    }
+
+    /**
+     * Metodo que vai possibilitar todos os movimentos realizado por determinada
+     * pessoa.
+     *
+     * @return
+     * @throws EmptyExcpetion
+     * @throws ElementNonComparable
+     */
+    private DoubleLinkedOrderedList<Movimentos> movimentosPessoa(Pessoa pessoa) throws EmptyExcpetion, ElementNonComparable {
+
+        DoubleLinkedOrderedList<Movimentos> listaDeMovimentos = new DoubleLinkedOrderedList<>();
+
+        Iterator itr = movimentosNoIntervalo(this.aux, this.hotel.getMovimentosHotel().iterator()).iterator();
+
+        while (itr.hasNext()) {
+            Movimentos move = (Movimentos) itr.next();
+            if (move.getIdPessoa() == pessoa.getId()) {
+                listaDeMovimentos.add(move);
+            }
+        }
+        return listaDeMovimentos;
+    }
+
+    /**
+     * Método que vai possibilitar retornar todas as divisoes
+     *
+     * @return
+     * @throws EmptyExcpetion
+     * @throws ElementNonComparable
+     */
+    private void divisoesPartilhadas() throws EmptyExcpetion, ElementNonComparable {
+        if (this.hotel.getListaDePessoas().isEmpty()) {
+            System.out.println("Ainda nao tem pessoas associadas ao hotel...");
+        } else {
+            Pessoa pessoa = escolhePessoa();
+
+            Iterator itrMovPessoa = movimentosPessoa(pessoa).iterator();
+
+            DoubleLinkedOrderedList<Movimentos> listaFinal = new DoubleLinkedOrderedList<>();
+
+            Movimentos movPessoaInical = (Movimentos) itrMovPessoa.next();
+
+            System.out.println("Esteve em contacto com :\n");
+
+            while (itrMovPessoa.hasNext()) {
+                Movimentos movPessoaFinal = (Movimentos) itrMovPessoa.next();
+                Iterator itrMovPessoasDiferente = movimentosPessoaDiferente(pessoa).iterator();
+                verificaSeTemMovimento(movPessoaInical, movPessoaFinal, itrMovPessoasDiferente);
+                movPessoaInical = movPessoaFinal;
+            }
+
+        }
+    }
+
+    /**
+     * Verifica se tem movimento para salas em comum e caso tenha escreve
+     *
+     * @param movimentoInicial Movimento que ele entrou na divisão
+     * @param movimentoFinal Movimento que ele saiu da divisão
+     * @param itr iterador com todos os movimentos das outras pessoas
+     * @throws ElementNonComparable
+     */
+    private void verificaSeTemMovimento(Movimentos movimentoInicial, Movimentos movimentoFinal, Iterator itr) throws ElementNonComparable {
+        Date dateInical = movimentoInicial.getDataHoraAtual();
+        Date dateFinal = movimentoFinal.getDataHoraAtual();
+
+        Movimentos moveAux = (Movimentos) itr.next();
+
+        while (itr.hasNext()) {
+            Movimentos moveItr2 = (Movimentos) itr.next();
+            Date dateMov = moveItr2.getDataHoraAtual();
+
+            if (!dateInical.after(moveAux.getDataHoraAtual())
+                    && !dateFinal.before(moveAux.getDataHoraAtual())) {
+                if (movimentoInicial.getNomeDivisao().equals(moveAux.getNomeDivisao())) {
+                    System.out.println("Estva em contacto com a pessoa no:\n");
+                    System.out.println("->" + moveAux.toString() + "\n");
+                }
+            } else if (!moveAux.getDataHoraAtual().after(dateInical)
+                    && !dateMov.before(dateInical)) {
+                if (moveAux.getNomeDivisao().equals(movimentoInicial.getNomeDivisao())) {
+                    System.out.println("Estva em contacto com a pessoa no:\n");
+                    System.out.println("->" + moveAux.toString() + "\n");
+                }
+            }
+            moveAux = moveItr2;
+        }
+    }
+
+    public void imprimeDivisoesDasPessoas() throws EmptyExcpetion, ElementNonComparable {
+        this.aux = definaIntrevaloDeTempo();
+        divisoesPartilhadas();
+    }
+
+    /**
+     * Metodo que vai intoduzir o intervalo de tempo na qual queremos os
+     * movimentos
+     *
+     * @return
+     */
+    private int definaIntrevaloDeTempo() {
+        int tempoTemp = 0;
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Introduza o Intrevalo de Tempo:");
+        tempoTemp = scanner.nextInt();
+
+        return tempoTemp;
     }
 }

@@ -400,6 +400,7 @@ public class Hotel implements InterfaceHotel{
             contador++;
             System.out.println(  contador + "-> " + itr_divisoes.next().getNome() + "\n");
         }
+        System.out.println("0 -> Sair\n");
         return contador;
     }
     
