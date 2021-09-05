@@ -29,7 +29,6 @@ public class Menu {
     private Import importTemp;
     private Export export;
     private DoubleLinkedOrderedList<JSONMovimentos> listaJsonMovimentos;
-    private int aux;
 
     public Menu() throws IOException {
         try {
@@ -108,7 +107,11 @@ public class Menu {
                     imprimeTodasAsDivisoes();
                     break;
                 case 7:
-                    System.out.println(hotel.getMovimentosHotel().toString());
+                    if (hotel.getMovimentosHotel().isEmpty()) {
+                        System.out.println("Ainda nao tem movimentos...\n");
+                    } else {
+                        System.out.println(hotel.getMovimentosHotel().toString());
+                    }
                     break;
                 case 8:
                     this.gestaoHotel.caminhoMaisCurtoSalaQuarentena();
@@ -165,21 +168,6 @@ public class Menu {
         return fileMapa;
     }
 
-    /**
-     * Metodo que vai intoduzir o intervalo de tempo na qual queremos os
-     * movimentos
-     *
-     * @return
-     */
-    private int definaIntrevaloDeTempo() {
-        int tempoTemp = 0;
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Introduza o Intrevalo de Tempo:");
-        tempoTemp = scanner.nextInt();
-
-        return tempoTemp;
-    }
 
     private void imprimeTodasAsDivisoes(){
         Iterator itr = this.hotel.getDivisoes().getTodasDivisoes().iterator();

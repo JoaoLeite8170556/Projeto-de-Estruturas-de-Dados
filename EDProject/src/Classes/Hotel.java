@@ -418,6 +418,11 @@ public class Hotel implements InterfaceHotel{
         return null;
     }
     
+    /**
+     * Método que vai procurar a pessoa no hotel 
+     * @param pessoa pessoa que pretende procurar
+     * @return divisao que a pessoa se encontra 
+     */
     @Override
    public Divisao encontraPessoaDivisao(Pessoa pessoa){
         Iterator<Divisao> itr = this.divisoesHotel.getTodasDivisoes().iterator();

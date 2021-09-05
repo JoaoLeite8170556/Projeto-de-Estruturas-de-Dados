@@ -34,6 +34,11 @@ public class GestaoHotel implements InterfaceGestaoHotel {
 
     }
 
+    /**
+     * Metodo para escolher pessoa 
+     * @return return da pessoa escolhida 
+     * @throws EmptyExcpetion 
+     */
     @Override
     public Pessoa escolhePessoa() throws EmptyExcpetion {
 
@@ -73,6 +78,13 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         return null;
     }
 
+    /**
+     * Metodo que insere pessoa caso ela ainda nao esteja criada
+     * @param escolha
+     * @return id a pessoa 
+     * @throws EmptyExcpetion 
+     */
+    
     private int pessoaDesconhecida(String escolha) throws EmptyExcpetion {
 
         Scanner scanner = new Scanner(System.in);
@@ -99,6 +111,11 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         return -1;
     }
 
+    /**
+     * Este metodo vai permitir mover as poessoas dentro do hotel 
+     * @throws EmptyExcpetion
+     * @throws ElementNonComparable 
+     */
     @Override
     public void modoManual() throws EmptyExcpetion, ElementNonComparable {
 
@@ -163,7 +180,17 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         }
     }
 
-    private String validacoes(Pessoa pessoa, Divisao divisao, String escolha) throws ElementNonComparable, EmptyExcpetion {
+    /**
+     * Este metodo vai fazer as validaçoes cada vez que a pessoa enbtras numa divisao 
+     * @param pessoa pessoa que se esta a mvover 
+     * @param divisao divisao que a pessoa esta 
+     * @param escolha divisao que pretende ir 
+     * @return valido se a escolha for valida 
+     * @throws ElementNonComparable
+     * @throws EmptyExcpetion 
+     */
+    private String validacoes(Pessoa pessoa, Divisao divisao, String escolha) 
+            throws ElementNonComparable, EmptyExcpetion {
         Divisao divisaoPessoa = hotel.encontraPessoaDivisao(pessoa);
         boolean querSair = false;
         if (divisao.getNome().equals(hotel.getEntrada().getNome())) {
@@ -197,6 +224,11 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         return escolha;
     }
 
+    /**
+     * Metodo verifica se divisao esta perto da lotação maxima 
+     * @param lugaresVagos numero de lugares vagos na divisão 
+     * @throws EmptyExcpetion 
+     */
     private void verificaPertoLotacaoMax(Integer lugaresVagos) throws EmptyExcpetion {
         UnorderedArrayList<Integer> arrayList = new UnorderedArrayList<>();
         arrayList.addToRear(2);
@@ -211,7 +243,17 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         }
     }
 
-    private boolean desejaSair(String escolha, Pessoa pessoa) throws EmptyExcpetion, ElementNonComparable {
+    /**
+     * Metodo vai perguntar a pessoa se deseja sair sempre que a mesma passa volta 
+     * a entrada
+     * @param escolha variavel aux para o ciclo
+     * @param pessoa pessoa que se esta a mover 
+     * @return true se quer sair e false se nao pretende sair 
+     * @throws EmptyExcpetion
+     * @throws ElementNonComparable 
+     */
+    private boolean desejaSair(String escolha, Pessoa pessoa) throws EmptyExcpetion,
+            ElementNonComparable {
         Scanner scanner = new Scanner(System.in);
 
         while (!escolha.equals("valido")) {
@@ -240,6 +282,15 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         return false;
 
     }
+    
+    /**
+     * Método que confirma a movimentação da pessoa 
+     * @param pessoa pessoa que se pretende mover 
+     * @param divisaoInicial divisao que esta 
+     * @param divisaoDestino divisão que pretende ir 
+     * @throws ElementNonComparable
+     * @throws EmptyExcpetion 
+     */
 
     private void confirmacaoMovimento(Pessoa pessoa, Divisao divisaoInicial, Divisao divisaoDestino)
             throws ElementNonComparable, EmptyExcpetion {
@@ -264,6 +315,14 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         }
     }
 
+    /**
+     * Metodo que vai mover a pessoa 
+     * @param pessoa pessoa que se pretende mover 
+     * @param divisaoInicial divisao que esta 
+     * @param divisaoDestino divisão que pretende ir 
+     * @throws ElementNonComparable
+     * @throws EmptyExcpetion 
+     */
     private void movePessoa(Pessoa pessoa, Divisao divisaoInicial, Divisao divisaoDestino)
             throws ElementNonComparable, EmptyExcpetion {
         this.hotel.addPessoaEmDivisao(divisaoDestino, pessoa);
@@ -272,12 +331,22 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         this.hotel.atualizaPesos(divisaoInicial, divisaoDestino);
     }
 
+    /**
+     * Metodo que adiciona movimento ao hotel
+     * @param divisao divisao do movimento 
+     * @param pessoa pessoa que se esta a mover 
+     * @throws ElementNonComparable 
+     */
     private void adicionaMovimento(Divisao divisao, Pessoa pessoa)
             throws ElementNonComparable {
         this.hotel.getMovimentosHotel().add(new Movimentos(pessoa.getId(),
                 divisao.getNome()));
     }
-
+    
+    /**
+     * imprime divisoes adjacentes 
+     * @param divisao divisao que se pretende obter divisões adjacentes 
+     */
     public void imprimeDivisaoAdjacentes(String divisao) {
 
         Divisao divisaoAux = this.hotel.findDivision(divisao);
@@ -288,7 +357,8 @@ public class GestaoHotel implements InterfaceGestaoHotel {
     }
 
     /**
-     *
+     * Metodo vai apresentar o caminho mais curto para a sala de quarentena, 
+     * passando pelo menor numero de pessoas 
      * @throws EmptyExcpetion
      */
     @Override
@@ -318,6 +388,11 @@ public class GestaoHotel implements InterfaceGestaoHotel {
         }
     }
 
+    /**
+     * Metodo vai escrever o caminho mais curto para a sala de quarentena 
+     * @param itr itr da lista de divisoes
+     * @param divisaoQuarentena divisao do tipo quarentena 
+     */
     private void caminhoMaisCurtoSalaQuarentenaHospede(Iterator itr, Divisao divisaoQuarentena) {
 
         Divisao divAtual = (Divisao) itr.next();
@@ -342,6 +417,11 @@ public class GestaoHotel implements InterfaceGestaoHotel {
 
     }
 
+    /**
+     * Metodo procura a divisao com menos pessoas 
+     * @param itr itr de divisoes   
+     * @return divisao com menos pessoas
+     */
     private Divisao divisaoMenosPessoas(Iterator itr) {
         Divisao divAux = null;
         Divisao divisaoMenosPessoas = null;
@@ -365,27 +445,32 @@ public class GestaoHotel implements InterfaceGestaoHotel {
      * Metodo que vai possibilitar retornar a localização atual de uma pessoa
      */
     public void escolhePessoaParaEncontrar() {
-        System.out.println("Escolha qual a Pessoa que pretende obter localização atual!!!!");
+        if (this.hotel.getListaDePessoas().isEmpty()) {
+            System.out.println("Ainda nao tem pessoas associadas ao hotel...\n");
+        } else {
+            System.out.println("Escolha qual a Pessoa que pretende obter localização atual!!!!\n");
 
-        for (Pessoa pessoa : this.hotel.getListaDePessoas()) {
-            System.out.println("-> ");
-            System.out.println(pessoa.getId());
-            System.out.println("\n");
+            for (Pessoa pessoa : this.hotel.getListaDePessoas()) {
+                System.out.println("-> ");
+                System.out.println(pessoa.getId());
+                System.out.println("\n");
+            }
+
+            System.out.println("Escolha a opção: " + "\n");
+
+            Scanner scanner = new Scanner(System.in);
+
+            String escolha = scanner.nextLine();
+
+            Pessoa pessoaEscolhida = this.hotel.encontraPessoa(escolha);
+
+            Divisao div = this.hotel.encontraPessoaDivisao(pessoaEscolhida);
+
+            System.out.println("A divisão atual da pessoa: " + pessoaEscolhida.getId() + "\n"
+                    + "é " + div.getNome());
         }
-
-        System.out.println("Escolha a opção: " + "\n");
-
-        Scanner scanner = new Scanner(System.in);
-
-        String escolha = scanner.nextLine();
-
-        Pessoa pessoaEscolhida = this.hotel.encontraPessoa(escolha);
-
-        Divisao div = this.hotel.encontraPessoaDivisao(pessoaEscolhida);
-
-        System.out.println("A divisão atual da pessoa: " + pessoaEscolhida.getId() + "\n"
-                + "é " + div.getNome());
     }
+
 
     /**
      * Método que permite obter todos os movimentos realizados em determinado
@@ -468,8 +553,8 @@ public class GestaoHotel implements InterfaceGestaoHotel {
      * @throws ElementNonComparable
      */
     private void divisoesPartilhadas() throws EmptyExcpetion, ElementNonComparable {
-        if (this.hotel.getListaDePessoas().isEmpty()) {
-            System.out.println("Ainda não tem pessoas associadas ao hotel...");
+        if (this.hotel.getListaDePessoas().isEmpty() || this.hotel.getMovimentosHotel().isEmpty()) {
+            System.out.println("Ainda não tem pessoas ou movimentos associadas ao hotel...");
         } else {
             Pessoa pessoa = escolhePessoa();
 
