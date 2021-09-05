@@ -5,10 +5,9 @@
  */
 package Classes;
 
-import Colecoes.DoubleLinkedOrderedList;
-import Colecoes.UnorderedArrayList;
-import Excepcoes.ElementNonComparable;
-import Interfaces.InterfaceImport;
+import Colecoes.*;
+import Excepcoes.*;
+import Interfaces.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,7 +28,7 @@ import org.json.simple.parser.ParseException;
  * @author Celio Macedo Nº 8170358
  */
 public class Import implements InterfaceImport{
-    
+
      /**
      * Este metodo vai ler o ficheiro json e guardar a informação numa lista.
      *
@@ -82,7 +81,10 @@ public class Import implements InterfaceImport{
         return tempList;
     }
     
-    
+    /**
+     * Obtem todos os mapa que estão no directorio 
+     * @return iterador com a coleção com todos os mapas
+     */
     private Iterator obtemMapasHoteis(){
         UnorderedArrayList<Mapa> listaDeMapas = new UnorderedArrayList<>();
         
@@ -96,7 +98,6 @@ public class Import implements InterfaceImport{
             Mapa mapa = new Mapa(arquivos.getName(),arquivos.getAbsolutePath());
             listaDeMapas.addToRear(mapa);
         }
-        
         return listaDeMapas.iterator();
     }
        
@@ -108,16 +109,19 @@ public class Import implements InterfaceImport{
     @Override
     public String escolheHotel(String escolhaHotel) throws FileNotFoundException, ParseException{
         int count =1;
+        
         boolean found = false;
+        
         Iterator itr = this.obtemMapasHoteis();
         
         while(itr.hasNext() && !found){
+            
             Mapa hotel = (Mapa) itr.next();
             
-            if(Integer.parseInt(escolhaHotel)==count){
-                found=true;
+            if (Integer.parseInt(escolhaHotel) == count) {
+                found = true;
                 return hotel.getPath();
-            }else{
+            } else {
                 count++;
             }
         }
@@ -125,7 +129,7 @@ public class Import implements InterfaceImport{
     }
     
     /**
-     * Este metodo vai imprimir todos os hoteis e retornar o seu número
+     * Este método vai imprimir todos os hoteis e retornar o seu número
      * @return número de hoteis
      */
     @Override

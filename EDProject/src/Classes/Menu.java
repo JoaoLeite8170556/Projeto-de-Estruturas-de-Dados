@@ -5,25 +5,15 @@
  */
 package Classes;
 
-import Colecoes.DoubleLinkedOrderedList;
-import Colecoes.UnorderedArrayList;
-import Colecoes.UnorderedDoubleLinkedList;
-import Excepcoes.ElementNonComparable;
-import Excepcoes.EmptyExcpetion;
+import Colecoes.*;
+import Excepcoes.*;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -99,13 +89,13 @@ public class Menu {
             int escolha = scanner.nextInt();
             switch (escolha) {
                 case 1:
-                    gestaoHotel.modoManual();
+                    this.gestaoHotel.modoManual();
                     break;
                 case 2:
-                    hotel.inserirHospede();
+                    this.hotel.inserirHospede();
                     break;
                 case 3:
-                    hotel.inserirFuncionario();
+                    this.hotel.inserirFuncionario();
                     break;
                 case 4:
                     this.gestaoHotel.escolhePessoaParaEncontrar();
@@ -115,13 +105,13 @@ public class Menu {
                     break;
                 case 6:
                     System.out.println(hotel.getDivisoes().toString());
-                    this.hotel.getDivisoes().getTodasDivisoes();
+                    imprimeTodasAsDivisoes();
                     break;
                 case 7:
                     System.out.println(hotel.getMovimentosHotel().toString());
                     break;
                 case 8:
-                    gestaoHotel.caminhoMaisCurtoSalaQuarentena();
+                    this.gestaoHotel.caminhoMaisCurtoSalaQuarentena();
                     break;
                 case 9:
                     this.gestaoHotel.imprimeDivisoesDasPessoas();
@@ -156,7 +146,7 @@ public class Menu {
         boolean validPath = false;
 
         while (!validPath) {
-            int number = importTemp.mostraHoteis();
+            int number = this.importTemp.mostraHoteis();
 
             System.out.println("Escolha o mapa que quer jogar!!!!!" + " \n");
 
@@ -164,9 +154,9 @@ public class Menu {
 
             escolha = scanner.nextLine();
 
-            if (escolha.matches("[1" + number + "]")) {
-                if (importTemp.escolheHotel(escolha) != null) {
-                    fileMapa = importTemp.escolheHotel(escolha);
+            if (escolha.matches("[1-" + number + "]")) {
+                if (this.importTemp.escolheHotel(escolha) != null) {
+                    fileMapa = this.importTemp.escolheHotel(escolha);
                     validPath = true;
                 }
             }
@@ -191,6 +181,12 @@ public class Menu {
         return tempoTemp;
     }
 
-    
+    private void imprimeTodasAsDivisoes(){
+        Iterator itr = this.hotel.getDivisoes().getTodasDivisoes().iterator();
+        System.out.println("\n"+"Divisões do Hotel: "+"\n");
+        while(itr.hasNext()){
+            System.out.println(itr.next()+"\n");
+        }
+    }
 
 }

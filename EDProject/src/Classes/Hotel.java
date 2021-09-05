@@ -309,9 +309,6 @@ public class Hotel implements InterfaceHotel{
         }
         
     }
-    
-    
-
     /**
      * Este método vai adicionar uma pessoa na Divisao para qual ela se moveu
      *

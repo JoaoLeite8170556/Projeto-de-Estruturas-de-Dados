@@ -28,7 +28,4 @@ public class Mapa {
         return path;
     }
     
-    
-    
-    
 }

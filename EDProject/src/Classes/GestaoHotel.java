@@ -469,7 +469,7 @@ public class GestaoHotel implements InterfaceGestaoHotel {
      */
     private void divisoesPartilhadas() throws EmptyExcpetion, ElementNonComparable {
         if (this.hotel.getListaDePessoas().isEmpty()) {
-            System.out.println("Ainda nao tem pessoas associadas ao hotel...");
+            System.out.println("Ainda não tem pessoas associadas ao hotel...");
         } else {
             Pessoa pessoa = escolhePessoa();
 
